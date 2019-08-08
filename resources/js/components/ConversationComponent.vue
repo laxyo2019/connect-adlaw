@@ -11,7 +11,7 @@
                 data-toggle="modal" 
                 data-target="#groupMembersModal">
                 {{ selecteduser.roomname.toUpperCase().charAt(0) }}
-                <span class='online-dot-profile'></span>
+                <!-- <span class='online-dot-profile'></span> -->
             </span>
             <!-- <span v-else-if="selecteduser" class="sender-avatar-icon">
                 {{ selecteduser.roomname.toUpperCase().charAt(0) }}
@@ -31,6 +31,9 @@
                 <li class="sent message sent_message" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
                 	<div v-if="message.message_deleted=='0'">
 				            <div class="chat-body">
+				            	<!-- <span v-if="checkIsQuote(message.is_quote)">
+				            		{{(JSON.parse(message.is_quote))['parent_id']}}
+				            	</span> -->
 				              <span v-if="message.is_file=='0'">
 				                <TextAsMessage :right="true"
 				                		@forwardMessageModal = 'forwardMessageModal'
@@ -268,7 +271,10 @@
                 editing_message:null,
                 hidegroupmodel:false,
                 qoutemessagebody:'',
+                qoutemessageid:'',
                 quoting:false,
+                qoutesenderid : '',
+                qoutesendername : '',
                 quotemessagename:'',
                 senderavatar:'',
                 forwardingMessage:'',
@@ -277,6 +283,13 @@
             };
         },
         methods:{
+	        	checkIsQuote(message){
+	        		let msg = JSON.parse(message);
+	        		if(msg.parent_id!=""){
+								return true;
+	        		}
+	        		return false;
+	        	},
             checkdate(message){
                 if(message.group_at == this.lastmessage.group_at){
                     return false;
@@ -317,12 +330,18 @@
             },
             cancelquotemessage(){
                 this.qoutemessagebody = '';
+                this.qoutemessageid = '';
                 this.quoting = false;
+                this.qoutesenderid = '';
+                this.qoutesendername = '';
             },
             quoteMessage(message,index){
                 this.quoting = true;
                 this.senderavatar = message.sender_name.toUpperCase().charAt(0);
                 this.qoutemessagebody = message.message;
+                this.qoutemessageid = message.message_id;
+                this.qoutesenderid = message.sender_id;
+                this.qoutesendername = message.sender_name;
                 this.quotemessagename = message.sender_name;
                 // console.log($('.quotemesg').html())
             },
@@ -348,17 +367,24 @@
                     });
                     return;
                 }
-                if(this.quoting){
-                    this.qoutemessagebody = ''; 
-                }
                 axios.post('sendMessage', {
                     room_id: this.selectedContact.room_id,
                     message: message,
                     quoting:this.quoting,
-                    qoutemessagebody:$('.quotemesg').html()
+                    // qoutemessagebody:$('.quotemesg').html()
+                    quotemessagebody : this.qoutemessagebody,
+                    qotemessageid : this.qoutemessageid,
+                    qoutesendername : this.qoutesendername,
+                    qoutesenderid : this.qoutesenderid,
                 }).then((response) => {
                     this.$emit('newMessage', response.data);
                 });
+                if(this.quoting){
+                    this.qoutemessagebody = ''; 
+                    this.qoutemessageid = ''; 
+                    this.qoutesendername = ''; 
+                    this.qoutesenderid = ''; 
+                }
             },
             openEditMessageEditor(message,index){
                 // console.log('msg',message)

@@ -1,7 +1,7 @@
 <template>
 	<div class="chat-text" @contextmenu.prevent="$refs.menu.open">
 		<div style='position:relative' class="text context-parent_div">
-			<p class="after_msg" v-html="content.message" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }"></p>
+			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }"></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
 					<template slot-scope="child">
 				    <li>
@@ -29,6 +29,13 @@
 			}
 		},
 		methods: {
+			checkIsQuote(isQuote,message){
+	        		let quote = JSON.parse(isQuote);
+	        		if(quote.parent_id!=""){
+								return '<span class="quote_msg_div"><i class="fa fa-quote-left fa-1x"></i></br><span class="quote_msg">'+quote['msg']+'</span></br><span>~ '+quote['sender_name']+'</span></br></br></span></br>'+message;
+	        		}
+	        		return message;
+	        	},
 			forwardMsg() {
 
 			},

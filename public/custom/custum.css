@@ -522,7 +522,17 @@ label:focus,
     float: left;
     margin-right: 10px;
 }
-
+/*mohini*/
+.q_sender_name{
+	
+}
+.quote_msg{
+	font-style: italic;
+}
+.quote_msg_div{
+	display: block;
+	border-bottom:solid 1px #fff;
+}
 @media screen and (max-width: 735px) {
     #frame #sidepanel #contacts ul li.contact .wrap img {
         margin-right: 0px;

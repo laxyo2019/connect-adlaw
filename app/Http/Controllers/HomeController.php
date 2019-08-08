@@ -114,20 +114,31 @@ class HomeController extends Controller
 
     // Send Message
     public function sendMessage(Request $request){
-        $messagebody = '';
+    	$is_quote = array(
+    		'parent_id' => "",
+    		'sender_id' => "",
+    		'sender_name' => "",
+    		'msg' => "",
+    	);
+        // $messagebody = '';
         if($request->quoting){
-            $messagebody .= $request->qoutemessagebody;
+        			$is_quote['parent_id'] = $request->qotemessageid;
+        			$is_quote['sender_name'] = $request->qoutesendername;
+        			$is_quote['sender_id'] = $request->qoutesenderid;
+        			$is_quote['msg'] = $request->quotemessagebody;
+            // $messagebody .= $request->qoutemessagebody;
         }
-        $messagebody1 = $request->message;
-        $array = explode(' ',$messagebody1);
-        foreach($array as $arr){
-            if(strpos( $arr, '@' ) !== false) {
-                $highlight = '<a href="#">'.$arr.'</a>';
-                $messagebody1 = str_replace($arr,$highlight,$messagebody1);
-            }
-        }
+        // $messagebody1 = $request->message;
+        // $array = explode(' ',$messagebody1);
+        // foreach($array as $arr){
+        //     if(strpos( $arr, '@' ) !== false) {
+        //         $highlight = '<a href="#">'.$arr.'</a>';
+        //         $messagebody1 = str_replace($arr,$highlight,$messagebody1);
+        //     }
+        // }
 
-        $messagebody = $messagebody . $messagebody1;
+        $messagebody =  $request->message;
+        // $messagebody = $messagebody . $messagebody1;
         $user_id = Auth::user()->id;
         $newMessage = new ChatroomMessage;
 
@@ -139,7 +150,7 @@ class HomeController extends Controller
             $newMessage->is_file = 0;
             $newMessage->message = $messagebody;
         }
-
+        $newMessage->is_quote = json_encode($is_quote);
         $newMessage->chatroom_id = $request->room_id;
         $newMessage->sender_id = $user_id;
         $newMessage->save();
