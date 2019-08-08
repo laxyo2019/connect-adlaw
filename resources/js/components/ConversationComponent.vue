@@ -185,18 +185,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                		<!-- <div class="form-group">
+                			<input v-model="searchForwardTo" type="text" class="form-control" placeholder="Search Name.." style="border-radius: 25px;" @keyup="filterForwardToList()">
+                		</div> -->
                     <ul class="list-group">
-                        <li class="list-group-item" v-for="(member,index) in allusers" :key="index">
+                        <li class="list-group-item" v-for="(member,index) in forwardToList" :key="index">
                             <table style="width:100%;">
-                                <tr>
-                                    <td style="width:20%">
+                                <tr style="border-bottom: solid rgb(229, 228, 232); border-width: 2px;">
+                                    <td style="width:13%">
                                         <span class="sender-avatar-icon">{{ member.roomname.toUpperCase().charAt(0) }}</span>
                                         <!-- <img class="img" width="50px" :src="profile_pre + member.user_name.toUpperCase().charAt(0) +'.png'"> -->
                                         </td>
-                                    <td style="width:60%;"><p style="line-height:3.5;margin-bottom:0px;" >{{member.roomname}}</p></td>
-                                    <td style="width:20%;text-align:right;"><i style="line-height:4;" 
+                                    <td style="width:67%;"><p style="line-height:3.5;margin-bottom:0px;" >{{member.roomname}}</p></td>
+                                    <td style="width:20%;text-align:right;">
+                                    	<span style="    font-size: 13px;
+																		    background: #3490dc;
+																		    color: #fff;
+																		    border-radius: 25px;
+																		    padding: 6px 10px!important;">
+                                    	<i style="line-height:4;" 
                                         class="fa fa-share" 
-                                        @click="forwardMessage(member.room_id)"></i>
+                                        @click="forwardMessage(member.room_id)">
+                                      </i>
+																			Send
+																		</span>
                                     </td>
                                 </tr>
                             </table>	
@@ -255,6 +267,8 @@
         },
     data() {
             return {
+            		searchForwardTo:'',
+            		forwardToList:'',
                 selectedMembers:[],
                 selecteduser:null,
                 editmessage:'',
@@ -306,9 +320,12 @@
                 }
             },
             forwardMessageModal(message,index){
-            	console.log('msg',message);
+            	this.forwardToList = this.allusers;
                 $('#forwardMessageModal').modal('show');
                 this.forwardingMessage = message.message;
+            },
+            filterForwardToList(){
+            	console.log(this.searchForwardTo);
             },
             forwardMessage(room_id){
                 axios.post('sendMessage', {
@@ -713,5 +730,10 @@
 .fancy span:after {
   left: 100%;
   margin-left: 15px;
+}
+.modal-header{
+	background: #3490dc;
+    /* border: 0; */
+    color: #fff;
 }
 </style>
