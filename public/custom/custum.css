@@ -495,13 +495,15 @@ label:focus,
     background: #fff;
 }
 #frame #sidepanel #contacts ul li.contact .wrap span.online {
-    background: #2ecc71;
-    top: -2px;
-    width: 10px;
-    height: 10px;
-    z-index: 100;
+       background: #2ecc71;
     /* background: green; */
-    border-radius: 50%;
+		    border-radius: 50%;
+		    left: 25px;
+		    width: 11px;
+		    border: solid 1px #fff !important;
+		    height: 11px;
+		    z-index: 100;
+		    bottom: -7px;
 }
 
 #frame #sidepanel #contacts ul li.contact .wrap span.away {
