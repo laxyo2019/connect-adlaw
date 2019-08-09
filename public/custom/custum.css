@@ -7,6 +7,11 @@
 .emoji-mart-preview{
     display: none !important;
 }
+.forward_send_btn:hover{
+	  color: #198ff1 !important;
+    border: solid 1px #198ff1 !important;
+    background: #fff !important;
+}
 body {
     background: #ced6d2;
     /* font-family: "proxima-nova", "Source Sans Pro", sans-serif; */

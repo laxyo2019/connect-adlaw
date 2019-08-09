@@ -2859,12 +2859,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2967,11 +2961,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     forwardMessageModal: function forwardMessageModal(message, index) {
       this.forwardToList = this.allusers;
+      this.searchForwardTo = '';
       $('#forwardMessageModal').modal('show');
       this.forwardingMessage = message.message;
     },
     filterForwardToList: function filterForwardToList() {
-      console.log(this.searchForwardTo);
+      var searchKey = this.searchForwardTo; //create  a regression to match a particular string in the name , i stands in insensitive 
+
+      var searchReg = new RegExp(searchKey, "i");
+      var usersArr = [];
+      this.allusers.forEach(function (v, k) {
+        if (v.roomname.match(searchReg)) {
+          //push object if string has matched		
+          usersArr.push(v);
+        }
+      });
+      this.forwardToList = usersArr;
     },
     forwardMessage: function forwardMessage(room_id) {
       var _this = this;
@@ -59933,6 +59938,34 @@ var render = function() {
                 _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.searchForwardTo,
+                          expression: "searchForwardTo"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { "border-radius": "25px" },
+                      attrs: { type: "text", placeholder: "Search Name.." },
+                      domProps: { value: _vm.searchForwardTo },
+                      on: {
+                        keyup: function($event) {
+                          return _vm.filterForwardToList()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.searchForwardTo = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "ul",
                     { staticClass: "list-group" },
@@ -59990,30 +60023,29 @@ var render = function() {
                                   },
                                   [
                                     _c(
-                                      "span",
+                                      "button",
                                       {
+                                        staticClass: "btn forward_send_btn",
                                         staticStyle: {
-                                          "font-size": "13px",
-                                          background: "#3490dc",
+                                          "border-radius": "19px",
                                           color: "#fff",
-                                          "border-radius": "25px",
-                                          padding: "6px 10px!important"
+                                          background: "#198ff1",
+                                          border: "solid 1px #198ff1"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.forwardMessage(
+                                              member.room_id
+                                            )
+                                          }
                                         }
                                       },
                                       [
                                         _c("i", {
-                                          staticClass: "fa fa-share",
-                                          staticStyle: { "line-height": "4" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.forwardMessage(
-                                                member.room_id
-                                              )
-                                            }
-                                          }
+                                          staticClass: "fa fa-share mr-2"
                                         }),
                                         _vm._v(
-                                          "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSend\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+                                          "Send\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
                                         )
                                       ]
                                     )

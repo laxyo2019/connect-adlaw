@@ -185,9 +185,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                		<!-- <div class="form-group">
+                		<div class="form-group">
                 			<input v-model="searchForwardTo" type="text" class="form-control" placeholder="Search Name.." style="border-radius: 25px;" @keyup="filterForwardToList()">
-                		</div> -->
+                		</div>
                     <ul class="list-group">
                         <li class="list-group-item" v-for="(member,index) in forwardToList" :key="index">
                             <table style="width:100%;">
@@ -198,17 +198,11 @@
                                         </td>
                                     <td style="width:67%;"><p style="line-height:3.5;margin-bottom:0px;" >{{member.roomname}}</p></td>
                                     <td style="width:20%;text-align:right;">
-                                    	<span style="    font-size: 13px;
-																		    background: #3490dc;
-																		    color: #fff;
-																		    border-radius: 25px;
-																		    padding: 6px 10px!important;">
-                                    	<i style="line-height:4;" 
-                                        class="fa fa-share" 
-                                        @click="forwardMessage(member.room_id)">
-                                      </i>
-																			Send
-																		</span>
+                                    	<button class="btn forward_send_btn"
+                                    		style="border-radius: 19px;color: #fff;background: #198ff1; border: solid 1px #198ff1"
+																				@click="forwardMessage(member.room_id)">
+                                    		<i  class="fa fa-share mr-2" ></i>Send
+																			</button>
                                     </td>
                                 </tr>
                             </table>	
@@ -321,11 +315,21 @@
             },
             forwardMessageModal(message,index){
             	this.forwardToList = this.allusers;
+            		this.searchForwardTo = '';
                 $('#forwardMessageModal').modal('show');
                 this.forwardingMessage = message.message;
             },
             filterForwardToList(){
-            	console.log(this.searchForwardTo);
+            	let searchKey = this.searchForwardTo;
+            	//create  a regression to match a particular string in the name , i stands in insensitive 
+            	let searchReg =   new RegExp(searchKey, "i"); 
+            	let usersArr = [];
+            	this.allusers.forEach(function(v,k){
+            		if(v.roomname.match(searchReg)){ //push object if string has matched		
+            			usersArr.push(v);
+            		}	
+            	});
+            	this.forwardToList = usersArr;
             },
             forwardMessage(room_id){
                 axios.post('sendMessage', {
@@ -393,8 +397,9 @@
                     qotemessageid : this.qoutemessageid,
                     qoutesendername : this.qoutesendername,
                     qoutesenderid : this.qoutesenderid,
+
                 }).then((response) => {
-                    this.$emit('newMessage', response.data);
+                   this.$emit('newMessage', response.data);
                 });
                 if(this.quoting){
                     this.qoutemessagebody = ''; 
