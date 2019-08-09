@@ -459,13 +459,13 @@ label:focus,
 	  position: absolute;
     right: 0;
     top: -10px;
-    font-size: 12px;
+    font-size: 10px;
     color: #929090;
 }
 .received_message .display_msg_time{
 	  position: absolute;
     top: -21px;
-    font-size: 12px;
+    font-size: 10px;
     color: #929090;
 }
 @media screen and (max-width: 735px) {
