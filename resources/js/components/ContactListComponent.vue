@@ -19,7 +19,8 @@
 					        <span>Add</span>
 					      </a>
           	</li>
-          	<li> 
+          	<li v-if="user.id==2 || user.id==1"> 
+				      <!-- <a v-if="group_permission==1" -->
 				      <a v-if="group_permission==1"
 				              id="creategroup"
 				              data-toggle="modal"

@@ -31,9 +31,11 @@
                 <li class="sent message sent_message" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
                 	<div v-if="message.message_deleted=='0'">
 				            <div class="chat-body">
-				            	<!-- <span v-if="checkIsQuote(message.is_quote)">
-				            		{{(JSON.parse(message.is_quote))['parent_id']}}
-				            	</span> -->
+				            	<div>
+				            		<span v-if="checkdate(message)" class="date_line">
+                         <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
+                     		</span>
+				            	</div>
 				              <span v-if="message.is_file=='0'">
 				                <TextAsMessage :right="true"
 				                		@forwardMessageModal = 'forwardMessageModal'
@@ -188,7 +190,7 @@
                 		<div class="form-group">
                 			<input v-model="searchForwardTo" type="text" class="form-control" placeholder="Search Name.." style="border-radius: 25px;" @keyup="filterForwardToList()">
                 		</div>
-                    <ul class="list-group">
+                    <ul class="list-group messages" id="message_container" v-if="loading_chat" v-on:scroll="scrollevent()" v-chat-scroll="{always: false}">
                         <li class="list-group-item" v-for="(member,index) in forwardToList" :key="index">
                             <table style="width:100%;">
                                 <tr style="border-bottom: solid rgb(229, 228, 232); border-width: 2px;">
@@ -534,6 +536,7 @@
 .date_line{
     position: absolute;
     left: 50%;
+    top: -20px;
 }
 .date_line1{
     position: relative;

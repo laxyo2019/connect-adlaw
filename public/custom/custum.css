@@ -425,6 +425,9 @@ label:focus,
 #frame #sidepanel #contacts.expanded {
     height: calc(100% - 334px);
 }
+#contacts::-webkit-scrollbar {
+    display:none!important;
+}
 
 #frame #sidepanel #contacts::-webkit-scrollbar {
     width: 8px;
@@ -452,7 +455,19 @@ label:focus,
 #frame ul {
     padding-left: 0px !important;
 }
-
+.sent_message .display_msg_time{
+	  position: absolute;
+    right: 0;
+    top: -10px;
+    font-size: 12px;
+    color: #929090;
+}
+.received_message .display_msg_time{
+	  position: absolute;
+    top: -21px;
+    font-size: 12px;
+    color: #929090;
+}
 @media screen and (max-width: 735px) {
     #frame #sidepanel #contacts ul li.contact {
         padding: 6px 0 46px 8px;
@@ -689,7 +704,7 @@ label:focus,
     }
 }
 .last_messge_time {
-    font-size: 9px!important;
+    font-size:.6rem !important;
     margin-right: 10px!important;
 }
 @media screen and (max-width: 1000px) {
@@ -799,7 +814,8 @@ label:focus,
     margin: 6px 8px 0 0;
 }
 
-#frame .content .messages ul li.replies p.after_msg, #frame .content .messages ul li.replies p.after_msg a{
+#frame .content .messages ul li.replies p.after_msg, #frame .content .messages ul li.replies p.after_msg{
+/*#frame .content .messages ul li.replies p.after_msg, #frame .content .messages ul li.replies p.after_msg a{*/
   padding: .5rem 1rem;
   color: #757575!important;
   border-radius: 5px;
@@ -1004,7 +1020,8 @@ label:focus,
 #frame .content .messages ul li.sent p.after_msg {
     background: #2196f3; 
     min-width: 80px;
-    margin-top: 30px;
+    margin-top: 10px!important;
+    margin-bottom: 10px!important;
     word-break: break-word;
     white-space: pre-wrap;
     color:#fff!important;   
@@ -1030,7 +1047,7 @@ label:focus,
     position: absolute;
     width: 12px;
     height: 12px;
-    top: 43px;
+    top: 20px;
     right: -6px;
     background: #2196f3;
     transform: rotate(45deg);

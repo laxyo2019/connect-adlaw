@@ -40,7 +40,7 @@ class Participant extends JsonResource
         $now = Carbon::parse(Carbon::now()->format('Y-m-d'));
         $diff = $now->diffInDays(Carbon::parse($date1->format('Y-m-d')));
 			  if($diff==0){
-			  	$display_date = $lastMessage_time->format("h:i a");
+			  	$display_date = $lastMessage_time->format("h:i A");
 			  }else if($diff >= 6){
 			  	$display_date = $lastMessage_time->format("d/m/Y");
 			  }else{

@@ -2550,6 +2550,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     mobileView: {
@@ -2642,6 +2643,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message/TextAsMessage */ "./resources/js/components/Message/TextAsMessage.vue");
 /* harmony import */ var _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message/ImageAsMessage */ "./resources/js/components/Message/ImageAsMessage.vue");
 /* harmony import */ var _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message/FileAsMessage */ "./resources/js/components/Message/FileAsMessage.vue");
+//
+//
 //
 //
 //
@@ -3345,6 +3348,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-context */ "./node_modules/vue-context/dist/js/vue-context.js");
 /* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_context__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -7934,7 +7938,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n::-webkit-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-moz-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n:-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n.date_line{\n    position: absolute;\n    left: 50%;\n}\n.date_line1{\n    position: relative;\n    left: 100%;\n    top: -20px;\n}\n.btn:focus, .btn.focus {\n    outline: 0;\n    box-shadow: unset !important;\n}\n.fa-ellipsis-v{\n    color:#8e8585;\n}\n/* .actionbuttons{\n    display: none;\n}\n.sent_message:hover > .actionbuttons{\n    display:block;\n} */\n.edit_message_input{\n    border-radius: 0px;\n}\n.typing_indicator{\n    font-size: 12px;\n    color: #2c3e50;\n}\n.groupsendername {\n    position: relative;\n    text-transform: capitalize;\n    /* left: 5%; */\n}\n.text-muted{\n    font-style: italic;\n}\n.sent_message{\n    position: relative;\n}\n.replies{\n    position: relative;\n}\n.sendmessagetime{\n    /* float: right; */\n    position: absolute;\n    top: 10px;\n    right: 37px;\n}\n.actionbuttonssend {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreply{\n    position: absolute;\n    left: 60%;\n    top: -3px;\n}\n.actionbuttonssendgroup {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreplygroup {\n    position: absolute;\n    left: 106px;\n    top: -6px;\n}\n.recievemessagetime{\n    /* float: right; */\n    position: relative;\n    top: 0;\n    left: 10px;\n}\n.messages .text-muted{\n    font-size: 10px;\n}\n#frame .content .messages{\n    /* max-height: unset !important; */\n    word-spacing: 2px;\n}\n.replies .text-muted{\n    color: #abafb3 !important\n}\n.list-group-item{\n    border: unset;\n    padding: unset;\n}\n.deletegroupbutton{\n    position: absolute;\n    right: 10%;\n    top: 4%;\n}\n.file_thumbnail{\n    width: 30% !important;\n    /* border-radius: unset !important; */\n}\n.file_thumbnail1{\n    width: 60% !important;\n    border-radius: 5px !important;\n}\n.sender-avatar-icon{\n    height: 37px;\n    text-align: center;\n    width: 37px;\n    color: #000;\n    background-color: #e5e4e8;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 37px;\n    position: relative;\n    margin: 6px 10px 10px;\n}\n.actionbuttonsender{\n    top: 30px;\n}\n.quotemesg{\n        left: 2%;\n    width: 95%;\n    position: absolute;\n    bottom: 17%;\n    background: whitesmoke;\n    border-radius: 10px;\n    padding: 10px;\n}\n.quotemesgclose{\n    position: absolute;\n    bottom: 20%;\n    right: 5%;\n}\n.container_send_message{\n    word-break: unset;\n    white-space: unset;\n}\n#qouteMsgTable tr > td {\n    margin: 0;\n    padding: 0;\n}\n.file_container_send{\n    width: 50%;\n    float: right;\n    background: rgb(241, 241, 244) !important;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n.file_container_recieve{\n    width: 70%;\n    float: left;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n@media screen and (max-width: 735px) {\n.typing_indicator{\n        font-size: 8px;\n        color: #2c3e50;\n}\n.contact-profile p{\n        font-size: 12px;\n}\n}\n.subtitle {\n  margin: 0 0 2em 0;\n  color: grey;\n}\n.fancy {\n\tfont-size: 11px;\n  background: #c7edfc;\n  padding: 4px;\n  border-radius: 10px;\n  line-height: 0.5;\n  text-align: center;\n  padding-right: 8px;\n  padding-left: 8px;\n}\n.fancy span {\n  display: inline-block;\n  position: relative;\n}\n.fancy span:before,\n.fancy span:after {\n  content: \"\";\n  position: absolute;\n  height: 5px;\n  top: 0;\n  width: 600%;\n}\n.fancy span:before {\n  right: 100%;\n  margin-right: 15px;\n}\n.fancy span:after {\n  left: 100%;\n  margin-left: 15px;\n}\n.modal-header{\n\tbackground: #3490dc;\n    /* border: 0; */\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n::-webkit-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-moz-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n:-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n.date_line{\n    position: absolute;\n    left: 50%;\n    top: -20px;\n}\n.date_line1{\n    position: relative;\n    left: 100%;\n    top: -20px;\n}\n.btn:focus, .btn.focus {\n    outline: 0;\n    box-shadow: unset !important;\n}\n.fa-ellipsis-v{\n    color:#8e8585;\n}\n/* .actionbuttons{\n    display: none;\n}\n.sent_message:hover > .actionbuttons{\n    display:block;\n} */\n.edit_message_input{\n    border-radius: 0px;\n}\n.typing_indicator{\n    font-size: 12px;\n    color: #2c3e50;\n}\n.groupsendername {\n    position: relative;\n    text-transform: capitalize;\n    /* left: 5%; */\n}\n.text-muted{\n    font-style: italic;\n}\n.sent_message{\n    position: relative;\n}\n.replies{\n    position: relative;\n}\n.sendmessagetime{\n    /* float: right; */\n    position: absolute;\n    top: 10px;\n    right: 37px;\n}\n.actionbuttonssend {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreply{\n    position: absolute;\n    left: 60%;\n    top: -3px;\n}\n.actionbuttonssendgroup {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreplygroup {\n    position: absolute;\n    left: 106px;\n    top: -6px;\n}\n.recievemessagetime{\n    /* float: right; */\n    position: relative;\n    top: 0;\n    left: 10px;\n}\n.messages .text-muted{\n    font-size: 10px;\n}\n#frame .content .messages{\n    /* max-height: unset !important; */\n    word-spacing: 2px;\n}\n.replies .text-muted{\n    color: #abafb3 !important\n}\n.list-group-item{\n    border: unset;\n    padding: unset;\n}\n.deletegroupbutton{\n    position: absolute;\n    right: 10%;\n    top: 4%;\n}\n.file_thumbnail{\n    width: 30% !important;\n    /* border-radius: unset !important; */\n}\n.file_thumbnail1{\n    width: 60% !important;\n    border-radius: 5px !important;\n}\n.sender-avatar-icon{\n    height: 37px;\n    text-align: center;\n    width: 37px;\n    color: #000;\n    background-color: #e5e4e8;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 37px;\n    position: relative;\n    margin: 6px 10px 10px;\n}\n.actionbuttonsender{\n    top: 30px;\n}\n.quotemesg{\n        left: 2%;\n    width: 95%;\n    position: absolute;\n    bottom: 17%;\n    background: whitesmoke;\n    border-radius: 10px;\n    padding: 10px;\n}\n.quotemesgclose{\n    position: absolute;\n    bottom: 20%;\n    right: 5%;\n}\n.container_send_message{\n    word-break: unset;\n    white-space: unset;\n}\n#qouteMsgTable tr > td {\n    margin: 0;\n    padding: 0;\n}\n.file_container_send{\n    width: 50%;\n    float: right;\n    background: rgb(241, 241, 244) !important;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n.file_container_recieve{\n    width: 70%;\n    float: left;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n@media screen and (max-width: 735px) {\n.typing_indicator{\n        font-size: 8px;\n        color: #2c3e50;\n}\n.contact-profile p{\n        font-size: 12px;\n}\n}\n.subtitle {\n  margin: 0 0 2em 0;\n  color: grey;\n}\n.fancy {\n\tfont-size: 11px;\n  background: #c7edfc;\n  padding: 4px;\n  border-radius: 10px;\n  line-height: 0.5;\n  text-align: center;\n  padding-right: 8px;\n  padding-left: 8px;\n}\n.fancy span {\n  display: inline-block;\n  position: relative;\n}\n.fancy span:before,\n.fancy span:after {\n  content: \"\";\n  position: absolute;\n  height: 5px;\n  top: 0;\n  width: 600%;\n}\n.fancy span:before {\n  right: 100%;\n  margin-right: 15px;\n}\n.fancy span:after {\n  left: 100%;\n  margin-left: 15px;\n}\n.modal-header{\n\tbackground: #3490dc;\n    /* border: 0; */\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -59138,28 +59142,30 @@ var render = function() {
               ? _c("ul", { staticClass: "dropdown_css" }, [
                   _vm._m(0),
                   _vm._v(" "),
-                  _c("li", [
-                    _vm.group_permission == 1
-                      ? _c(
-                          "a",
-                          {
-                            attrs: {
-                              id: "creategroup",
-                              "data-toggle": "modal",
-                              "data-target": "#createnewgroup"
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-users fa-fw",
-                              attrs: { "aria-hidden": "true" }
-                            }),
-                            _vm._v(" "),
-                            _c("span", [_vm._v("Group")])
-                          ]
-                        )
-                      : _vm._e()
-                  ]),
+                  _vm.user.id == 2 || _vm.user.id == 1
+                    ? _c("li", [
+                        _vm.group_permission == 1
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  id: "creategroup",
+                                  "data-toggle": "modal",
+                                  "data-target": "#createnewgroup"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-users fa-fw",
+                                  attrs: { "aria-hidden": "true" }
+                                }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Group")])
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("li", [
                     _c(
@@ -59480,6 +59486,22 @@ var render = function() {
                         message.message_deleted == "0"
                           ? _c("div", [
                               _c("div", { staticClass: "chat-body" }, [
+                                _c("div", [
+                                  _vm.checkdate(message)
+                                    ? _c("span", { staticClass: "date_line" }, [
+                                        _c(
+                                          "span",
+                                          { staticClass: "subtitle fancy" },
+                                          [
+                                            _c("span", [
+                                              _vm._v(_vm._s(message.group_at))
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
                                 message.is_file == "0"
                                   ? _c(
                                       "span",
@@ -59966,99 +59988,126 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "ul",
-                    { staticClass: "list-group" },
-                    _vm._l(_vm.forwardToList, function(member, index) {
-                      return _c(
-                        "li",
-                        { key: index, staticClass: "list-group-item" },
-                        [
-                          _c("table", { staticStyle: { width: "100%" } }, [
-                            _c(
-                              "tr",
-                              {
-                                staticStyle: {
-                                  "border-bottom": "solid rgb(229, 228, 232)",
-                                  "border-width": "2px"
-                                }
-                              },
-                              [
-                                _c("td", { staticStyle: { width: "13%" } }, [
-                                  _c(
-                                    "span",
-                                    { staticClass: "sender-avatar-icon" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          member.roomname
-                                            .toUpperCase()
-                                            .charAt(0)
-                                        )
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticStyle: { width: "67%" } }, [
-                                  _c(
-                                    "p",
-                                    {
-                                      staticStyle: {
-                                        "line-height": "3.5",
-                                        "margin-bottom": "0px"
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(member.roomname))]
-                                  )
-                                ]),
-                                _vm._v(" "),
+                  _vm.loading_chat
+                    ? _c(
+                        "ul",
+                        {
+                          directives: [
+                            {
+                              name: "chat-scroll",
+                              rawName: "v-chat-scroll",
+                              value: { always: false },
+                              expression: "{always: false}"
+                            }
+                          ],
+                          staticClass: "list-group messages",
+                          attrs: { id: "message_container" },
+                          on: {
+                            scroll: function($event) {
+                              return _vm.scrollevent()
+                            }
+                          }
+                        },
+                        _vm._l(_vm.forwardToList, function(member, index) {
+                          return _c(
+                            "li",
+                            { key: index, staticClass: "list-group-item" },
+                            [
+                              _c("table", { staticStyle: { width: "100%" } }, [
                                 _c(
-                                  "td",
+                                  "tr",
                                   {
                                     staticStyle: {
-                                      width: "20%",
-                                      "text-align": "right"
+                                      "border-bottom":
+                                        "solid rgb(229, 228, 232)",
+                                      "border-width": "2px"
                                     }
                                   },
                                   [
                                     _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn forward_send_btn",
-                                        staticStyle: {
-                                          "border-radius": "19px",
-                                          color: "#fff",
-                                          background: "#198ff1",
-                                          border: "solid 1px #198ff1"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.forwardMessage(
-                                              member.room_id
+                                      "td",
+                                      { staticStyle: { width: "13%" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "sender-avatar-icon" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                member.roomname
+                                                  .toUpperCase()
+                                                  .charAt(0)
+                                              )
                                             )
-                                          }
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticStyle: { width: "67%" } },
+                                      [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticStyle: {
+                                              "line-height": "3.5",
+                                              "margin-bottom": "0px"
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(member.roomname))]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticStyle: {
+                                          width: "20%",
+                                          "text-align": "right"
                                         }
                                       },
                                       [
-                                        _c("i", {
-                                          staticClass: "fa fa-share mr-2"
-                                        }),
-                                        _vm._v(
-                                          "Send\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn forward_send_btn",
+                                            staticStyle: {
+                                              "border-radius": "19px",
+                                              color: "#fff",
+                                              background: "#198ff1",
+                                              border: "solid 1px #198ff1"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.forwardMessage(
+                                                  member.room_id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-share mr-2"
+                                            }),
+                                            _vm._v(
+                                              "Send\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+                                            )
+                                          ]
                                         )
                                       ]
                                     )
                                   ]
                                 )
-                              ]
-                            )
-                          ])
-                        ]
+                              ])
+                            ]
+                          )
+                        }),
+                        0
                       )
-                    }),
-                    0
-                  )
+                    : _vm._e()
                 ])
               ])
             ]
@@ -60379,6 +60428,10 @@ var render = function() {
       }
     },
     [
+      _c("span", { staticClass: "display_msg_time" }, [
+        _vm._v(_vm._s(_vm.content.created_at))
+      ]),
+      _vm._v(" "),
       _c(
         "div",
         {

@@ -70,7 +70,7 @@ class MessageResource extends JsonResource
             'fileurl'    => $fileurl,
             'file_name'    => $file_name,
             'file_size'    => $file_size,
-            'created_at' => $this->created_at->format('d-m-y H:i:s'),
+            'created_at' => $this->created_at->format('d/m/y h:i A'),
             'updated_at' => $this->updated_at->format('d-m-y H:i:s'),
             'group_at' => $this->created_at->format('d-m-y'),
             'message_deleted' => ($this->deleted_at) ? "Message was deleted" : "0",

@@ -1,5 +1,6 @@
 <template>
 	<div class="chat-text" @contextmenu.prevent="$refs.menu.open">
+		<span class="display_msg_time">{{content.created_at}}</span>
 		<div style='position:relative' class="text context-parent_div">
 			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }"></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
