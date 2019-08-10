@@ -42,7 +42,7 @@ class Participant extends JsonResource
 			  if($diff==0){
 			  	$display_date = $lastMessage_time->format("h:i A");
 			  }else if($diff >= 6){
-			  	$display_date = $lastMessage_time->format("d/m/Y");
+			  	$display_date = $lastMessage_time->format("d/m/y");
 			  }else{
 			  	$display_date = $lastMessage_time->format('D');
 			  }

@@ -4,6 +4,13 @@
    
     src: url("./Helvitica.ttf");
 }
+.preloader_div{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #fff;
+  z-index: 999;
+}
 .emoji-mart-preview{
     display: none !important;
 }
@@ -455,16 +462,20 @@ label:focus,
 #frame ul {
     padding-left: 0px !important;
 }
-.sent_message .display_msg_time{
-	  position: absolute;
-    right: 0;
-    top: -10px;
+ .display_msg_time, .display_file_time{
     font-size: 10px;
     color: #929090;
 }
-.received_message .display_msg_time{
-	  position: absolute;
-    top: -21px;
+.display_file_time{
+	margin:0 0 10px 0;
+}
+.right .display_file_time{
+	text-align: right;
+}
+.sent .display_msg_time_p{
+	text-align:right;
+}
+.display_msg_time{
     font-size: 10px;
     color: #929090;
 }
@@ -756,10 +767,12 @@ label:focus,
 #frame .content .contact-profile .social-media i:hover {
     color: #435f7a;
 }
-
+.replies .display_msg_time_p{
+	margin-bottom: 11px;
+}
 #frame .content .messages {
-    height: 85%;
-    position: absolute;
+    height: 88%;
+    /*position: absolute;*/
     width: 100%;
     /* min-height: calc(100% - 93px); */
     /* max-height: calc(100% - 93px); */
@@ -789,7 +802,7 @@ label:focus,
 }
 
 #frame .content .messages ul .replies{
-    width: 387px !important;
+    /*width: 387px !important;*/
 }
 
 #frame .content .messages ul li .replied_dropdown{
@@ -817,7 +830,7 @@ label:focus,
 #frame .content .messages ul li.replies p.after_msg, #frame .content .messages ul li.replies p.after_msg{
 /*#frame .content .messages ul li.replies p.after_msg, #frame .content .messages ul li.replies p.after_msg a{*/
   padding: .5rem 1rem;
-  color: #757575!important;
+  color: #4a4848!important
   border-radius: 5px;
   background-color: #fff;
   -webkit-box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .14);
@@ -828,7 +841,7 @@ label:focus,
     float: right;
     border-radius: 7px !important;
     border-radius: 35px;
-    margin: 33px 0 0 8px;
+    margin: 0px 0 0 8px;
 }
 
 
@@ -859,11 +872,12 @@ label:focus,
     font-size: 10px !important;
 }
 
-
+.sent .show_name{
+	display:none;
+}
 #frame .content .messages ul li p {
     display: inline-block;
     padding: 10px 15px;
-    border-radius: 20px;
     max-width: 205px;
     line-height: 130%;
 }
@@ -991,8 +1005,8 @@ label:focus,
     border-right: 3px solid #212121;
 }
 #frame .content .messages ul li p {
-    /* border-radius: 20px; */
-    border-radius: 2px 20px;
+     border-radius: 5px; 
+    /*border-radius: 2px 20px;*/
 }
 #frame a {
     color: #63646A;
@@ -1330,3 +1344,4 @@ label:focus,
 @media only screen and (max-width: 767px) {
 
 }
+

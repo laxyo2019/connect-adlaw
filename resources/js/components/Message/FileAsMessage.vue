@@ -1,6 +1,9 @@
 <template>
 	<div class="row">
     <div class="col-12" :class="{right: right}">
+    	<div class="col-12 pr-0 pl-0 display_file_time">
+    		<span class="show_name" v-show="sender_name">{{sender_name}},</span>
+    		 {{created_at}}</div>
     	<a :href="`/media/${link}`">
 				<div class="card custom_card text-white" style="">
           <span class="card-body">
@@ -15,7 +18,7 @@
 
 <script>
 	export default {
-		props: ['right', 'link', 'filename', 'filesize']
+		props: ['right', 'link', 'filename', 'filesize','created_at','sender_name']
 	}
 </script>
 <style scoped="">

@@ -20,63 +20,80 @@
             <p v-else>Start a new chat</p>
             <span class="typing_indicator float-right"></span>
         </div>
-        <div class="messages">
+        <div class="messages" style="position:absolute!important">
             <img src="/custom/loader.gif" style="position:absolute;top:0;left:50%;width:20px;z-index:100;" v-show="loading_more">
-            <img src="/custom/loader.gif" style="position:absolute;top:30%;left:50%;width:50px;z-index: 100;" v-if="!loading_chat">
+            <img 	src="/custom/loader.gif" style="position:absolute;top:30%;left:50%;width:50px;z-index: 100;" v-if="!loading_chat">
             <!-- <div>
                 <h4 style="position:absolute;top:40%;left:44%;">No Messages Yet</h4>
                 <button class="btn btn-primary" style="position:absolute;top:50%;left:50%;" @click="sendFirstHi()">Say Hi</button>
             </div> -->
             <ul class="messages"  v-if="loading_chat" v-on:scroll="scrollevent()" v-chat-scroll="{always: false}" id="message_container">
                 <li class="sent message sent_message" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
+                	<div class="text-center">
+		            		<span v-if="checkdate(message)" class="date_line">
+                     <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
+                 		</span>
+				          </div>
                 	<div v-if="message.message_deleted=='0'">
 				            <div class="chat-body">
-				            	<div>
-				            		<span v-if="checkdate(message)" class="date_line">
-                         <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
-                     		</span>
-				            	</div>
 				              <span v-if="message.is_file=='0'">
 				                <TextAsMessage :right="true"
 				                		@forwardMessageModal = 'forwardMessageModal'
 				                		@edit='openEditMessageEditor'
 				                		@quote='quoteMessage'
 				                    :content="message"
+				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :index="index"
 				                    :user="user" />
 				              </span>
 				              <span v-else-if="message.is_image">
-				                <ImageAsMessage :right="true" 
-				                    :link="message.file_id" 
-				                    :src="message.fileurl" />
+				                <ImageAsMessage 
+				                		:right="true" 
+				                    :file_id="message.file_id" 
+				                    :created_at="message.created_at" 
+				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+				                    :fileurl="message.fileurl" />
 				              </span>
 				  	          <span v-else>
 				                <FileAsMessage :right="true" 
 				                    :link="message.file_id" 
+				                    :created_at="message.created_at" 
 				                    :filename="message.file_name" 
+				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :filesize="message.file_size" />
 				              </span>
 				            </div>
 				           </div>
                 </li>
                 <li v-else class="replies message received_message">
-	                <div class="chat-body">
+                	<div class="text-center">
+		            		<span v-if="checkdate(message)" class="date_line">
+                     <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
+                 		</span>
+				          </div>
+	                <div class="chat-body" v-if="message.message_deleted=='0'">
 			              <span v-if="message.is_file=='0'">
 			                <TextAsMessage :right="false" 
 			                		@forwardMessageModal = 'forwardMessageModal'
 				                	@quote='quoteMessage'
 			                    :content="message" 
 			                    :index="index"
+			                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 			                     :user="user"/>
 			              </span>
 			              <span v-else-if="message.is_image">
-			                <ImageAsMessage :right="false" 
-			                    :link="message.file_id" 
-			                    :src="message.fileurl" />
+			                <ImageAsMessage 
+			                		:right="false" 
+			                		:sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                    :file_id="message.file_id" 
+			                    :created_at="message.created_at" 
+			                    :fileurl="message.fileurl" />
 			              </span>
 			              <span v-else>
 			                <FileAsMessage :right="false" 
 			                    :link="message.file_id" 
+			                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                    :created_at="message.created_at" 
 			                    :filename="message.file_name" 
 			                    :filesize="message.file_size" />
 			              </span>
@@ -534,14 +551,9 @@
   font-size: 13px;
 }
 .date_line{
-    position: absolute;
+    /*position: relative;
     left: 50%;
-    top: -20px;
-}
-.date_line1{
-    position: relative;
-    left: 100%;
-    top: -20px;
+    top: -20px;*/
 }
 .btn:focus, .btn.focus {
     outline: 0;

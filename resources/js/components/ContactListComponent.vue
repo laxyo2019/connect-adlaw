@@ -228,11 +228,14 @@ export default {
 
 }
 .badge-light {
-    position: absolute;
-    color: #ffffff;
-    right: 5%;
-    top: 50%;
-    background-color: #44a66d;
+  position: absolute;
+  color: #ffffff;
+  right: 5%;
+  top: 50%;
+  background-color: #ff5252;
+  border-radius: 50%;
+  width: 20px;
+  font-size: .75rem;
 }
 span.last_messge_time {
     right: 0;

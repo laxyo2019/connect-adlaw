@@ -1,6 +1,8 @@
 <template>
 	<div class="chat-text" @contextmenu.prevent="$refs.menu.open">
-		<span class="display_msg_time">{{content.created_at}}</span>
+		<div class="display_msg_time_p"><span class="text-right display_msg_time">
+			<span class="show_name" v-show="sender_name">{{sender_name}},</span>
+			{{content.created_at}}</span></div>
 		<div style='position:relative' class="text context-parent_div">
 			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }"></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
@@ -20,7 +22,7 @@
 <script>
 	import {VueContext} from 'vue-context';
 	export default {
-		props: ['right', 'content','index','user'],
+		props: ['right', 'content','index','user','sender_name'],
 		components: {
 			VueContext
 		},

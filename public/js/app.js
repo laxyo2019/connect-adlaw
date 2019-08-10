@@ -1860,6 +1860,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var FaviconNotification = __webpack_require__(/*! favicon-notification */ "./node_modules/favicon-notification/src/index.js");
 
 
@@ -2862,6 +2882,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3304,8 +3341,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['right', 'link', 'filename', 'filesize']
+  props: ['right', 'link', 'filename', 'filesize', 'created_at', 'sender_name']
 });
 
 /***/ }),
@@ -3331,8 +3371,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['right', 'link', 'src']
+  props: ['right', 'file_id', 'fileurl', 'created_at', 'sender_name']
 });
 
 /***/ }),
@@ -3367,9 +3411,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['right', 'content', 'index', 'user'],
+  props: ['right', 'content', 'index', 'user', 'sender_name'],
   components: {
     VueContext: vue_context__WEBPACK_IMPORTED_MODULE_0__["VueContext"]
   },
@@ -7881,7 +7927,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.loader[data-v-80d584ac]{\n     position: absolute;\n     top: 50%;\n     right: 50%;\n}\n.loader-overlay-custom[data-v-80d584ac]{\n    background: #000a0a87;\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n    z-index: 100;\n    width: 100%;\n    height: 105%;\n}\n", ""]);
+exports.push([module.i, "\n.loader[data-v-80d584ac]{\n        position: absolute;\n        top: 50%;\n        right: 50%;\n}\n.loader-overlay-custom[data-v-80d584ac]{\n       background: #000a0a87;\n       position: absolute;\n       top: 0;\n       left: 0;\n       bottom: 0;\n       right: 0;\n       z-index: 100;\n       width: 100%;\n       height: 105%;\n}\n\t/*//preloader*/\n.loader17[data-v-80d584ac]{position:relative;width:65px;border:1px solid transparent;margin:40px auto}\n.loader17 span[data-v-80d584ac]{position:absolute;bottom:0;display:block;width:9px;height:5px;border-radius:5px;background:rgba(0,0,0,.1);-webkit-animation:preloader-data-v-80d584ac 2s infinite ease-in-out;animation:preloader-data-v-80d584ac 2s infinite ease-in-out}\n.loader17 span[data-v-80d584ac]:nth-child(2){left:11px;-webkit-animation-delay:.2s;animation-delay:.2s}\n.loader17 span[data-v-80d584ac]:nth-child(3){left:22px;-webkit-animation-delay:.4s;animation-delay:.4s}\n.loader17 span[data-v-80d584ac]:nth-child(4){left:33px;-webkit-animation-delay:.6s;animation-delay:.6s}\n.loader17 span[data-v-80d584ac]:nth-child(5){left:44px;-webkit-animation-delay:.8s;animation-delay:.8s}\n.loader17 span[data-v-80d584ac]:nth-child(6){left:55px;-webkit-animation-delay:1s;animation-delay:1s}\n@-webkit-keyframes preloader-data-v-80d584ac{\n0%,100%,50%{height:5px;transform:translateY(0);background:rgba(0,0,0,.1)}\n25%{height:30px;transform:translateY(15px);background:#f8990c}\n}\n@keyframes preloader-data-v-80d584ac{\n0%,100%,50%{height:5px;transform:translateY(0);background:rgba(0,0,0,.1)}\n25%{height:30px;transform:translateY(15px);background:#f8990c}\n}\n", ""]);
 
 // exports
 
@@ -7919,7 +7965,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.dropdown_css li[data-v-84f8d1ac]{\n\tline-height: 33px;\n\tpadding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n\tcolor:#7d7e7f;\n\tdisplay:block;\n\tcursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n\tlist-style-type: none;\n\twidth:150px;\n\tposition: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n \tz-index:999;\n \tmargin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    text-align: center;\n    width: 35px;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 2.5;\n    margin: 10px;\n    margin-top:6px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n\t    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n\tbox-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n    position: absolute;\n    color: #ffffff;\n    right: 5%;\n    top: 50%;\n    background-color: #44a66d;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown_css li[data-v-84f8d1ac]{\n\tline-height: 33px;\n\tpadding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n\tcolor:#7d7e7f;\n\tdisplay:block;\n\tcursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n\tlist-style-type: none;\n\twidth:150px;\n\tposition: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n \tz-index:999;\n \tmargin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    text-align: center;\n    width: 35px;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 2.5;\n    margin: 10px;\n    margin-top:6px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n\t    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n\tbox-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n", ""]);
 
 // exports
 
@@ -7938,7 +7984,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n::-webkit-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-moz-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n:-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n.date_line{\n    position: absolute;\n    left: 50%;\n    top: -20px;\n}\n.date_line1{\n    position: relative;\n    left: 100%;\n    top: -20px;\n}\n.btn:focus, .btn.focus {\n    outline: 0;\n    box-shadow: unset !important;\n}\n.fa-ellipsis-v{\n    color:#8e8585;\n}\n/* .actionbuttons{\n    display: none;\n}\n.sent_message:hover > .actionbuttons{\n    display:block;\n} */\n.edit_message_input{\n    border-radius: 0px;\n}\n.typing_indicator{\n    font-size: 12px;\n    color: #2c3e50;\n}\n.groupsendername {\n    position: relative;\n    text-transform: capitalize;\n    /* left: 5%; */\n}\n.text-muted{\n    font-style: italic;\n}\n.sent_message{\n    position: relative;\n}\n.replies{\n    position: relative;\n}\n.sendmessagetime{\n    /* float: right; */\n    position: absolute;\n    top: 10px;\n    right: 37px;\n}\n.actionbuttonssend {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreply{\n    position: absolute;\n    left: 60%;\n    top: -3px;\n}\n.actionbuttonssendgroup {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreplygroup {\n    position: absolute;\n    left: 106px;\n    top: -6px;\n}\n.recievemessagetime{\n    /* float: right; */\n    position: relative;\n    top: 0;\n    left: 10px;\n}\n.messages .text-muted{\n    font-size: 10px;\n}\n#frame .content .messages{\n    /* max-height: unset !important; */\n    word-spacing: 2px;\n}\n.replies .text-muted{\n    color: #abafb3 !important\n}\n.list-group-item{\n    border: unset;\n    padding: unset;\n}\n.deletegroupbutton{\n    position: absolute;\n    right: 10%;\n    top: 4%;\n}\n.file_thumbnail{\n    width: 30% !important;\n    /* border-radius: unset !important; */\n}\n.file_thumbnail1{\n    width: 60% !important;\n    border-radius: 5px !important;\n}\n.sender-avatar-icon{\n    height: 37px;\n    text-align: center;\n    width: 37px;\n    color: #000;\n    background-color: #e5e4e8;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 37px;\n    position: relative;\n    margin: 6px 10px 10px;\n}\n.actionbuttonsender{\n    top: 30px;\n}\n.quotemesg{\n        left: 2%;\n    width: 95%;\n    position: absolute;\n    bottom: 17%;\n    background: whitesmoke;\n    border-radius: 10px;\n    padding: 10px;\n}\n.quotemesgclose{\n    position: absolute;\n    bottom: 20%;\n    right: 5%;\n}\n.container_send_message{\n    word-break: unset;\n    white-space: unset;\n}\n#qouteMsgTable tr > td {\n    margin: 0;\n    padding: 0;\n}\n.file_container_send{\n    width: 50%;\n    float: right;\n    background: rgb(241, 241, 244) !important;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n.file_container_recieve{\n    width: 70%;\n    float: left;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n@media screen and (max-width: 735px) {\n.typing_indicator{\n        font-size: 8px;\n        color: #2c3e50;\n}\n.contact-profile p{\n        font-size: 12px;\n}\n}\n.subtitle {\n  margin: 0 0 2em 0;\n  color: grey;\n}\n.fancy {\n\tfont-size: 11px;\n  background: #c7edfc;\n  padding: 4px;\n  border-radius: 10px;\n  line-height: 0.5;\n  text-align: center;\n  padding-right: 8px;\n  padding-left: 8px;\n}\n.fancy span {\n  display: inline-block;\n  position: relative;\n}\n.fancy span:before,\n.fancy span:after {\n  content: \"\";\n  position: absolute;\n  height: 5px;\n  top: 0;\n  width: 600%;\n}\n.fancy span:before {\n  right: 100%;\n  margin-right: 15px;\n}\n.fancy span:after {\n  left: 100%;\n  margin-left: 15px;\n}\n.modal-header{\n\tbackground: #3490dc;\n    /* border: 0; */\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n::-webkit-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-moz-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n:-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::-ms-input-placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n::placeholder {\n  color: peachpuff;\n  font-size: 13px;\n}\n.date_line{\n    /*position: relative;\n    left: 50%;\n    top: -20px;*/\n}\n.btn:focus, .btn.focus {\n    outline: 0;\n    box-shadow: unset !important;\n}\n.fa-ellipsis-v{\n    color:#8e8585;\n}\n/* .actionbuttons{\n    display: none;\n}\n.sent_message:hover > .actionbuttons{\n    display:block;\n} */\n.edit_message_input{\n    border-radius: 0px;\n}\n.typing_indicator{\n    font-size: 12px;\n    color: #2c3e50;\n}\n.groupsendername {\n    position: relative;\n    text-transform: capitalize;\n    /* left: 5%; */\n}\n.text-muted{\n    font-style: italic;\n}\n.sent_message{\n    position: relative;\n}\n.replies{\n    position: relative;\n}\n.sendmessagetime{\n    /* float: right; */\n    position: absolute;\n    top: 10px;\n    right: 37px;\n}\n.actionbuttonssend {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreply{\n    position: absolute;\n    left: 60%;\n    top: -3px;\n}\n.actionbuttonssendgroup {\n    top: 3px;\n    right: 108px;\n    position: absolute;\n}\n.actionsbuttonreplygroup {\n    position: absolute;\n    left: 106px;\n    top: -6px;\n}\n.recievemessagetime{\n    /* float: right; */\n    position: relative;\n    top: 0;\n    left: 10px;\n}\n.messages .text-muted{\n    font-size: 10px;\n}\n#frame .content .messages{\n    /* max-height: unset !important; */\n    word-spacing: 2px;\n}\n.replies .text-muted{\n    color: #abafb3 !important\n}\n.list-group-item{\n    border: unset;\n    padding: unset;\n}\n.deletegroupbutton{\n    position: absolute;\n    right: 10%;\n    top: 4%;\n}\n.file_thumbnail{\n    width: 30% !important;\n    /* border-radius: unset !important; */\n}\n.file_thumbnail1{\n    width: 60% !important;\n    border-radius: 5px !important;\n}\n.sender-avatar-icon{\n    height: 37px;\n    text-align: center;\n    width: 37px;\n    color: #000;\n    background-color: #e5e4e8;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    line-height: 37px;\n    position: relative;\n    margin: 6px 10px 10px;\n}\n.actionbuttonsender{\n    top: 30px;\n}\n.quotemesg{\n        left: 2%;\n    width: 95%;\n    position: absolute;\n    bottom: 17%;\n    background: whitesmoke;\n    border-radius: 10px;\n    padding: 10px;\n}\n.quotemesgclose{\n    position: absolute;\n    bottom: 20%;\n    right: 5%;\n}\n.container_send_message{\n    word-break: unset;\n    white-space: unset;\n}\n#qouteMsgTable tr > td {\n    margin: 0;\n    padding: 0;\n}\n.file_container_send{\n    width: 50%;\n    float: right;\n    background: rgb(241, 241, 244) !important;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n.file_container_recieve{\n    width: 70%;\n    float: left;\n    padding: 25px;\n    word-break: unset;\n    white-space: unset;\n}\n@media screen and (max-width: 735px) {\n.typing_indicator{\n        font-size: 8px;\n        color: #2c3e50;\n}\n.contact-profile p{\n        font-size: 12px;\n}\n}\n.subtitle {\n  margin: 0 0 2em 0;\n  color: grey;\n}\n.fancy {\n\tfont-size: 11px;\n  background: #c7edfc;\n  padding: 4px;\n  border-radius: 10px;\n  line-height: 0.5;\n  text-align: center;\n  padding-right: 8px;\n  padding-left: 8px;\n}\n.fancy span {\n  display: inline-block;\n  position: relative;\n}\n.fancy span:before,\n.fancy span:after {\n  content: \"\";\n  position: absolute;\n  height: 5px;\n  top: 0;\n  width: 600%;\n}\n.fancy span:before {\n  right: 100%;\n  margin-right: 15px;\n}\n.fancy span:after {\n  left: 100%;\n  margin-left: 15px;\n}\n.modal-header{\n\tbackground: #3490dc;\n    /* border: 0; */\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -58684,6 +58730,10 @@ var render = function() {
   return _c(
     "div",
     [
+      !_vm.loading_chat
+        ? _c("div", { staticClass: "preloader_div text-center" }, [_vm._m(0)])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         {
@@ -58765,7 +58815,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -58797,7 +58847,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -58819,6 +58869,47 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "container", staticStyle: { "margin-top": "12%" } },
+      [
+        _c("br"),
+        _c("br"),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "mb-3",
+          attrs: { src: "/custom/mini_logo.png" }
+        }),
+        _vm._v(" "),
+        _c("h3", { staticClass: "h3" }, [_vm._v("Laxyo Connect")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "loader17" }, [
+              _c("span"),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c("span")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _c("br")
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -59424,99 +59515,213 @@ var render = function() {
         _c("span", { staticClass: "typing_indicator float-right" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "messages" }, [
-        _c("img", {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.loading_more,
-              expression: "loading_more"
-            }
-          ],
-          staticStyle: {
-            position: "absolute",
-            top: "0",
-            left: "50%",
-            width: "20px",
-            "z-index": "100"
-          },
-          attrs: { src: "/custom/loader.gif" }
-        }),
-        _vm._v(" "),
-        !_vm.loading_chat
-          ? _c("img", {
-              staticStyle: {
-                position: "absolute",
-                top: "30%",
-                left: "50%",
-                width: "50px",
-                "z-index": "100"
-              },
-              attrs: { src: "/custom/loader.gif" }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.loading_chat
-          ? _c(
-              "ul",
+      _c(
+        "div",
+        {
+          staticClass: "messages",
+          staticStyle: { position: "absolute!important" }
+        },
+        [
+          _c("img", {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "chat-scroll",
-                    rawName: "v-chat-scroll",
-                    value: { always: false },
-                    expression: "{always: false}"
+                name: "show",
+                rawName: "v-show",
+                value: _vm.loading_more,
+                expression: "loading_more"
+              }
+            ],
+            staticStyle: {
+              position: "absolute",
+              top: "0",
+              left: "50%",
+              width: "20px",
+              "z-index": "100"
+            },
+            attrs: { src: "/custom/loader.gif" }
+          }),
+          _vm._v(" "),
+          !_vm.loading_chat
+            ? _c("img", {
+                staticStyle: {
+                  position: "absolute",
+                  top: "30%",
+                  left: "50%",
+                  width: "50px",
+                  "z-index": "100"
+                },
+                attrs: { src: "/custom/loader.gif" }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.loading_chat
+            ? _c(
+                "ul",
+                {
+                  directives: [
+                    {
+                      name: "chat-scroll",
+                      rawName: "v-chat-scroll",
+                      value: { always: false },
+                      expression: "{always: false}"
+                    }
+                  ],
+                  staticClass: "messages",
+                  attrs: { id: "message_container" },
+                  on: {
+                    scroll: function($event) {
+                      return _vm.scrollevent()
+                    }
                   }
-                ],
-                staticClass: "messages",
-                attrs: { id: "message_container" },
-                on: {
-                  scroll: function($event) {
-                    return _vm.scrollevent()
-                  }
-                }
-              },
-              _vm._l(_vm.messages, function(message, index) {
-                return message.sender_id == _vm.user.id
-                  ? _c(
-                      "li",
-                      { key: index, staticClass: "sent message sent_message" },
-                      [
-                        message.message_deleted == "0"
-                          ? _c("div", [
-                              _c("div", { staticClass: "chat-body" }, [
-                                _c("div", [
-                                  _vm.checkdate(message)
-                                    ? _c("span", { staticClass: "date_line" }, [
-                                        _c(
-                                          "span",
-                                          { staticClass: "subtitle fancy" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(_vm._s(message.group_at))
-                                            ])
-                                          ]
-                                        )
+                },
+                _vm._l(_vm.messages, function(message, index) {
+                  return message.sender_id == _vm.user.id
+                    ? _c(
+                        "li",
+                        {
+                          key: index,
+                          staticClass: "sent message sent_message"
+                        },
+                        [
+                          _c("div", { staticClass: "text-center" }, [
+                            _vm.checkdate(message)
+                              ? _c("span", { staticClass: "date_line" }, [
+                                  _c(
+                                    "span",
+                                    { staticClass: "subtitle fancy" },
+                                    [
+                                      _c("span", [
+                                        _vm._v(_vm._s(message.group_at))
                                       ])
-                                    : _vm._e()
-                                ]),
-                                _vm._v(" "),
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          message.message_deleted == "0"
+                            ? _c("div", [
+                                _c("div", { staticClass: "chat-body" }, [
+                                  message.is_file == "0"
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("TextAsMessage", {
+                                            attrs: {
+                                              right: true,
+                                              content: message,
+                                              sender_name:
+                                                _vm.selecteduser.room_type ==
+                                                "group"
+                                                  ? message.sender_name.split(
+                                                      " "
+                                                    )[0]
+                                                  : false,
+                                              index: index,
+                                              user: _vm.user
+                                            },
+                                            on: {
+                                              forwardMessageModal:
+                                                _vm.forwardMessageModal,
+                                              edit: _vm.openEditMessageEditor,
+                                              quote: _vm.quoteMessage
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : message.is_image
+                                    ? _c(
+                                        "span",
+                                        [
+                                          _c("ImageAsMessage", {
+                                            attrs: {
+                                              right: true,
+                                              file_id: message.file_id,
+                                              created_at: message.created_at,
+                                              sender_name:
+                                                _vm.selecteduser.room_type ==
+                                                "group"
+                                                  ? message.sender_name.split(
+                                                      " "
+                                                    )[0]
+                                                  : false,
+                                              fileurl: message.fileurl
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "span",
+                                        [
+                                          _c("FileAsMessage", {
+                                            attrs: {
+                                              right: true,
+                                              link: message.file_id,
+                                              created_at: message.created_at,
+                                              filename: message.file_name,
+                                              sender_name:
+                                                _vm.selecteduser.room_type ==
+                                                "group"
+                                                  ? message.sender_name.split(
+                                                      " "
+                                                    )[0]
+                                                  : false,
+                                              filesize: message.file_size
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    : _c(
+                        "li",
+                        { staticClass: "replies message received_message" },
+                        [
+                          _c("div", { staticClass: "text-center" }, [
+                            _vm.checkdate(message)
+                              ? _c("span", { staticClass: "date_line" }, [
+                                  _c(
+                                    "span",
+                                    { staticClass: "subtitle fancy" },
+                                    [
+                                      _c("span", [
+                                        _vm._v(_vm._s(message.group_at))
+                                      ])
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          message.message_deleted == "0"
+                            ? _c("div", { staticClass: "chat-body" }, [
                                 message.is_file == "0"
                                   ? _c(
                                       "span",
                                       [
                                         _c("TextAsMessage", {
                                           attrs: {
-                                            right: true,
+                                            right: false,
                                             content: message,
                                             index: index,
+                                            sender_name:
+                                              _vm.selecteduser.room_type ==
+                                              "group"
+                                                ? message.sender_name.split(
+                                                    " "
+                                                  )[0]
+                                                : false,
                                             user: _vm.user
                                           },
                                           on: {
                                             forwardMessageModal:
                                               _vm.forwardMessageModal,
-                                            edit: _vm.openEditMessageEditor,
                                             quote: _vm.quoteMessage
                                           }
                                         })
@@ -59529,9 +59734,17 @@ var render = function() {
                                       [
                                         _c("ImageAsMessage", {
                                           attrs: {
-                                            right: true,
-                                            link: message.file_id,
-                                            src: message.fileurl
+                                            right: false,
+                                            sender_name:
+                                              _vm.selecteduser.room_type ==
+                                              "group"
+                                                ? message.sender_name.split(
+                                                    " "
+                                                  )[0]
+                                                : false,
+                                            file_id: message.file_id,
+                                            created_at: message.created_at,
+                                            fileurl: message.fileurl
                                           }
                                         })
                                       ],
@@ -59542,8 +59755,16 @@ var render = function() {
                                       [
                                         _c("FileAsMessage", {
                                           attrs: {
-                                            right: true,
+                                            right: false,
                                             link: message.file_id,
+                                            sender_name:
+                                              _vm.selecteduser.room_type ==
+                                              "group"
+                                                ? message.sender_name.split(
+                                                    " "
+                                                  )[0]
+                                                : false,
+                                            created_at: message.created_at,
                                             filename: message.file_name,
                                             filesize: message.file_size
                                           }
@@ -59552,71 +59773,15 @@ var render = function() {
                                       1
                                     )
                               ])
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  : _c(
-                      "li",
-                      { staticClass: "replies message received_message" },
-                      [
-                        _c("div", { staticClass: "chat-body" }, [
-                          message.is_file == "0"
-                            ? _c(
-                                "span",
-                                [
-                                  _c("TextAsMessage", {
-                                    attrs: {
-                                      right: false,
-                                      content: message,
-                                      index: index,
-                                      user: _vm.user
-                                    },
-                                    on: {
-                                      forwardMessageModal:
-                                        _vm.forwardMessageModal,
-                                      quote: _vm.quoteMessage
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : message.is_image
-                            ? _c(
-                                "span",
-                                [
-                                  _c("ImageAsMessage", {
-                                    attrs: {
-                                      right: false,
-                                      link: message.file_id,
-                                      src: message.fileurl
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : _c(
-                                "span",
-                                [
-                                  _c("FileAsMessage", {
-                                    attrs: {
-                                      right: false,
-                                      link: message.file_id,
-                                      filename: message.file_name,
-                                      filesize: message.file_size
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                        ])
-                      ]
-                    )
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+                            : _vm._e()
+                        ]
+                      )
+                }),
+                0
+              )
+            : _vm._e()
+        ]
+      ),
       _vm._v(" "),
       _vm.qoutemessagebody != ""
         ? _c(
@@ -60334,6 +60499,25 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-12", class: { right: _vm.right } }, [
+      _c("div", { staticClass: "col-12 pr-0 pl-0 display_file_time" }, [
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.sender_name,
+                expression: "sender_name"
+              }
+            ],
+            staticClass: "show_name"
+          },
+          [_vm._v(_vm._s(_vm.sender_name) + ",")]
+        ),
+        _vm._v("\n    \t\t " + _vm._s(_vm.created_at))
+      ]),
+      _vm._v(" "),
       _c("a", { attrs: { href: "/media/" + _vm.link } }, [
         _c("div", { staticClass: "card custom_card text-white" }, [
           _c("span", { staticClass: "card-body" }, [
@@ -60377,16 +60561,42 @@ var render = function() {
     "div",
     { staticClass: "col s12 m6 l6", class: { right: _vm.right } },
     [
-      _c("div", { staticClass: "card small" }, [
+      _c(
+        "div",
+        {
+          staticClass: "m-2",
+          style: [_vm.right ? { "text-align": "right" } : ""]
+        },
+        [
+          _c("span", { staticClass: "display_msg_time" }, [
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.sender_name,
+                    expression: "sender_name"
+                  }
+                ],
+                staticClass: "show_name"
+              },
+              [_vm._v(_vm._s(_vm.sender_name) + ",")]
+            ),
+            _vm._v("\n\t\t " + _vm._s(_vm.created_at))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card small", staticStyle: { border: "0" } }, [
         _c("div", { staticClass: "card-image" }, [
-          _vm.message.is_image
-            ? _c("a", { attrs: { href: "/media/" + _vm.message.file_id } }, [
-                _c("img", {
-                  staticClass: "file_thumbnail1 msg_img",
-                  attrs: { src: _vm.message.fileurl }
-                })
-              ])
-            : _vm._e(),
+          _c("a", { attrs: { href: "/media/" + _vm.file_id } }, [
+            _c("img", {
+              staticClass: "file_thumbnail1 msg_img",
+              attrs: { src: _vm.fileurl }
+            })
+          ]),
           _vm._v(" "),
           _c("span", { staticClass: "card-title" })
         ])
@@ -60428,8 +60638,25 @@ var render = function() {
       }
     },
     [
-      _c("span", { staticClass: "display_msg_time" }, [
-        _vm._v(_vm._s(_vm.content.created_at))
+      _c("div", { staticClass: "display_msg_time_p" }, [
+        _c("span", { staticClass: "text-right display_msg_time" }, [
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.sender_name,
+                  expression: "sender_name"
+                }
+              ],
+              staticClass: "show_name"
+            },
+            [_vm._v(_vm._s(_vm.sender_name) + ",")]
+          ),
+          _vm._v("\n\t\t" + _vm._s(_vm.content.created_at))
+        ])
       ]),
       _vm._v(" "),
       _c(
