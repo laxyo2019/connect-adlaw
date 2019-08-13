@@ -2899,6 +2899,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3120,13 +3121,16 @@ __webpack_require__.r(__webpack_exports__);
     hideGroupmodel: function hideGroupmodel() {
       $('#groupMembersModal').modal('hide');
     },
-    delteMessage: function delteMessage(index, message_id) {
-      axios.post('deleteMessage', {
-        message_id: message_id,
-        index: index
-      }).then(function (response) {// this.messages.splice(index, 1);
-        // this.$emit('newMessage', response.data);
+    deleteMessage: function deleteMessage(message_id) {
+      console.log('message_id', message_id);
+      var key = '';
+      this.messages.forEach(function (v, k) {
+        if (v.message_id == message_id) {
+          console.log('key', k);
+          key = k;
+        }
       });
+      this.messages.splice(key, 1);
     },
     addMemberstoGroup: function addMemberstoGroup() {
       var _this4 = this;
@@ -3438,12 +3442,15 @@ __webpack_require__.r(__webpack_exports__);
     quoteMsg: function quoteMsg() {},
     editMsg: function editMsg() {},
     deleteMsg: function deleteMsg() {
+      var _this = this;
+
       axios.post("deleteMessage", {
         message_id: this.content.message_id,
         index: this.index
-      }).then(function (response) {// this.$emit('deleted', this.content.message_id);
+      }).then(function (response) {
+        _this.$emit('deleted', _this.content.message_id);
       })["catch"](function (error) {
-        return console.log(error.response.data);
+        return console.log(error.response);
       });
     }
   }
@@ -8041,7 +8048,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.msg_img{\n\t\twidth: 100%;\n    border-radius: 0\n}\n", ""]);
+exports.push([module.i, "\n.msg_img{\n\t\tmax-width: 300px!important;\n\t\tmax-height: 220px!important;\n\t\twidth:auto!important;\n    border-radius: 0\n}\n", ""]);
 
 // exports
 
@@ -59624,7 +59631,8 @@ var render = function() {
                                               forwardMessageModal:
                                                 _vm.forwardMessageModal,
                                               edit: _vm.openEditMessageEditor,
-                                              quote: _vm.quoteMessage
+                                              quote: _vm.quoteMessage,
+                                              deleted: _vm.deleteMessage
                                             }
                                           })
                                         ],
@@ -60592,10 +60600,7 @@ var render = function() {
       _c("div", { staticClass: "card small", staticStyle: { border: "0" } }, [
         _c("div", { staticClass: "card-image" }, [
           _c("a", { attrs: { href: "/media/" + _vm.file_id } }, [
-            _c("img", {
-              staticClass: "file_thumbnail1 msg_img",
-              attrs: { src: _vm.fileurl }
-            })
+            _c("img", { staticClass: "msg_img", attrs: { src: _vm.fileurl } })
           ]),
           _vm._v(" "),
           _c("span", { staticClass: "card-title" })

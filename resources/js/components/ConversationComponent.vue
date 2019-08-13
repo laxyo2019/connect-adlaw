@@ -41,6 +41,7 @@
 				                		@forwardMessageModal = 'forwardMessageModal'
 				                		@edit='openEditMessageEditor'
 				                		@quote='quoteMessage'
+				                		@deleted = 'deleteMessage'
 				                    :content="message"
 				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :index="index"
@@ -442,14 +443,17 @@
             hideGroupmodel(){
                $('#groupMembersModal').modal('hide')
             },
-            delteMessage(index,message_id){
-                axios.post('deleteMessage', {
-                    message_id: message_id,
-                    index :index
-                }).then((response) => {
-                    // this.messages.splice(index, 1);
-                    // this.$emit('newMessage', response.data);
-                });
+            deleteMessage(message_id){
+            	console.log('message_id',message_id);
+            	let key = '';
+            	this.messages.forEach(function(v,k){
+            		if(v.message_id == message_id){
+            			console.log('key',k);
+            			key = k;
+            		}
+
+            	});
+              this.messages.splice(key, 1);
             },
             addMemberstoGroup(){
                 if(this.selectedMembers.length>0){

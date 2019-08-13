@@ -4,7 +4,7 @@
 			<span class="show_name" v-show="sender_name">{{sender_name}},</span>
 			{{content.created_at}}</span></div>
 		<div style='position:relative' class="text context-parent_div">
-			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }"></p>
+			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }" ></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
 					<template slot-scope="child">
 				    <li>
@@ -50,8 +50,8 @@
 			},
 			deleteMsg() {
 				axios.post(`deleteMessage`,{message_id:this.content.message_id,index:this.index}).then((response) => {
-          // this.$emit('deleted', this.content.message_id);
-        }).catch(error => console.log(error.response.data));
+           this.$emit('deleted', this.content.message_id);
+        }).catch(error => console.log(error.response));
 			}
 		}
 	}

@@ -474,6 +474,7 @@ label:focus,
 }
 .sent .display_msg_time_p{
 	text-align:right;
+	margin-top:15px;
 }
 .display_msg_time{
     font-size: 10px;
@@ -812,7 +813,7 @@ label:focus,
     display: inline-block;
     clear: both;
     float: left;
-    margin: 15px 15px 5px 15px;
+    /*margin: 15px 15px 5px 15px;*/
     width: calc(100% - 25px);
     font-size: 1em;
     
@@ -1035,11 +1036,17 @@ label:focus,
     background: #2196f3; 
     min-width: 80px;
     margin-top: 10px!important;
-    margin-bottom: 10px!important;
+    margin-bottom: 2rem !important;
     word-break: break-word;
     white-space: pre-wrap;
     color:#fff!important;   
     border-radius:5px;
+}
+.sent_message div:nth-child(2) {
+  margin:15px 0!important;
+}
+.received_message div:nth-child(2) {
+   margin:15px;
 }
 
 /*#frame .content .messages ul li.sent p:before {

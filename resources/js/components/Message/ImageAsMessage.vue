@@ -7,7 +7,7 @@
       <div class="card-image">
       	<a  :href="`/media/${file_id}`">
            <!-- <img  src="https://static-global-s-msn-com.akamaized.net/img-resizer/tenant/amp/entityid/AAFAoWI.img?h=75&w=100&m=6&q=60&u=t&o=t&l=f&f=jpg" class="file_thumbnail1 msg_img"/> -->
-           <img  :src="fileurl" class="file_thumbnail1 msg_img"/>
+           <img  :src="fileurl" class="msg_img" />
          </a>
         <span class="card-title"></span>
       </div>
@@ -21,7 +21,9 @@
 </script>
 <style>
 	.msg_img{
-		width: 100%;
+		max-width: 300px!important;
+		max-height: 220px!important;
+		width:auto!important;
     border-radius: 0
 	}
 </style>
