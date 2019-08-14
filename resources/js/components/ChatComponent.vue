@@ -1,6 +1,6 @@
 <template>
     <div>
-    	<div class="preloader_div text-center" v-if="!loading_chat">
+    	<div class="preloader_div text-center" v-if="!loading_chat && !newChat">
     	<!-- <div class="preloader_div text-center" v-if="1"> -->
     	<div class="container" style="margin-top:12%">
 	        <br/><br/>
@@ -27,17 +27,16 @@
             							:mobileView="mobileView"
                         :user="user"
                         ref="contactlistcompnentref" 
-                        @selected="startConversationWith" 
+                        @selected="emitStartConversationWith" 
                         :group_permission="group_permission"
                         @menuWidth="closeNav">
             </ContactsList>
         </div>
-       
-
+      
         <ContactsList v-if="bigScreenView"
                      :allusers="contacts" 
                      :user="user"                     
-                    	@selected="startConversationWith" 
+                    	@selected="emitStartConversationWith" 
                      :group_permission="group_permission"
                      ref="contactlistcompnentref">
         </ContactsList>
@@ -133,6 +132,7 @@
         },
         data() {
             return {
+            		newChat : false,
                 usercontactlist:[],
                 contacts:[],
                 messages: [],
@@ -228,6 +228,10 @@
                 
         },
         methods:{
+        	emitStartConversationWith(room){
+        		this.newChat = true;
+        		this.startConversationWith(room);
+        	},
             updateusersstatus(){
                 this.onlineuserslist.forEach((user)=>{
                     $('.onlineuserscount').text(this.onlineuserslist.length);
@@ -294,6 +298,7 @@
                             this.hasChatHistory = true;
                         }
                         this.loading_chat = true
+                        this.newChat = false
                     });
                     
             },

@@ -138,6 +138,7 @@ export default {
       }
       this.$emit("send", this.message);
       this.message = "";
+      document.getElementById('textarea1').style.height = "2.5rem";
       // var audio = new Audio('audio/sendmessage.mp3');
       // audio.play();
     },

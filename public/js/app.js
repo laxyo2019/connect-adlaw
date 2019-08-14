@@ -1879,7 +1879,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var FaviconNotification = __webpack_require__(/*! favicon-notification */ "./node_modules/favicon-notification/src/index.js");
 
 
@@ -1917,6 +1916,7 @@ FaviconNotification.init({
   },
   data: function data() {
     return {
+      newChat: false,
       usercontactlist: [],
       contacts: [],
       messages: [],
@@ -2013,6 +2013,10 @@ FaviconNotification.init({
     });
   },
   methods: {
+    emitStartConversationWith: function emitStartConversationWith(room) {
+      this.newChat = true;
+      this.startConversationWith(room);
+    },
     updateusersstatus: function updateusersstatus() {
       var _this2 = this;
 
@@ -2077,8 +2081,8 @@ FaviconNotification.init({
       var _this6 = this;
 
       this.messages = [];
-      this.scrollends = false; // this.loading_chat = false
-
+      this.scrollends = false;
+      this.loading_chat = false;
       this.hasChatHistory = false;
       this.page = 1;
       axios.get('get_room_conversations/' + room.room_id).then(function (response) {
@@ -2091,6 +2095,7 @@ FaviconNotification.init({
         }
 
         _this6.loading_chat = true;
+        _this6.newChat = false;
       });
     },
     saveNewMessage: function saveNewMessage(message) {
@@ -2427,7 +2432,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.$emit("send", this.message);
-      this.message = ""; // var audio = new Audio('audio/sendmessage.mp3');
+      this.message = "";
+      document.getElementById('textarea1').style.height = "2.5rem"; // var audio = new Audio('audio/sendmessage.mp3');
       // audio.play();
     },
     uploadfileboxopen: function uploadfileboxopen() {
@@ -58737,7 +58743,7 @@ var render = function() {
   return _c(
     "div",
     [
-      !_vm.loading_chat
+      !_vm.loading_chat && !_vm.newChat
         ? _c("div", { staticClass: "preloader_div text-center" }, [_vm._m(0)])
         : _vm._e(),
       _vm._v(" "),
@@ -58757,7 +58763,10 @@ var render = function() {
               user: _vm.user,
               group_permission: _vm.group_permission
             },
-            on: { selected: _vm.startConversationWith, menuWidth: _vm.closeNav }
+            on: {
+              selected: _vm.emitStartConversationWith,
+              menuWidth: _vm.closeNav
+            }
           })
         ],
         1
@@ -58771,7 +58780,7 @@ var render = function() {
               user: _vm.user,
               group_permission: _vm.group_permission
             },
-            on: { selected: _vm.startConversationWith }
+            on: { selected: _vm.emitStartConversationWith }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -59587,7 +59596,8 @@ var render = function() {
                         "li",
                         {
                           key: index,
-                          staticClass: "sent message sent_message"
+                          staticClass: "sent message sent_message",
+                          attrs: { id: "msg_" + index }
                         },
                         [
                           _c("div", { staticClass: "text-center" }, [
