@@ -123,7 +123,7 @@ export default {
       this.$emit("selected", contact);
       // ###r
       this.$emit("menuWidth", "0px");
-      $('#message_composer').focus();
+      $('#textarea1').focus();
     },
     logout() {
       axios.post("logout", {}).then(response => {

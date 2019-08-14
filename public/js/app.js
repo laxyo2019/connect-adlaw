@@ -2077,8 +2077,8 @@ FaviconNotification.init({
       var _this6 = this;
 
       this.messages = [];
-      this.scrollends = false;
-      this.loading_chat = false;
+      this.scrollends = false; // this.loading_chat = false
+
       this.hasChatHistory = false;
       this.page = 1;
       axios.get('get_room_conversations/' + room.room_id).then(function (response) {
@@ -2611,7 +2611,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("selected", contact); // ###r
 
       this.$emit("menuWidth", "0px");
-      $('#message_composer').focus();
+      $('#textarea1').focus();
     },
     logout: function logout() {
       axios.post("logout", {}).then(function (response) {
