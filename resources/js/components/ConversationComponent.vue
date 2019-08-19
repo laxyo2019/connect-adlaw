@@ -50,6 +50,10 @@
 				              <span v-else-if="message.is_image">
 				                <ImageAsMessage 
 				                		:right="true" 
+				                		:index="index"
+				                		@deleted = 'deleteMessage'
+				                		:user="user"
+				                    :content="message"
 				                    :file_id="message.file_id" 
 				                    :created_at="message.created_at" 
 				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
@@ -57,9 +61,13 @@
 				              </span>
 				  	          <span v-else>
 				                <FileAsMessage :right="true" 
+				                		@deleted = 'deleteMessage'
 				                    :link="message.file_id" 
 				                    :created_at="message.created_at" 
 				                    :filename="message.file_name" 
+				                     :user="user"
+				                      :index="index"
+				                     :content="message"
 				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :filesize="message.file_size" />
 				              </span>
@@ -84,6 +92,9 @@
 			              </span>
 			              <span v-else-if="message.is_image">
 			                <ImageAsMessage 
+			                		@deleted = 'deleteMessage'
+			                		:user="user"
+			                    :content="message"
 			                		:right="false" 
 			                		:sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 			                    :file_id="message.file_id" 
@@ -93,6 +104,9 @@
 			              <span v-else>
 			                <FileAsMessage :right="false" 
 			                    :link="message.file_id" 
+			                    :user="user"
+				                  :content="message"
+				                  :index="index"
 			                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 			                    :created_at="message.created_at" 
 			                    :filename="message.file_name" 
@@ -112,7 +126,7 @@
             </div>
         </div>
         <i v-if="qoutemessagebody!=''" @click="cancelquotemessage" class="quotemesgclose fa fa-close"></i>
-        <ComposeMessage :mobileView="mobileView"ref="messagecomposercomponent" @send="sendMessage" :selectedContact="selectedContact" :user="user"></ComposeMessage>
+        <ComposeMessage :mobileView="mobileView" ref="messagecomposercomponent" @send="sendMessage" :selectedContact="selectedContact" :user="user"></ComposeMessage>
         <!-- Group Members Model Starts -->
         <div class="modal fade" id="groupMembersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -404,7 +418,7 @@
                         this.editflag = false;
                         this.editing_index = null;
                         this.editing_message = null;
-                         this.$emit('newMessage', response.data);
+                        this.$emit('newMessage', response.data);
                     });
                     return;
                 }
@@ -451,7 +465,6 @@
             			console.log('key',k);
             			key = k;
             		}
-
             	});
               this.messages.splice(key, 1);
             },

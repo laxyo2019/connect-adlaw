@@ -230,7 +230,7 @@ class HomeController extends Controller
     public function deleteMessage(Request $request){
         $deletedMessage = ChatroomMessage::where('id',$request->message_id)->first();
         ChatroomMessage::where('id',$request->message_id)->delete();
-        // broadcast(new DeleteMessage($deletedMessage,$request->index));
+        broadcast(new DeleteMessage($deletedMessage,$request->index));
     }
 
     public function getGroupMembers($chatroom_id){

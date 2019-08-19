@@ -2906,6 +2906,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3336,6 +3350,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-context */ "./node_modules/vue-context/dist/js/vue-context.js");
+/* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_context__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3354,8 +3370,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['right', 'link', 'filename', 'filesize', 'created_at', 'sender_name']
+  props: ['right', 'link', 'filename', 'filesize', 'index', 'created_at', 'sender_name', 'user', 'content'],
+  components: {
+    VueContext: vue_context__WEBPACK_IMPORTED_MODULE_0__["VueContext"]
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    deleteMsg: function deleteMsg() {
+      var _this = this;
+
+      axios.post("deleteMessage", {
+        message_id: this.content.message_id,
+        index: this.index
+      }).then(function (response) {
+        _this.$emit('deleted', _this.content.message_id);
+      })["catch"](function (error) {
+        return console.log(error.response);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3369,6 +3414,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-context */ "./node_modules/vue-context/dist/js/vue-context.js");
+/* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_context__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3385,8 +3432,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['right', 'file_id', 'fileurl', 'created_at', 'sender_name']
+  props: ['right', 'content', 'user', 'file_id', 'index', 'fileurl', 'created_at', 'sender_name'],
+  components: {
+    VueContext: vue_context__WEBPACK_IMPORTED_MODULE_0__["VueContext"]
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    deleteMsg: function deleteMsg() {
+      var _this = this;
+
+      axios.post("deleteMessage", {
+        message_id: this.content.message_id,
+        index: this.index
+      }).then(function (response) {
+        _this.$emit('deleted', _this.content.message_id);
+      })["catch"](function (error) {
+        return console.log(error.response);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -8035,7 +8110,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.custom_card[data-v-15103f56]{\n    width: 173px;\n    background: -webkit-linear-gradient(45deg, #ff5252, #f48fb1) !important;\n    box-shadow: 0 6px 20px 0 rgba(244, 143, 177, .5) !important;\n}\n.right .custom_card[data-v-15103f56]{\n\t\tfloat:right;\n}\n", ""]);
+exports.push([module.i, "\n.custom_card[data-v-15103f56]{\n    width: 173px;\n    background: -webkit-linear-gradient(45deg, #ff5252, #f48fb1) !important;\n    box-shadow: 0 6px 20px 0 rgba(244, 143, 177, .5) !important;\n}\n.right .custom_card[data-v-15103f56]{\n\t\tfloat:right;\n}\n.after_msg .text-muted[data-v-15103f56]{\n  color: #fff!important;\n}\n.context-parent_div[data-v-15103f56] {\n\t\tposition:relative;\n}\n.context-menu[data-v-15103f56] {\n\t\ttop: 25px !important;\n\t\tposition: absolute;\n\t\tpadding: 0 !important;\n}\n.context-menu-right[data-v-15103f56] {\n    left: auto !important;\n\t\tright: 0 !important;\n}\n.context-menu-left[data-v-15103f56] {\n    left: 0 !important;\n}\n", ""]);
 
 // exports
 
@@ -59596,8 +59671,7 @@ var render = function() {
                         "li",
                         {
                           key: index,
-                          staticClass: "sent message sent_message",
-                          attrs: { id: "msg_" + index }
+                          staticClass: "sent message sent_message"
                         },
                         [
                           _c("div", { staticClass: "text-center" }, [
@@ -59655,6 +59729,9 @@ var render = function() {
                                           _c("ImageAsMessage", {
                                             attrs: {
                                               right: true,
+                                              index: index,
+                                              user: _vm.user,
+                                              content: message,
                                               file_id: message.file_id,
                                               created_at: message.created_at,
                                               sender_name:
@@ -59665,7 +59742,8 @@ var render = function() {
                                                     )[0]
                                                   : false,
                                               fileurl: message.fileurl
-                                            }
+                                            },
+                                            on: { deleted: _vm.deleteMessage }
                                           })
                                         ],
                                         1
@@ -59679,6 +59757,9 @@ var render = function() {
                                               link: message.file_id,
                                               created_at: message.created_at,
                                               filename: message.file_name,
+                                              user: _vm.user,
+                                              index: index,
+                                              content: message,
                                               sender_name:
                                                 _vm.selecteduser.room_type ==
                                                 "group"
@@ -59687,7 +59768,8 @@ var render = function() {
                                                     )[0]
                                                   : false,
                                               filesize: message.file_size
-                                            }
+                                            },
+                                            on: { deleted: _vm.deleteMessage }
                                           })
                                         ],
                                         1
@@ -59752,6 +59834,8 @@ var render = function() {
                                       [
                                         _c("ImageAsMessage", {
                                           attrs: {
+                                            user: _vm.user,
+                                            content: message,
                                             right: false,
                                             sender_name:
                                               _vm.selecteduser.room_type ==
@@ -59763,7 +59847,8 @@ var render = function() {
                                             file_id: message.file_id,
                                             created_at: message.created_at,
                                             fileurl: message.fileurl
-                                          }
+                                          },
+                                          on: { deleted: _vm.deleteMessage }
                                         })
                                       ],
                                       1
@@ -59775,6 +59860,9 @@ var render = function() {
                                           attrs: {
                                             right: false,
                                             link: message.file_id,
+                                            user: _vm.user,
+                                            content: message,
+                                            index: index,
                                             sender_name:
                                               _vm.selecteduser.room_type ==
                                               "group"
@@ -60515,43 +60603,103 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-12", class: { right: _vm.right } }, [
-      _c("div", { staticClass: "col-12 pr-0 pl-0 display_file_time" }, [
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.sender_name,
-                expression: "sender_name"
-              }
-            ],
-            staticClass: "show_name"
-          },
-          [_vm._v(_vm._s(_vm.sender_name) + ",")]
-        ),
-        _vm._v("\n    \t\t " + _vm._s(_vm.created_at))
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "/media/" + _vm.link } }, [
-        _c("div", { staticClass: "card custom_card text-white" }, [
-          _c("span", { staticClass: "card-body" }, [
-            _c("p", { staticClass: "m-0 p-0 p-r-2 p-l-2" }, [
-              _c("i", { staticClass: "fa fa-file-text" }),
-              _vm._v(" " + _vm._s(_vm.filename))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "m-0 p-0 p-r-2 p-l-2" }, [
-              _vm._v(_vm._s(_vm.filesize))
-            ])
+  return _c(
+    "div",
+    {
+      staticClass: "row",
+      on: {
+        contextmenu: function($event) {
+          $event.preventDefault()
+          return _vm.$refs.menu.open($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "col-12", class: { right: _vm.right } }, [
+        _c("div", { staticClass: "col-12 pr-0 pl-0 display_file_time" }, [
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.sender_name,
+                  expression: "sender_name"
+                }
+              ],
+              staticClass: "show_name"
+            },
+            [_vm._v(_vm._s(_vm.sender_name) + ",")]
+          ),
+          _vm._v("\n    \t\t " + _vm._s(_vm.created_at))
+        ]),
+        _vm._v(" "),
+        _c("a", { attrs: { href: "/media/" + _vm.link } }, [
+          _c("div", { staticClass: "card custom_card text-white" }, [
+            _c(
+              "span",
+              { staticClass: "card-body" },
+              [
+                _c("p", { staticClass: "m-0 p-0 p-r-2 p-l-2" }, [
+                  _c("i", { staticClass: "fa fa-file-text" }),
+                  _vm._v(" " + _vm._s(_vm.filename))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "m-0 p-0 p-r-2 p-l-2" }, [
+                  _vm._v(_vm._s(_vm.filesize))
+                ]),
+                _vm._v(" "),
+                _c("vue-context", {
+                  ref: "menu",
+                  staticClass: "context-menu",
+                  class: [
+                    _vm.right ? "context-menu-right" : "context-menu-left"
+                  ],
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(child) {
+                        return [
+                          _c("li", [
+                            _c(
+                              "a",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.content.sender_id == _vm.user.id,
+                                    expression: "content.sender_id== user.id"
+                                  }
+                                ],
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.deleteMsg()
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fa fa-trash" }),
+                                _vm._v("Delete")
+                              ]
+                            )
+                          ])
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
           ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60577,7 +60725,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col s12 m6 l6", class: { right: _vm.right } },
+    {
+      staticClass: "col s12 m6 l6",
+      class: { right: _vm.right },
+      on: {
+        contextmenu: function($event) {
+          $event.preventDefault()
+          return _vm.$refs.menu.open($event)
+        }
+      }
+    },
     [
       _c(
         "div",
@@ -60609,9 +60766,58 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "card small", staticStyle: { border: "0" } }, [
         _c("div", { staticClass: "card-image" }, [
-          _c("a", { attrs: { href: "/media/" + _vm.file_id } }, [
-            _c("img", { staticClass: "msg_img", attrs: { src: _vm.fileurl } })
-          ]),
+          _c(
+            "a",
+            { attrs: { href: "/media/" + _vm.file_id } },
+            [
+              _c("img", {
+                staticClass: "msg_img",
+                attrs: { src: _vm.fileurl }
+              }),
+              _vm._v(" "),
+              _c("vue-context", {
+                ref: "menu",
+                staticClass: "context-menu",
+                class: [_vm.right ? "context-menu-right" : "context-menu-left"],
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(child) {
+                      return [
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.content.sender_id == _vm.user.id,
+                                  expression: "content.sender_id== user.id"
+                                }
+                              ],
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteMsg()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-trash" }),
+                              _vm._v("Delete")
+                            ]
+                          )
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("span", { staticClass: "card-title" })
         ])
