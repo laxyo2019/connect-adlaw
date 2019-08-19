@@ -436,6 +436,7 @@
                    this.$emit('newMessage', response.data);
                 });
                 if(this.quoting){
+                		this.quoting = false;
                     this.qoutemessagebody = ''; 
                     this.qoutemessageid = ''; 
                     this.qoutesendername = ''; 
@@ -447,7 +448,7 @@
                 // $('#edit_message_'+message.message_id).show();
                 var editmessage = '';
                 editmessage = message.message.replace(/<\/?[^>]+(>|$)/g, "")
-                editmessage = editmessage.replace("( Edited )", "");
+                // editmessage = editmessage.replace("( Edited )", "");
                 this.editmessage = editmessage;
                 this.$refs.messagecomposercomponent.message = this.editmessage;
                 this.editflag = true;

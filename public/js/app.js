@@ -2125,6 +2125,7 @@ FaviconNotification.init({
       }
 
       this.messages[index].message = message.message;
+      this.messages[index].msg_props = message.msg_props;
     },
     handleDeletedMessage: function handleDeletedMessage(message) {
       this.messages.splice(message.message_index, 1);
@@ -3120,6 +3121,7 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (this.quoting) {
+        this.quoting = false;
         this.qoutemessagebody = '';
         this.qoutemessageid = '';
         this.qoutesendername = '';
@@ -3130,8 +3132,8 @@ __webpack_require__.r(__webpack_exports__);
       // console.log('msg',message)
       // $('#edit_message_'+message.message_id).show();
       var editmessage = '';
-      editmessage = message.message.replace(/<\/?[^>]+(>|$)/g, "");
-      editmessage = editmessage.replace("( Edited )", "");
+      editmessage = message.message.replace(/<\/?[^>]+(>|$)/g, ""); // editmessage = editmessage.replace("( Edited )", "");
+
       this.editmessage = editmessage;
       this.$refs.messagecomposercomponent.message = this.editmessage;
       this.editflag = true;

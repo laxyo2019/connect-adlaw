@@ -326,6 +326,7 @@
                     index = message.message_index;
                 }
                 this.messages[index].message = message.message;
+                this.messages[index].msg_props = message.msg_props;
             },
             handleDeletedMessage(message){
                 this.messages.splice(message.message_index, 1);

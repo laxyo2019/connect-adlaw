@@ -575,6 +575,9 @@ label:focus,
 	display: block;
 	border-bottom:solid 1px #fff;
 }
+.received_message .quote_msg_div{
+    border-bottom: solid 1px #808182e0!important;
+}
 @media screen and (max-width: 735px) {
     #frame #sidepanel #contacts ul li.contact .wrap img {
         margin-right: 0px;

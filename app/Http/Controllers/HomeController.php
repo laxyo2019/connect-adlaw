@@ -177,7 +177,10 @@ class HomeController extends Controller
 
     public function editMessage(Request $request){
         $editMessage = ChatroomMessage::findOrFail($request->message_id);
-        $editMessage->message = $request->newmessage . " <b class='text-muted'>( Edited )</b>";
+        $msg_props  =  json_decode($editMessage->msg_props);
+        $msg_props->edited = true;
+        $editMessage->message = $request->newmessage;
+        $editMessage->msg_props = json_encode($msg_props);
         $editMessage->save();
 
         broadcast(new EditMessage($editMessage,$request->index));
