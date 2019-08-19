@@ -28,7 +28,7 @@
                 <button class="btn btn-primary" style="position:absolute;top:50%;left:50%;" @click="sendFirstHi()">Say Hi</button>
             </div> -->
             <ul class="messages"  v-if="loading_chat" v-on:scroll="scrollevent()" v-chat-scroll="{always: false}" id="message_container">
-                <li class="sent message sent_message" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
+                <li class="sent message sent_message" :id="message.message_id" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
                 	<div class="text-center">
 		            		<span v-if="checkdate(message)" class="date_line">
                      <span class="subtitle fancy"><span>{{message.group_at}}</span></span>

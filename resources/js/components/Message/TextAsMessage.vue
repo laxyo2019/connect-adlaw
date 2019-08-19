@@ -4,7 +4,8 @@
 			<span class="show_name" v-show="sender_name">{{sender_name}},</span>
 			{{content.created_at}}</span></div>
 		<div style='position:relative' class="text context-parent_div">
-			<p class="after_msg" v-html="checkIsQuote(content.is_quote,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }" ></p>
+			<p class="after_msg" v-html="checkIsQuote(content.msg_props,content.message)" v-bind:style="{maxWidth : content.message.length > 150 ? '80%' : '' }" ></p>
+			<p class="msg_edited_icon" v-if="checkIsEdited(content.msg_props,content.message)"><i class="fa fa-pencil"></i></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
 					<template slot-scope="child">
 				    <li>
@@ -32,13 +33,20 @@
 			}
 		},
 		methods: {
-			checkIsQuote(isQuote,message){
-	        		let quote = JSON.parse(isQuote);
-	        		if(quote.parent_id!=""){
-								return '<span class="quote_msg_div"><i class="fa fa-quote-left fa-1x"></i></br><span class="quote_msg">'+quote['msg']+'</span></br><span>~ '+quote['sender_name']+'</span></br></br></span></br>'+message;
-	        		}
-	        		return message;
-	        	},
+			checkIsQuote(msgProps,message){
+    		let quote = JSON.parse(msgProps);
+    		if(quote.parent_id!=""){
+					return '<span class="quote_msg_div"><i class="fa fa-quote-left fa-1x"></i></br><span class="quote_msg">'+quote['msg']+'</span></br><span>~ '+quote['sender_name']+'</span></br></br></span></br>'+message;
+    		}
+    		return message;
+    	},
+  		checkIsEdited(msgProps,message){
+      		let msgProp = JSON.parse(msgProps);
+      		if(msgProp.edited!=""){
+						return true;
+      		}
+      		return false;
+      	},
 			forwardMsg() {
 
 			},

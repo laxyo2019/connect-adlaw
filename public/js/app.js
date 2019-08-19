@@ -3498,6 +3498,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['right', 'content', 'index', 'user', 'sender_name'],
@@ -3510,14 +3511,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    checkIsQuote: function checkIsQuote(isQuote, message) {
-      var quote = JSON.parse(isQuote);
+    checkIsQuote: function checkIsQuote(msgProps, message) {
+      var quote = JSON.parse(msgProps);
 
       if (quote.parent_id != "") {
         return '<span class="quote_msg_div"><i class="fa fa-quote-left fa-1x"></i></br><span class="quote_msg">' + quote['msg'] + '</span></br><span>~ ' + quote['sender_name'] + '</span></br></br></span></br>' + message;
       }
 
       return message;
+    },
+    checkIsEdited: function checkIsEdited(msgProps, message) {
+      var msgProp = JSON.parse(msgProps);
+
+      if (msgProp.edited != "") {
+        return true;
+      }
+
+      return false;
     },
     forwardMsg: function forwardMsg() {},
     quoteMsg: function quoteMsg() {},
@@ -59671,7 +59681,8 @@ var render = function() {
                         "li",
                         {
                           key: index,
-                          staticClass: "sent message sent_message"
+                          staticClass: "sent message sent_message",
+                          attrs: { id: message.message_id }
                         },
                         [
                           _c("div", { staticClass: "text-center" }, [
@@ -60892,10 +60903,16 @@ var render = function() {
             style: { maxWidth: _vm.content.message.length > 150 ? "80%" : "" },
             domProps: {
               innerHTML: _vm._s(
-                _vm.checkIsQuote(_vm.content.is_quote, _vm.content.message)
+                _vm.checkIsQuote(_vm.content.msg_props, _vm.content.message)
               )
             }
           }),
+          _vm._v(" "),
+          _vm.checkIsEdited(_vm.content.msg_props, _vm.content.message)
+            ? _c("p", { staticClass: "msg_edited_icon" }, [
+                _c("i", { staticClass: "fa fa-pencil" })
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("vue-context", {
             ref: "menu",

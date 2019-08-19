@@ -114,18 +114,21 @@ class HomeController extends Controller
 
     // Send Message
     public function sendMessage(Request $request){
-    	$is_quote = array(
+    	$msg_props = array(
     		'parent_id' => "",
     		'sender_id' => "",
     		'sender_name' => "",
     		'msg' => "",
+    		'quoted'=>"",
+    		'edited'=>""
     	);
+
         // $messagebody = '';
         if($request->quoting){
-        			$is_quote['parent_id'] = $request->qotemessageid;
-        			$is_quote['sender_name'] = $request->qoutesendername;
-        			$is_quote['sender_id'] = $request->qoutesenderid;
-        			$is_quote['msg'] = $request->quotemessagebody;
+        			$msg_props['parent_id'] = $request->qotemessageid;
+        			$msg_props['sender_name'] = $request->qoutesendername;
+        			$msg_props['sender_id'] = $request->qoutesenderid;
+        			$msg_props['msg'] = $request->quotemessagebody;
             // $messagebody .= $request->qoutemessagebody;
         }
         // $messagebody1 = $request->message;
@@ -150,7 +153,7 @@ class HomeController extends Controller
             $newMessage->is_file = 0;
             $newMessage->message = $messagebody;
         }
-        $newMessage->is_quote = json_encode($is_quote);
+        $newMessage->msg_props = json_encode($msg_props);
         $newMessage->chatroom_id = $request->room_id;
         $newMessage->sender_id = $user_id;
         $newMessage->save();

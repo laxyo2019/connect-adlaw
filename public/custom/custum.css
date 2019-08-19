@@ -11,6 +11,14 @@
   background: #fff;
   z-index: 999;
 }
+ .msg_edited_icon{
+    color: #a09898;
+}
+.sent_message .msg_edited_icon{
+	float: right;
+    margin-top: 12px;
+    color: #a09898;
+}
 .emoji-mart-preview{
     display: none !important;
 }

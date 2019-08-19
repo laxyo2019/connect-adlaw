@@ -56,7 +56,7 @@ class MessageResource extends JsonResource
         }
         return [
             'message_id' => $this->id,
-            'is_quote' => $this->is_quote,
+            'msg_props' => $this->msg_props,
             'room_id'    => $this->chatroom_id,
             'roomtype'   => $this->chatroom->type,
             'sender_id'  => $this->sender_id,
