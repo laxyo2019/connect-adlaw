@@ -9,10 +9,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <script src="{{ asset('service-worker.js') }}"></script>
+    {{-- <script src="{{ asset('service-worker.js') }}"></script> --}}
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <link rel='manifest' href='{{ asset('manifest.json') }}'>
+   <!-- {{-- <link rel='manifest' href='{{ asset('manifest.json') }}'> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

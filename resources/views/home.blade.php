@@ -4,7 +4,7 @@
 @section('content')
 	<div class="container-fluid p-0">
 		<div id="frame">
-			@php $create = 1//auth()->user()->hasRole('superadmin') ? 1 : 0 
+			@php $create = auth()->user()->hasRole('superadmin') ? 1 : 0 
 			@endphp
 			<chat-component :user="{{ auth()->user() }}" 
 			:allusers="{{ $allusers }}" :allcontacts="{{ $allcontacts }}" 
