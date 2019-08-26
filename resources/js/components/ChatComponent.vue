@@ -1,7 +1,6 @@
 <template>
     <div>
-    	<div class="preloader_div text-center" v-if="!loading_chat && !newChat">
-    	<!-- <div class="preloader_div text-center" v-if="1"> -->
+    	<div class="preloader_div text-center" v-if="!loading_chat && !newChat" >
     	<div class="container" style="margin-top:12%">
 	        <br/><br/>
 	         <img src="/custom/mini_logo.png" class="mb-3">
@@ -266,7 +265,13 @@
                             this.startConversationWith(this.contacts[0]);
                             
                         }
+                        console.log('length',this.contacts.length);
+		                    if(this.contacts.length < 1){
+		                    	this.loading_chat = true;
+		                    	this.newChat = true;
+		                    }
                     });
+
             },
             loadMoreMessages(room){
                 // console.log('from chat',room.room_id)
@@ -329,11 +334,12 @@
                 this.messages[index].msg_props = message.msg_props;
             },
             handleDeletedMessage(message){
-                this.messages.splice(message.message_index, 1);
-                if (this.selectedContact.room_id === message.room_id) {
-                    this.saveNewMessage(message);
-                    return;
-                }
+                // this.messages.splice(message.message_index, 1);
+                this.messages.filter(m => message.message_id != message.message_id);
+                // if (this.selectedContact.room_id === message.room_id) {
+                //     this.saveNewMessage(message);
+                //     return;
+                // }
             },
             showMessageNotificaiton(message){
                 var iconURL = "/favicon.ico";

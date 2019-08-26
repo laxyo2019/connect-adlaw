@@ -105,8 +105,7 @@ class HomeController extends Controller
         if(!request()->has('page')){
             UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->delete();
         }
-        $data = ChatroomMessage::where('chatroom_id', $room_id)->withTrashed()->get();
-        $data = ChatroomMessage::where('chatroom_id', $room_id)->withTrashed()->orderBy('id','desc')->paginate(20);
+        $data = ChatroomMessage::where('chatroom_id', $room_id)->orderBy('id','desc')->paginate(20);
         
         return (new MessageResourceCollection($data))->chatroom_id($room_id);
         // return response(new MessageResourceCollection($data));

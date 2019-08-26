@@ -1878,7 +1878,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var FaviconNotification = __webpack_require__(/*! favicon-notification */ "./node_modules/favicon-notification/src/index.js");
 
 
@@ -2057,6 +2056,13 @@ FaviconNotification.init({
 
           _this4.startConversationWith(_this4.contacts[0]);
         }
+
+        console.log('length', _this4.contacts.length);
+
+        if (_this4.contacts.length < 1) {
+          _this4.loading_chat = true;
+          _this4.newChat = true;
+        }
       });
     },
     loadMoreMessages: function loadMoreMessages(room) {
@@ -2128,12 +2134,13 @@ FaviconNotification.init({
       this.messages[index].msg_props = message.msg_props;
     },
     handleDeletedMessage: function handleDeletedMessage(message) {
-      this.messages.splice(message.message_index, 1);
-
-      if (this.selectedContact.room_id === message.room_id) {
-        this.saveNewMessage(message);
-        return;
-      }
+      // this.messages.splice(message.message_index, 1);
+      this.messages.filter(function (m) {
+        return message.message_id != message.message_id;
+      }); // if (this.selectedContact.room_id === message.room_id) {
+      //     this.saveNewMessage(message);
+      //     return;
+      // }
     },
     showMessageNotificaiton: function showMessageNotificaiton(message) {
       var iconURL = "/favicon.ico";
@@ -73362,7 +73369,7 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "5cae8d5a3c198a117d3b",
+  key: "myKey",
   wsHost: window.location.hostname,
   wsPort: 6001,
   disableStats: true
