@@ -60911,7 +60911,7 @@ var render = function() {
             staticClass: "after_msg",
             style: { maxWidth: _vm.content.message.length > 150 ? "80%" : "" },
             domProps: {
-              textContent: _vm._s(
+              innerHTML: _vm._s(
                 _vm.checkIsQuote(_vm.content.msg_props, _vm.content.message)
               )
             }
