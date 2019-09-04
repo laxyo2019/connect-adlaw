@@ -3508,6 +3508,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['right', 'content', 'index', 'user', 'sender_name'],
@@ -3524,10 +3536,10 @@ __webpack_require__.r(__webpack_exports__);
       var quote = JSON.parse(msgProps);
 
       if (quote.parent_id != "") {
-        return '<span class="quote_msg_div"><i class="fa fa-quote-left fa-1x"></i></br><span class="quote_msg">' + quote['msg'] + '</span></br><span>~ ' + quote['sender_name'] + '</span></br></br></span></br>' + message;
+        return true;
       }
 
-      return message;
+      return false;
     },
     checkIsEdited: function checkIsEdited(msgProps, message) {
       var msgProp = JSON.parse(msgProps);
@@ -60907,15 +60919,58 @@ var render = function() {
           staticStyle: { position: "relative" }
         },
         [
-          _c("p", {
-            staticClass: "after_msg",
-            style: { maxWidth: _vm.content.message.length > 150 ? "80%" : "" },
-            domProps: {
-              innerHTML: _vm._s(
-                _vm.checkIsQuote(_vm.content.msg_props, _vm.content.message)
+          _vm.checkIsQuote(_vm.content.msg_props, _vm.content.message)
+            ? _c(
+                "p",
+                {
+                  staticClass: "after_msg",
+                  style: {
+                    maxWidth: _vm.content.message.length > 150 ? "80%" : ""
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "quote_msg_div",
+                      staticStyle: {
+                        "margin-bottom": "10px",
+                        "padding-bottom": "10px"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-quote-left fa-1x" }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "quote_msg" }, [
+                        _vm._v(_vm._s(JSON.parse(_vm.content.msg_props)["msg"]))
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(
+                          "~ " +
+                            _vm._s(
+                              JSON.parse(_vm.content.msg_props)["sender_name"]
+                            )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("br")
+                    ]
+                  ),
+                  _vm._v(_vm._s(_vm.content.message) + "\n\t\t")
+                ]
               )
-            }
-          }),
+            : _c("p", {
+                staticClass: "after_msg",
+                style: {
+                  maxWidth: _vm.content.message.length > 150 ? "80%" : ""
+                },
+                domProps: { textContent: _vm._s(_vm.content.message) }
+              }),
           _vm._v(" "),
           _vm.checkIsEdited(_vm.content.msg_props, _vm.content.message)
             ? _c("p", { staticClass: "msg_edited_icon" }, [
