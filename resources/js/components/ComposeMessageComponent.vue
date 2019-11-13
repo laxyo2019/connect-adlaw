@@ -83,10 +83,10 @@ export default {
       openfileuploadingbox: false,
       message: "",
       members: [],
-      typing: {
-        user: null,
-        chatroom_id: null
-      },
+      // typing: {
+      //   user: null,
+      //   chatroom_id: null
+      // },
       // showemojibox:false,
       queueComplete: false,
       dropzoneOptions: {
@@ -132,15 +132,20 @@ export default {
   	},
     sendMessage() {
       this.message = $.trim(this.message);
+      
       if (this.message === "") {
         this.$refs.myVueDropzone.processQueue();
         return;
       }
+
       this.$emit("send", this.message);
+
       this.message = "";
+
+      var audio = new Audio('audio/sendmessage.mp3');
+      audio.play();
+
       document.getElementById('textarea1').style.height = "2.5rem";
-      // var audio = new Audio('audio/sendmessage.mp3');
-      // audio.play();
     },
     uploadfileboxopen() {
       this.openfileuploadingbox = !this.openfileuploadingbox;
@@ -161,15 +166,14 @@ export default {
     },
 
     sendTypingEvent() {
-      this.typing.user = this.user;
-      this.typing.chatroom_id = this.selectedContact.room_id;
       Echo.private(`newMessage.${this.selectedContact.room_id}`)
-      .whisper(
-        "typing",
-        this.typing
-      );
-      Echo.join('chat')
-          .whisper('typing', this.user);
+        .whisper('typing', {
+          'name': this.user,
+          'chatroom_id': this.selectedContact.room_id
+        });
+
+      // Echo.join('chat')
+      //     .whisper('typing', this.user);
     }
   },
   watch: {

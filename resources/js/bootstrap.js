@@ -58,10 +58,17 @@ window.Pusher = require('pusher-js');
 //     encrypted: true
 // });
 
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     disableStats: true,
+// });
+
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    disableStats: true,
+    cluster: 'ap2',
+    encrypted: true
 });

@@ -55,6 +55,7 @@ class Participant extends JsonResource
             'roomname'        => $user_name,
             'initiator_id'    => $this->initiator_id,
             'user_avatar'     => $this->icon,
+            'typing'          => false,
             'unreadcount'     => $unreadcount,
             'lastmessage'     => ($lastMessage['message']) ? $lastMessage['message'] : "",
             'lastmessagetime' => ($lastMessage['created_at']) ? $lastMessage['created_at']->format('Y-m-d H:i:s') : $this->created_at->format('Y-m-d H:i:s'),

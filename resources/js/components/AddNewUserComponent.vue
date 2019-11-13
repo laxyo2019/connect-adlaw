@@ -60,5 +60,3 @@ import multiselect from 'vue-multiselect'
         
     }
 </script>
-<style scoped>
-</style>

@@ -1,75 +1,71 @@
 <template>
   <div id="sidepanel">
     <div id="profile">
-      <div class="wrap"  >
-        <!-- <img
-          id="profile-img"
-          :src="profile_pre + user.name.toUpperCase().charAt(0) +'.png'"
-          class="online"> -->
+      <div class="wrap">
         <span class="online sender-avatar-icon profile_avatar_s">{{ user.name.toUpperCase().charAt(0) }}
-         <span class='online-dot-profile'></span>
-       </span>
-        <p><b>{{ user.name }}</b></p>
-        <span class='float-right mt-3' @click="openMenu=!openMenu" style="position: absolute;right: 0">
-        	<i class='fa fa-ellipsis-v ' style="font-size: 1.3rem;padding: 0 20px!important;"></i>
-        	<ul class='dropdown_css' v-if='openMenu'>
-          	<li>
-							 <a id="addcontact" data-toggle="modal" data-target="#addusermodal">
-					        <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
-					        <span>Add</span>
-					      </a>
-          	</li>
-          	<li v-if="user.id==2 || user.id==1"> 
-				      <!-- <a v-if="group_permission==1" -->
-				      <a v-if="group_permission==1"
-				              id="creategroup"
-				              data-toggle="modal"
-				              data-target="#createnewgroup">
-				        <i class="fa fa-users fa-fw" aria-hidden="true"></i>
-				        <span>Group</span>
-				      </a>
-          	</li>
-          	<li>
-          		<a id='logout' href="#" class="" @click.prevent="logout()" title="Logout">
-			          <i class="fa fa-sign-out fa-lg"></i>
-			          <span>Log out</span>
-			        </a> 
-          	</li>
-          </ul>
+          <span class='online-dot-profile'></span>
         </span>
 
-      <!--<a href="#" class="float-right mt-3" @click.prevent="logout()" title="Logout">
-          <i class="fa fa-sign-out fa-lg"></i>
-        </a> -->
+        <b>{{ user.name }}</b>
+
+          <a href="#" id='logout' class="float-right mt-4 mr-2" style="color: #ff5252" 
+          @click.prevent="logout()" title="Logout">
+            <i class="fa fa-sign-out fa-lg"></i>
+        </a>
       </div>
     </div>
+
     <div class="form-group has-search" style="position:relative">
     	<i class="fa fa-search search_box_icon"></i>
       <input style="background: #eee;border-radius: 23px;" type="text" class="search_box form-control" v-model="search" placeholder="Search Chats...">
     </div>
 
     <div class="recent_chats">
-      <span>Recent Chats</span>
+      <span>Online: {{ onlineuserslist.length }}</span>
+
+      <span class="float-right">
+        <a v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" class="btn add_btn mr-2" title="New Group">
+          <i class="text-white fa fa-users fa-fw" aria-hidden="true"></i>
+        </a>
+
+        <a id="addcontact" data-toggle="modal" data-target="#addusermodal" class="btn add_btn" title="New Chat">
+          <i class="text-white fa fa-user-plus fa-fw" aria-hidden="true"></i>
+        </a>
+      </span>
+      
       <hr class="mb-0">
     </div>
+
     <div id="contacts">
       <div v-if="allusers.length > 0">
         <ul class="contactlists">
-          <li v-for="(contact,index) in orderedUsersLists"
+          <li v-for="(contact, index) in orderedUsersLists"
               :key="index"
               class="contact"
               v-bind:class="{ 'active' :room_id == contact.room_id}"
               @click="selectContact(contact)">
               <div class="wrap">
-                <span class="contact-status" v-bind:class="[{ 'busy' :contact.room_type == 'private'}, 'contact_no_'+contact.user_id]"></span>
+                <span class="contact-status" :class="[checkIfOnline(contact.user_id) ? 'online' : 'busy']"></span>
                 <span class="sender-avatar-icon float-right">{{ contact.roomname.toUpperCase().charAt(0) }}</span>
                 <div class="meta">
-                  <p class="name">{{ contact.roomname | truncate(18,'...')}}</p>
+                  <!-- <p class="name">{{ contact.roomname | truncate(18,'...')}}</p> -->
+                  <p class="name">{{ contact.roomname }}</p>
+                  <!-- <p class="m-0 info-text">Developer</p> -->
                   <span class="last_messge_time">{{ contact.displaylastmessagetime }}</span>
+                </div>
+                
+              </div>
+
+              <div class="ticontainer" v-if="contact.typing">
+                <div class="tiblock">
+                  <div class="tidot"></div>
+                  <div class="tidot"></div>
+                  <div class="tidot"></div>
                 </div>
               </div>
             <!-- <span class="last_message_info">{{ removetagsfromcontactlist(contact.lastmessage.slice(0,30)) }}</span> -->
-            <span v-show="contact.unreadcount>0" class="badge badge-light" v-bind:class="'preunread_'+contact.room_id">{{ contact.unreadcount }}</span>
+            <span v-show="contact.unreadcount > 0" class="badge badge-light" 
+              v-bind:class="'preunread_'+contact.room_id">{{ contact.unreadcount }}</span>
           </li>
         </ul>
       </div>
@@ -83,172 +79,239 @@
 </template>
 
 <script>
-export default {
-  props: {
-  	mobileView:{
-  		type:Boolean,
-  	},
-    user: {
-      type: Object,
-      required: true
+  export default {
+    props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
+      // mobileView:{
+      // 	type:Boolean,
+      // },
+      // user: {
+      //   type: Object,
+      //   required: true
+      // },
+      // allusers: {
+      //   type: Array,
+      //   default: []
+      // },
+      // group_permission: {
+      //   type: Number,
+      //   default: 0
+      // },
+      // onlineuserslist: {
+      //   type: Array,
+      //   default: []
+      // }
+    data() {
+      return {
+        // openMenu:false,
+        contacts: [],
+        room_id: "",
+        selected: "",
+        usercontactlist: [],
+        search: "",
+        profile_pre: "/custom/alphabets/",
+        // usersOnline: []
+      };
     },
-    allusers: {
-      type: Array,
-      default: []
+    created(){
+      // this.usersOnline = this.onlineuserslist;
     },
-    group_permission: {
-      type: Number,
-      default: 0
-    }
-  },
-  data() {
-    return {
-    	openMenu:false,
-      contacts: [],
-      room_id: "",
-      selected: "",
-      usercontactlist: [],
-      search: "",
-      profile_pre: "/custom/alphabets/",
-    };
-  },
-  methods: {
-    removetagsfromcontactlist(message){
-      return message.replace(/<\/?[^>]+(>|$)/g, "");
-    },
-    selectContact(contact) {
-      $('.preunread_'+contact.room_id).hide();
-      this.room_id = contact.room_id;
-      this.selected = contact;
-      this.$emit("selected", contact);
-      // ###r
-      this.$emit("menuWidth", "0px");
-      $('#textarea1').focus();
-    },
-    logout() {
-      axios.post("logout", {}).then(response => {
-        location.reload();
-      });
-    }
-  },
-  computed: {
-    // filterChatlist: function() {
-    //   return this.usercontactlist.filter(contact => {
-    //     return contact.roomname.toLowerCase().match(this.search);
-    //   });
-    // },
-    orderedUsersLists: function () {
-      if(this.search!=''){
-        return this.usercontactlist.filter(contact => {
-          return contact.roomname.toLowerCase().match(this.search);
+    methods: {
+      checkIfOnline(uid){
+        return this.onlineuserslist.find( e => e.id === uid );
+      },
+      removetagsfromcontactlist(message){
+        return message.replace(/<\/?[^>]+(>|$)/g, "");
+      },
+      selectContact(contact) {
+        $('.preunread_'+contact.room_id).hide();
+        this.room_id = contact.room_id;
+        this.selected = contact;
+        this.$emit("selected", contact);
+        // ###r
+        this.$emit("menuWidth", "0px");
+        $('#textarea1').focus();
+      },
+      logout() {
+        axios.post("logout", {}).then(response => {
+          location.reload();
         });
-      }else{
-        return _.orderBy(this.usercontactlist, 'lastmessagetime','desc')
+      }
+    },
+    computed: {
+      // filterChatlist: function() {
+      //   return this.usercontactlist.filter(contact => {
+      //     return contact.roomname.toLowerCase().match(this.search);
+      //   });
+      // },
+      orderedUsersLists: function () {
+        if(this.search!=''){
+          return this.usercontactlist.filter(contact => {
+            return contact.roomname.toLowerCase().match(this.search);
+          });
+        }else{
+          return _.orderBy(this.usercontactlist, 'lastmessagetime','desc')
+        }
+      }
+    },
+    watch: {
+      allusers(contacts) {
+        contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
+        this.usercontactlist = contacts;
+        this.room_id = contacts[0].room_id;
       }
     }
-  },
-  watch: {
-    allusers(contacts) {
-      contacts = _.orderBy(contacts, 'lastmessagetime','desc')
-      this.usercontactlist = contacts;
-      this.room_id = contacts[0].room_id;
-    }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.dropdown_css li{
-	line-height: 33px;
-	padding-left:10px;
-}
-.dropdown_css li a {
-	color:#7d7e7f;
-	display:block;
-	cursor:pointer;
-}
-.dropdown_css{
-	list-style-type: none;
-	width:150px;
-	position: absolute;
-  right: 0;
-  top: 20px;
-  padding: 5px 10px;
-  background: #fff;
- 	z-index:999;
- 	margin:0;
-  border: solid #e6dede 1px;
-}
-#frame #sidepanel #contacts ul li.contact .wrap .avatar {
-  width: 45px !important;
-  height: 45px !important;
-  border-radius: 50%;
-  float: left;
-  margin-right: 10px;
-  vertical-align: middle;
-  border-style: none;
-  display: unset !important;
-}
-.avatar span {
-  margin-left: -5px;
-}
- 
-.sender-avatar-icon{
-    height: 35px;
-    text-align: center;
-    width: 35px;
-    color: white;
-    background-color:#71e5ec;
-    float: left;
-    border-radius: 50%;
-    display: inline-block;
-    line-height: 2.5;
-    margin: 10px;
-    margin-top:6px;
-    position: relative;
-    line-height: 35px;
-}
-.search_box_icon{
-	    position: absolute;
-    top: 13px;
-    left: 32px;
-    font-size: 16px;
-    color: #a9acad;
-}
-.search_box:focus{
-	box-shadow:none!important;
-}
-.profile_avatar_s{
-    width: 40px;
-    background: #e5e4e8;
-    line-height: 40px;
-    color: #000;
-    height: 40px;
-    font-weight: 600;
 
-}
-.badge-light {
-  position: absolute;
-  color: #ffffff;
-  right: 5%;
-  top: 50%;
-  background-color: #ff5252;
-  border-radius: 50%;
-  width: 20px;
-  font-size: .75rem;
-}
-span.last_messge_time {
-    right: 0;
+  .add_btn {
+    border-radius: 40px;
+    background-color: #2196f3;
+  }
+
+  .dropdown_css li{
+    line-height: 33px;
+    padding-left:10px;
+  }
+
+  .dropdown_css li a {
+    color:#7d7e7f;
+    display:block;
+    cursor:pointer;
+  }
+
+  .dropdown_css{
+    list-style-type: none;
+    width:150px;
     position: absolute;
-    top: .68rem;
-    color: grey !important;
-    font-size: 8px;
-    background: #ffffff00 !important;
-}
+    right: 0;
+    top: 20px;
+    padding: 5px 10px;
+    background: #fff;
+    z-index:999;
+    margin:0;
+    border: solid #e6dede 1px;
+  }
 
-.onlineuserscount{
-  margin-top: 10%;
-  margin-right: 10%;
-  position: unset;
-}
+  #frame #sidepanel #contacts ul li.contact .wrap .avatar {
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+    vertical-align: middle;
+    border-style: none;
+    display: unset !important;
+  }
+
+  .avatar span {
+    margin-left: -5px;
+  }
+  
+  .sender-avatar-icon{
+      height: 35px;
+      width: 35px;
+      text-align: center;
+      color: white;
+      background-color:#71e5ec;
+      float: left;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 10px;
+      position: relative;
+      line-height: 35px;
+  }
+
+  .search_box_icon{
+      position: absolute;
+      top: 13px;
+      left: 32px;
+      font-size: 16px;
+      color: #a9acad;
+  }
+
+  .search_box:focus{
+    box-shadow:none!important;
+  }
+
+  .profile_avatar_s{
+      width: 40px;
+      background: #e5e4e8;
+      line-height: 40px;
+      color: #000;
+      height: 40px;
+      font-weight: 600;
+  }
+
+  .badge-light {
+    position: absolute;
+    color: #ffffff;
+    right: 5%;
+    top: 50%;
+    background-color: #ff5252;
+    border-radius: 50%;
+    width: 20px;
+    font-size: .75rem;
+  }
+
+  span.last_messge_time {
+      right: 0;
+      position: absolute;
+      top: .68rem;
+      color: grey !important;
+      font-size: 8px;
+      background: #ffffff00 !important;
+  }
+
+  .onlineuserscount{
+    margin-top: 10%;
+    margin-right: 10%;
+    position: unset;
+  }
+
+  /* typing indicator */
+  .tiblock {
+    align-items: center;
+    display: flex;
+    height: 20px;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .ticontainer .tidot {
+      background-color: #90949c;
+  }
+
+  .tidot {
+      -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+      border-radius: 2px;
+      display: inline-block;
+      height: 4px;
+      margin-right: 2px;
+      width: 4px;
+  }
+
+  @-webkit-keyframes mercuryTypingAnimation{
+  0%{
+    -webkit-transform:translateY(0px)
+  }
+  28%{
+    -webkit-transform:translateY(-5px)
+  }
+  44%{
+    -webkit-transform:translateY(0px)
+  }
+  }
+
+  .tidot:nth-child(1){
+  -webkit-animation-delay:200ms;
+  }
+  .tidot:nth-child(2){
+  -webkit-animation-delay:300ms;
+  }
+  .tidot:nth-child(3){
+  -webkit-animation-delay:400ms;
+  }
+
 </style>

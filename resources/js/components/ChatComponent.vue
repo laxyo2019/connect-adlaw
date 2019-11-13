@@ -20,43 +20,46 @@
 	        <br/><br/>
 	    </div>
     	</div>
-        <div id="mySidenav" v-bind:style="{width: menuWidth}" class="sidenav">
-            <!-- <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a> -->
-            <ContactsList :allusers="contacts" 
-            							:mobileView="mobileView"
-                        :user="user"
-                        ref="contactlistcompnentref" 
-                        @selected="emitStartConversationWith" 
-                        :group_permission="group_permission"
-                        @menuWidth="closeNav">
+        
+        <!-- FOR WEB VIEW -->
+        <div v-if="bigScreenView">
+            <ContactsList 
+                    :onlineuserslist="onlineuserslist"
+                    :allusers="contacts"
+                    :user="user" @selected="emitStartConversationWith"
+                    :group_permission="group_permission"
+                    ref="contactlistcompnentref">
             </ContactsList>
         </div>
-      
-        <ContactsList v-if="bigScreenView"
-                     :allusers="contacts" 
-                     :user="user"                     
-                    	@selected="emitStartConversationWith" 
-                     :group_permission="group_permission"
-                     ref="contactlistcompnentref">
-        </ContactsList>
+        <!-- FOR MOBILE VIEW -->
+        <div v-else id="mySidenav" :style="{width: menuWidth}" class="sidenav">
+            <ContactsList :mobileView="mobileView" @menuWidth="closeNav"
+                    :onlineuserslist="onlineuserslist"
+                    :allusers="contacts" :user="user"
+                    @selected="emitStartConversationWith"
+                    :group_permission="group_permission"
+                    ref="contactlistcompnentref">
+            </ContactsList>
+        </div>
+
         <div class="content">
-            <Conversation 
-        				@openNav = "openNav()"
-								:mobileView="mobileView"
-  							:messages="messages" :user="user" 
-                :selectedContact="selectedContact" 
-                :allusers="contacts"
-                :group_permission="group_permission"
+            <Conversation :mobileView="mobileView"
+                @openNav = "openNav()"
                 @groupdeleted="groupdeleted"
                 @newMessage="gotnewMessage"
                 @paginate_data="paginate_data"
+                :messages="messages" :user="user" 
+                :selectedContact="selectedContact" 
+                :allusers="contacts"
+                :group_permission="group_permission"
                 :loading_more="loading_more"
                 :hasChatHistory="hasChatHistory"
                 :loading_chat="loading_chat">
             </Conversation>    
         </div>
-        <div class="modal fade" id="addusermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+
+        <div class="modal fade" id="addusermodal" tabindex="-1" role="dialog"    
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -68,7 +71,6 @@
                     <div class="modal-body">
                         <AddNewUser :allcontacts="allusers"></AddNewUser>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -94,6 +96,9 @@
     </div>
 </template>
 <script>
+    import Toasted from 'vue-toasted';
+    Vue.use(Toasted)
+
     var FaviconNotification = require('favicon-notification');
     import Conversation from './ConversationComponent';
     import ContactsList from './ContactListComponent';
@@ -106,6 +111,7 @@
         lineColor: '#FFFFFF'
     });
     export default {
+
         props: {
             user: {
                 type: Object,
@@ -129,9 +135,10 @@
             },
            
         },
+
         data() {
             return {
-            		newChat : false,
+                newChat : false,
                 usercontactlist:[],
                 contacts:[],
                 messages: [],
@@ -139,7 +146,8 @@
                 activeUser: false,
                 typingStatus: false,
                 loading: false,
-                typing_indicator:'',
+                // typing_indicator:'',
+
                 // ####r
                 mobileView: false,
                 menuWidth: '0px',
@@ -149,15 +157,14 @@
                 loading_more:false,
                 hasChatHistory:false,
                 loading_chat:false,
-                onlineuserscount:0,
+                // onlineuserscount:0,
                 onlineuserslist:[]
             };
         },
+
         mounted(){
-            
             // ###r
             if( window.screen.availWidth <= 500 ){
-            // if(1){
                 this.mobileView         = true;
                 this.bigScreenView      = false;
                 this.openNav();
@@ -170,74 +177,89 @@
                     FaviconNotification.remove();
                 }
             }, false);
-            if (this.rooms.length > 0) {
-                for (var i = 0; i < this.rooms.length; i++) {
+            if (this.rooms.length > 0) 
+            {
+                for (var i = 0; i < this.rooms.length; i++) 
+                {
                     Echo.private(`EditMessage.${this.rooms[i]}`)
                         .listen('EditMessage', (e) => {
                             this.handleEditedMessage(e.editedmessage)
                         });
+
                     Echo.private(`DeleteMessage.${this.rooms[i]}`)
                         .listen('DeleteMessage', (e) => {
                             this.handleDeletedMessage(e.deletedmessage)
                         });
+
                     Echo.private(`GroupDelete.${this.rooms[i]}`)
                         .listen('GroupDelete', (e) => {
                             this.getcontactlist()
                         });
+
                     Echo.private(`newMessage.${this.rooms[i]}`)
                         .listen('NewMessage', (e) => {
                             this.handleIncoming(e.message);
                         })
-                        .listenForWhisper('typing', typingdata => {
-                            this.activeUser = typingdata.user;
+                        .listenForWhisper('typing', (e) => {
+  
                             if(this.typingStatus) {
-                                if(this.selectedContact.room_id == typingdata.chatroom_id){
-                                    this.typing_indicator = typingdata.user.name+' is typing... ';
-                                    $(".typing_indicator").text(this.typing_indicator)
-                                    console.log(typingdata.user.name+' is typing in '+typingdata.chatroom_id)
-                                }
+                                this.updateTypingStatus(e.chatroom_id, true);
                                 clearTimeout(this.typingStatus);
                             }
 
                             this.typingStatus = setTimeout(() => {
-                                this.activeUser = false;
-                                this.typing_indicator = ''
-                                $(".typing_indicator").text(this.typing_indicator)
+                                this.updateTypingStatus(e.chatroom_id, false);
                             }, 2000);
-                    }); 
+                        }); 
                 }
             }
+
             this.newRoomListner();
+
+            // PRESENCE CHANNELS
             Echo.join(`chat`)
                 .here((users) => {
-                    users.forEach((user)=>{
+                    users.forEach((user) => {
                         this.onlineuserslist.push(user);
-                        this.updateusersstatus();
                     });
                 })
                 .joining((user) => {
                     this.onlineuserslist.push(user);
-                    this.updateusersstatus();
+                    Vue.toasted.success(`${user.name} is online`, { duration: 2000 });
                 })
-                .leaving((user) => 
-                {
-                    this.onlineuserslist = this.onlineuserslist.filter(obj => obj.id !== user.id);
-                    this.updateusersstatus();
+                .leaving((user) => {
+                    this.onlineuserslist = this.onlineuserslist.filter(u => u.id !== user.id);
+                    Vue.toasted.show(`${user.name} went offline`, { duration: 2000 });
                 });
-                
         },
+
         methods:{
+
+            updateTypingStatus(room_id, status)
+            {
+                this.contacts.forEach((e) => {
+                    if(e.room_id == room_id)
+                    {
+                        console.log('updated');
+                        e.typing = status;
+                    }
+                });
+            },
+
         	emitStartConversationWith(room){
         		this.newChat = true;
         		this.startConversationWith(room);
-        	},
-            updateusersstatus(){
-                this.onlineuserslist.forEach((user)=>{
-                    $('.onlineuserscount').text(this.onlineuserslist.length);
-                    $('.contact_no_'+user.id).removeClass('busy');
-                    $('.contact_no_'+user.id).addClass('online');
-                });
             },
+            
+            // ABANDONED
+            // updateusersstatus(){
+            //     this.onlineuserslist.forEach((user)=>{
+            //         $('.onlineuserscount').text(this.onlineuserslist.length);
+            //         $('.contact_no_'+user.id).removeClass('busy');
+            //         $('.contact_no_'+user.id).addClass('online');
+            //     });
+            // },
+
             paginate_data(room){
                 this.page++;
                 this.loading_more = true;
@@ -247,32 +269,34 @@
                     this.loading_more = false;
                 }
             },
+
             gotnewMessage(message){
                 axios.get('getUsersChatRooms')
                     .then((response) => {
                         this.contacts = response.data;
-                        this.updateusersstatus();                         
+                        // this.updateusersstatus();                       
                 });
             },
+
             getcontactlist(){
                 axios.get('getUsersChatRooms')
                     .then((response) => {
-                        if (response.data.length > 0) {
+                        if (response.data.length > 0) 
+                        {
                             this.contacts = response.data;
-                            // console.log(response.data);
-                            this.contacts = _.orderBy(this.contacts, 'lastmessagetime','desc')
+                            this.contacts = _.orderBy(this.contacts, 'lastmessagetime', 'desc')
                             this.selectedContact = this.contacts[0];
                             this.startConversationWith(this.contacts[0]);
-                            
                         }
-                        console.log('length',this.contacts.length);
-		                    if(this.contacts.length < 1){
-		                    	this.loading_chat = true;
-		                    	this.newChat = true;
-		                    }
+                        // console.log('length', this.contacts.length);
+                        if(this.contacts.length < 1)
+                        {
+                            this.loading_chat = true;
+                            this.newChat = true;
+                        }
                     });
-
             },
+
             loadMoreMessages(room){
                 // console.log('from chat',room.room_id)
                 axios.get('get_room_conversations/' + room.room_id+'?page='+this.page)
@@ -288,6 +312,7 @@
                         }
                     });
             },
+
             startConversationWith(room) {
                 this.messages = [];
                 this.scrollends = false
@@ -307,9 +332,11 @@
                     });
                     
             },
+            
             saveNewMessage(message) {
                 this.messages.push(message);
             },
+
             handleIncoming(message) {
                 this.gotnewMessage(message);
                 if(message.sender_id != this.user.id){
@@ -325,6 +352,7 @@
                     return;
                 }
             },
+
             handleEditedMessage(message){
                 var index = 0;
                 if(message.message_index || message.message_index!=''){
@@ -333,6 +361,7 @@
                 this.messages[index].message = message.message;
                 this.messages[index].msg_props = message.msg_props;
             },
+
             handleDeletedMessage(message){
                 // this.messages.splice(message.message_index, 1);
                 this.messages.filter(m => message.message_id != message.message_id);
@@ -341,27 +370,38 @@
                 //     return;
                 // }
             },
+
             showMessageNotificaiton(message){
                 var iconURL = "/favicon.ico";
                 var title='';
                 var custommessage='';
-                if(message.is_file == 1){
+                
+                if(message.is_file == 1)
+                {
                     title = message.sender_name + ' Shared a File';
                     custommessage = message.file_name;
-                    var audio = new Audio('/audio/notification.mp3');
+                    var audio = new Audio('audio/notification.mp3');
                     audio.play();
-                }else{
-                    if(message.message.includes('@'+this.user.name.split(" ")[0])>0){
+                }
+                else
+                {
+                    // @ Mention Notification
+                    if(message.message.includes('@'+this.user.name.split(" ")[0])>0)
+                    {
                         title = message.sender_name + ' has mentioned you in ' + message.chatroom_title;
                         custommessage = message.message;
                         custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
-                        var audio = new Audio('/audio/mention.mp3');
+                        var audio = new Audio('audio/mention.mp3');
                         audio.play();
-                    }else{
+
+                    
+                    }
+                    else // New Message Notification
+                    {
                         title = 'New Message From '+message.sender_name;
                         custommessage = message.message;
                         custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
-                        var audio = new Audio('/audio/notification.mp3');
+                        var audio = new Audio('audio/notification1.mp3');
                         audio.play();
                     }
                 }
@@ -380,6 +420,7 @@
                         };
                     });
             },
+
             showNewUserNotificaiton(newRoomData){
                 var iconURL = "/favicon.ico";
                 var title='';
@@ -398,38 +439,22 @@
                         });
                     });
             },
+
             newRoomListner(){
-                // console.log(this.user);
                 Echo.private(`newroomcreated.${this.user.id}`)
                     .listen('NewRoom', (e) => {
                         this.updateRoomListners(e.newroomdata);
                         this.showNewUserNotificaiton(e.newroomdata);
                         this.getcontactlist();
                         // this.selectedContact = e.newRoomData;
-                        $('#contact_no_'+e.newroomdata.user_id).removeClass('busy');
-                        $('#contact_no_'+e.newroomdata.user_id).addClass('online');
+                        // $('#contact_no_'+e.newroomdata.user_id).removeClass('busy');
+                        // $('#contact_no_'+e.newroomdata.user_id).addClass('online');
                 });
             },
+
             updateRoomListners(newlyaddedroom){
-                Echo.private(`newMessage.${newlyaddedroom.chatroom_id}`)
-                        .listen('NewMessage', (e) => {
-                            this.handleIncoming(e.message);
-                        })
-                        .listenForWhisper('typing', typingdata => {
-                            this.activeUser = typingdata.user;
-                            if(this.typingStatus) {
-                                if(this.selectedContact.room_id == typingdata.chatroom_id){
-                                    this.typing_indicator = typingdata.user.name+' is typing... ';
-                                    $(".typing_indicator").text(this.typing_indicator)
-                                }
-                                clearTimeout(this.typingStatus);
-                            }
-                            this.typingStatus = setTimeout(() => {
-                                this.activeUser = false;
-                                this.typing_indicator = ''
-                                $(".typing_indicator").text(this.typing_indicator)
-                            }, 2000);
-                    });
+                this.getcontactlist();
+
                 Echo.private(`EditMessage.${newlyaddedroom.chatroom_id}`)
                         .listen('EditMessage', (e) => {
                             this.handleEditedMessage(e.editedmessage)
@@ -437,9 +462,23 @@
                 Echo.private(`DeleteMessage.${newlyaddedroom.chatroom_id}`)
                         .listen('DeleteMessage', (e) => {
                             this.handleDeletedMessage(e.deletedmessage)
-                        });    
-                this.getcontactlist();                    
+                        });
+                Echo.private(`newMessage.${newlyaddedroom.chatroom_id}`)
+                        .listen('NewMessage', (e) => {
+                            this.handleIncoming(e.message);
+                        })
+                        .listenForWhisper('typing', (e) => {
+                            if(this.typingStatus) {
+                                this.updateTypingStatus(e.chatroom_id, true);
+                                clearTimeout(this.typingStatus);
+                            }
+
+                            this.typingStatus = setTimeout(() => {
+                                this.updateTypingStatus(e.chatroom_id, false);
+                            }, 2000);
+                        });                      
             },
+
             groupdeleted(group){
                 this.getcontactlist();
             },
@@ -466,6 +505,7 @@
         top: 50%;
         right: 50%;
    }
+
    .loader-overlay-custom{
        background: #000a0a87;
        position: absolute;
@@ -477,7 +517,8 @@
        width: 100%;
        height: 105%;
    }
-	/*//preloader*/
+   
+	/* preloader */
 	.loader17{position:relative;width:65px;border:1px solid transparent;margin:40px auto}
 	.loader17 span{position:absolute;bottom:0;display:block;width:9px;height:5px;border-radius:5px;background:rgba(0,0,0,.1);-webkit-animation:preloader 2s infinite ease-in-out;animation:preloader 2s infinite ease-in-out}
 	.loader17 span:nth-child(2){left:11px;-webkit-animation-delay:.2s;animation-delay:.2s}
@@ -485,12 +526,14 @@
 	.loader17 span:nth-child(4){left:33px;-webkit-animation-delay:.6s;animation-delay:.6s}
 	.loader17 span:nth-child(5){left:44px;-webkit-animation-delay:.8s;animation-delay:.8s}
 	.loader17 span:nth-child(6){left:55px;-webkit-animation-delay:1s;animation-delay:1s}
+
 	@-webkit-keyframes preloader{
 		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:rgba(0,0,0,.1)}
 		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#f8990c}
 	}
+
 	@keyframes preloader{
 		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:rgba(0,0,0,.1)}
 		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#f8990c}
-	}
+    }
 </style>

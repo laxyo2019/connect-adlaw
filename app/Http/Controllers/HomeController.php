@@ -96,11 +96,11 @@ class HomeController extends Controller
         })
         ->with('participants')
         ->get();
+        
         return response(new ParticipantCollection($chatrooms));
     }
 
     //Get All Messages of single ChatRoom
-
     public function getRoomConversations($room_id){
         if(!request()->has('page')){
             UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->delete();
@@ -232,6 +232,7 @@ class HomeController extends Controller
         return response()->json(['success' => 1]);
         
     }
+
     public function deleteMessage(Request $request){
         $deletedMessage = ChatroomMessage::where('id',$request->message_id)->first();
         ChatroomMessage::where('id',$request->message_id)->delete();
@@ -270,6 +271,7 @@ class HomeController extends Controller
         }
         //All Users insertion end
     }
+    
     public function removeUserfromGroup(Request $request){
         ChatroomUser::where('chatroom_id',$request->chatroom_id)->where('user_id',$request->user_id)->delete();
 

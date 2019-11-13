@@ -65,13 +65,15 @@ body {
         min-width: 58px;
     }
 }
+
 .context-parent_div p{
 		word-wrap: break-word;
 }
+
 #frame #sidepanel #profile {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
 }
+
 textarea:hover, 
 input:hover, 
 textarea:active, 
