@@ -17,7 +17,8 @@
 
             <p v-if="selecteduser"><b>{{ selecteduser.roomname}}</b></p>
             <p v-else>Start a new chat</p>
-            <span class="typing_indicator float-right mt-3" v-if="selectedContact.typing">
+
+            <span class="typing_indicator float-right mt-3" v-if="!isEmpty(selectedContact) && selectedContact.typing">
                 <div class="ticontainer">
                     <div class="tiblock">
                         <div class="tidot"></div>
@@ -26,6 +27,7 @@
                     </div>
                 </div>
             </span>
+
         </div>
         <div class="messages" style="position:absolute!important">
             <img src="/custom/loader.gif" style="position:absolute;top:0;left:50%;width:20px;z-index:100;" v-show="loading_more">
@@ -125,15 +127,24 @@
         </div>
         <div class="quotemesg" style="white-space: unset;" v-if="qoutemessagebody!=''">
             <div style="white-space: unset;">
-                <i class="fa fa-quote-left fa-1x"></i> <br>
-                 <span style="margin: 0;" v-html="qoutemessagebody"></span>
-               <br>
-                <b style="" v-text="quotemessagename"></b>
+                <i class="fa fa-quote-left fa-1x"></i> 
+                <br>
+                    <span style="margin: 0;" v-html="qoutemessagebody"></span>
+                <br>
+                    <b style="" v-text="quotemessagename"></b>
                 <hr>
             </div>
         </div>
+
         <i v-if="qoutemessagebody!=''" @click="cancelquotemessage" class="quotemesgclose fa fa-close"></i>
-        <ComposeMessage :mobileView="mobileView" ref="messagecomposercomponent" @send="sendMessage" :selectedContact="selectedContact" :user="user"></ComposeMessage>
+
+        <ComposeMessage 
+            :mobileView="mobileView" 
+            ref="messagecomposercomponent"
+            @send="sendMessage" 
+            :selectedContact="selectedContact" 
+            :user="user">
+        </ComposeMessage>
         <!-- Group Members Model Starts -->
         <div class="modal fade" id="groupMembersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -333,13 +344,13 @@
             };
         },
         methods:{
-	        	checkIsQuote(message){
-	        		let msg = JSON.parse(message);
-	        		if(msg.parent_id!=""){
-								return true;
-	        		}
-	        		return false;
-	        	},
+        	checkIsQuote(message){
+        		let msg = JSON.parse(message);
+        		if(msg.parent_id!=""){
+							return true;
+        		}
+        		return false;
+        	},
             checkdate(message){
                 if(message.group_at == this.lastmessage.group_at){
                     return false;
@@ -355,13 +366,13 @@
                     this.$emit('paginate_data', this.selectedContact);
                 }
             },
-            forwardMessageModal(message,index){
+            forwardMessageModal(message,index) {
             	this.forwardToList = this.allusers;
                 this.searchForwardTo = '';
                 $('#forwardMessageModal').modal('show');
                 this.forwardingMessage = message.message;
             },
-            filterForwardToList(){
+            filterForwardToList() {
             	let searchKey = this.searchForwardTo;
             	//create  a regression to match a particular string in the name , i stands in insensitive 
             	let searchReg =   new RegExp(searchKey, "i"); 
@@ -373,7 +384,7 @@
             	});
             	this.forwardToList = usersArr;
             },
-            forwardMessage(room_id){
+            forwardMessage(room_id) {
                 axios.post('sendMessage', {
                     room_id: room_id,
                     message: this.forwardingMessage,
@@ -382,15 +393,22 @@
                     $('#forwardMessageModal').modal('hide');
                 });
             },
-            sendFirstHi(){
-                axios.post('sendMessage', {
-                    room_id: this.selectedContact.room_id,
-                    message: 'Hi',
-                }).then((response) => {
-                    this.$emit('newMessage', response.data);
-                    this.temphasChatHistory = true
-                });
-            },
+            isEmpty(obj) {
+                for(var key in obj) {
+                    if(obj.hasOwnProperty(key))
+                        return false;
+                    }
+                return true;
+            },  
+            // sendFirstHi() {
+            //     axios.post('sendMessage', {
+            //         room_id: this.selectedContact.room_id,
+            //         message: 'Hi',
+            //     }).then((response) => {
+            //         this.$emit('newMessage', response.data);
+            //         this.temphasChatHistory = true
+            //     });
+            // },
             cancelquotemessage(){
                 this.qoutemessagebody = '';
                 this.qoutemessageid = '';

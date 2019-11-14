@@ -619,6 +619,7 @@ label:focus,
     text-transform: capitalize;
     position: relative;
     left: 40px;
+    top: -10px;
 }
 
 #frame #sidepanel #contacts ul li.contact .wrap .meta .preview {

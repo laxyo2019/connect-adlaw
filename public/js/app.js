@@ -1878,10 +1878,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a);
 
@@ -2579,6 +2575,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
@@ -2632,6 +2629,22 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("menuWidth", "0px");
       $('#textarea1').focus();
     },
+    processName: function processName(str) {
+      if (str.indexOf("(") > 0 && str.indexOf(")") > 0) {
+        var pattern = /\((.*?)\)/;
+        var test = str.match(pattern)[0];
+        var output = {
+          'name': str.split(test).join(''),
+          'designation': str.match(pattern)[1]
+        };
+        return output;
+      }
+
+      return {
+        'name': str,
+        'designation': ''
+      };
+    },
     logout: function logout() {
       axios.post("logout", {}).then(function (response) {
         location.reload();
@@ -2682,6 +2695,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message/TextAsMessage */ "./resources/js/components/Message/TextAsMessage.vue");
 /* harmony import */ var _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message/ImageAsMessage */ "./resources/js/components/Message/ImageAsMessage.vue");
 /* harmony import */ var _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message/FileAsMessage */ "./resources/js/components/Message/FileAsMessage.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3071,18 +3095,22 @@ __webpack_require__.r(__webpack_exports__);
         $('#forwardMessageModal').modal('hide');
       });
     },
-    sendFirstHi: function sendFirstHi() {
-      var _this2 = this;
+    isEmpty: function isEmpty(obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
+      }
 
-      axios.post('sendMessage', {
-        room_id: this.selectedContact.room_id,
-        message: 'Hi'
-      }).then(function (response) {
-        _this2.$emit('newMessage', response.data);
-
-        _this2.temphasChatHistory = true;
-      });
+      return true;
     },
+    // sendFirstHi() {
+    //     axios.post('sendMessage', {
+    //         room_id: this.selectedContact.room_id,
+    //         message: 'Hi',
+    //     }).then((response) => {
+    //         this.$emit('newMessage', response.data);
+    //         this.temphasChatHistory = true
+    //     });
+    // },
     cancelquotemessage: function cancelquotemessage() {
       this.qoutemessagebody = '';
       this.qoutemessageid = '';
@@ -3103,7 +3131,7 @@ __webpack_require__.r(__webpack_exports__);
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
     },
     sendMessage: function sendMessage(message) {
-      var _this3 = this;
+      var _this2 = this;
 
       if (this.editflag) {
         if (this.editmessage == this.$refs.messagecomposercomponent.message) {
@@ -3115,13 +3143,13 @@ __webpack_require__.r(__webpack_exports__);
           message_id: this.editing_message.message_id,
           index: this.editing_index
         }).then(function (response) {
-          _this3.editmessage = '';
-          _this3.$refs.messagecomposercomponent.message = '';
-          _this3.editflag = false;
-          _this3.editing_index = null;
-          _this3.editing_message = null;
+          _this2.editmessage = '';
+          _this2.$refs.messagecomposercomponent.message = '';
+          _this2.editflag = false;
+          _this2.editing_index = null;
+          _this2.editing_message = null;
 
-          _this3.$emit('newMessage', response.data);
+          _this2.$emit('newMessage', response.data);
         });
         return;
       }
@@ -3136,7 +3164,7 @@ __webpack_require__.r(__webpack_exports__);
         qoutesendername: this.qoutesendername,
         qoutesenderid: this.qoutesenderid
       }).then(function (response) {
-        _this3.$emit('newMessage', response.data);
+        _this2.$emit('newMessage', response.data);
       });
 
       if (this.quoting) {
@@ -3174,7 +3202,7 @@ __webpack_require__.r(__webpack_exports__);
       this.messages.splice(key, 1);
     },
     addMemberstoGroup: function addMemberstoGroup() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.selectedMembers.length > 0) {
         for (var i = 0; i < this.selectedMembers.length; i++) {
@@ -3186,29 +3214,29 @@ __webpack_require__.r(__webpack_exports__);
           chatroom_id: this.selecteduser.room_id,
           users: this.selectedUserIds
         }).then(function (response) {
-          axios.get('getGroupMembers/' + _this4.selecteduser.room_id).then(function (response) {
-            _this4.groupmembers = response.data;
+          axios.get('getGroupMembers/' + _this3.selecteduser.room_id).then(function (response) {
+            _this3.groupmembers = response.data;
           });
-          axios.get('getallusernotingroup/' + _this4.selecteduser.room_id).then(function (response) {
-            _this4.addnewtogrouplist = response.data;
+          axios.get('getallusernotingroup/' + _this3.selecteduser.room_id).then(function (response) {
+            _this3.addnewtogrouplist = response.data;
           });
-          _this4.selectedMembers = [];
-          _this4.selectedUserIds = '';
+          _this3.selectedMembers = [];
+          _this3.selectedUserIds = '';
         });
       }
     },
     removeMembersfromGroup: function removeMembersfromGroup(user_id) {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.post('removeUserfromGroup', {
         chatroom_id: this.selecteduser.room_id,
         user_id: user_id
       }).then(function (response) {
-        axios.get('getGroupMembers/' + _this5.selecteduser.room_id).then(function (response) {
-          _this5.groupmembers = response.data;
+        axios.get('getGroupMembers/' + _this4.selecteduser.room_id).then(function (response) {
+          _this4.groupmembers = response.data;
         });
-        axios.get('getallusernotingroup/' + _this5.selecteduser.room_id).then(function (response) {
-          _this5.addnewtogrouplist = response.data;
+        axios.get('getallusernotingroup/' + _this4.selecteduser.room_id).then(function (response) {
+          _this4.addnewtogrouplist = response.data;
         });
       });
     },
@@ -3221,16 +3249,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     selectedContact: function selectedContact(room) {
-      var _this6 = this;
+      var _this5 = this;
 
       this.selecteduser = room;
 
       if (room.room_type != 'private') {
         axios.get('getGroupMembers/' + room.room_id).then(function (response) {
-          _this6.groupmembers = response.data;
+          _this5.groupmembers = response.data;
         });
         axios.get('getallusernotingroup/' + room.room_id).then(function (response) {
-          _this6.addnewtogrouplist = response.data;
+          _this5.addnewtogrouplist = response.data;
         });
       }
     },
@@ -8096,7 +8124,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n  background-color: #2196f3;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 2px;\n    display: inline-block;\n    height: 4px;\n    margin-right: 2px;\n    width: 4px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
+exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n  background-color: #2196f3;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.indicator[data-v-84f8d1ac] {\n  position: absolute;\n  left: 40px;\n  top: 18px;\n}\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 4px;\n    display: inline-block;\n    height: 8px;\n    margin-right: 4px;\n    width: 8px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
 
 // exports
 
@@ -53667,20 +53695,31 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "meta" }, [
                         _c("p", { staticClass: "name" }, [
-                          _vm._v(_vm._s(contact.roomname))
+                          _vm._v(_vm._s(_vm.processName(contact.roomname).name))
                         ]),
+                        _vm._v(" "),
+                        contact.typing
+                          ? _c(
+                              "div",
+                              { staticClass: "ticontainer indicator" },
+                              [_vm._m(1, true)]
+                            )
+                          : _c("div", { staticClass: "indicator" }, [
+                              _c("p", { staticClass: "m-0 info-text" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.processName(contact.roomname)
+                                      .designation
+                                  )
+                                )
+                              ])
+                            ]),
                         _vm._v(" "),
                         _c("span", { staticClass: "last_messge_time" }, [
                           _vm._v(_vm._s(contact.displaylastmessagetime))
                         ])
                       ])
                     ]),
-                    _vm._v(" "),
-                    contact.typing
-                      ? _c("div", { staticClass: "ticontainer" }, [
-                          _vm._m(1, true)
-                        ])
-                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "span",
@@ -53820,7 +53859,7 @@ var render = function() {
           ? _c("p", [_c("b", [_vm._v(_vm._s(_vm.selecteduser.roomname))])])
           : _c("p", [_vm._v("Start a new chat")]),
         _vm._v(" "),
-        _vm.selectedContact.typing
+        !_vm.isEmpty(_vm.selectedContact) && _vm.selectedContact.typing
           ? _c("span", { staticClass: "typing_indicator float-right mt-3" }, [
               _vm._m(0)
             ])

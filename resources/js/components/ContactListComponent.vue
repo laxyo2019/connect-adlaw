@@ -5,12 +5,10 @@
         <span class="online sender-avatar-icon profile_avatar_s">{{ user.name.toUpperCase().charAt(0) }}
           <span class='online-dot-profile'></span>
         </span>
-
         <b>{{ user.name }}</b>
-
-          <a href="#" id='logout' class="float-right mt-4 mr-2" style="color: #ff5252" 
-          @click.prevent="logout()" title="Logout">
-            <i class="fa fa-sign-out fa-lg"></i>
+        <a href="#" id='logout' class="float-right mt-4 mr-2" style="color: #ff5252" 
+        @click.prevent="logout()" title="Logout">
+          <i class="fa fa-sign-out fa-lg"></i>
         </a>
       </div>
     </div>
@@ -40,29 +38,32 @@
       <div v-if="allusers.length > 0">
         <ul class="contactlists">
           <li v-for="(contact, index) in orderedUsersLists"
-              :key="index"
-              class="contact"
+              :key="index" class="contact"
               v-bind:class="{ 'active' :room_id == contact.room_id}"
               @click="selectContact(contact)">
               <div class="wrap">
                 <span class="contact-status" :class="[checkIfOnline(contact.user_id) ? 'online' : 'busy']"></span>
                 <span class="sender-avatar-icon float-right">{{ contact.roomname.toUpperCase().charAt(0) }}</span>
                 <div class="meta">
-                  <!-- <p class="name">{{ contact.roomname | truncate(18,'...')}}</p> -->
-                  <p class="name">{{ contact.roomname }}</p>
-                  <!-- <p class="m-0 info-text">Developer</p> -->
+                  <p class="name">{{ processName(contact.roomname).name }}</p>
+
+                  <div class="ticontainer indicator" v-if="contact.typing">
+                    <div class="tiblock">
+                      <div class="tidot"></div>
+                      <div class="tidot"></div>
+                      <div class="tidot"></div>
+                    </div>
+                  </div>
+                  <div v-else class="indicator">
+                    <p class="m-0 info-text">{{ processName(contact.roomname).designation }}</p>
+                  </div>
+
                   <span class="last_messge_time">{{ contact.displaylastmessagetime }}</span>
                 </div>
                 
               </div>
 
-              <div class="ticontainer" v-if="contact.typing">
-                <div class="tiblock">
-                  <div class="tidot"></div>
-                  <div class="tidot"></div>
-                  <div class="tidot"></div>
-                </div>
-              </div>
+              
             <!-- <span class="last_message_info">{{ removetagsfromcontactlist(contact.lastmessage.slice(0,30)) }}</span> -->
             <span v-show="contact.unreadcount > 0" class="badge badge-light" 
               v-bind:class="'preunread_'+contact.room_id">{{ contact.unreadcount }}</span>
@@ -117,7 +118,7 @@
     },
     methods: {
       checkIfOnline(uid){
-        return this.onlineuserslist.find( e => e.id === uid );
+        return this.onlineuserslist.find(e => e.id === uid);
       },
       removetagsfromcontactlist(message){
         return message.replace(/<\/?[^>]+(>|$)/g, "");
@@ -131,6 +132,24 @@
         this.$emit("menuWidth", "0px");
         $('#textarea1').focus();
       },
+
+      processName(str) 
+      {
+        if(str.indexOf("(") > 0 && str.indexOf(")") > 0)
+        {
+          let pattern = /\((.*?)\)/;
+          let test = str.match(pattern)[0];
+
+          let output = {
+            'name': str.split(test).join('') ,
+            'designation': str.match(pattern)[1]
+          }
+          return output;
+        } 
+
+        return {'name' : str, 'designation' : ''}
+      },
+
       logout() {
         axios.post("logout", {}).then(response => {
           location.reload();
@@ -271,6 +290,12 @@
   }
 
   /* typing indicator */
+  .indicator {
+    position: absolute;
+    left: 40px;
+    top: 18px;
+  }
+
   .tiblock {
     align-items: center;
     display: flex;
@@ -285,11 +310,11 @@
 
   .tidot {
       -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
-      border-radius: 2px;
+      border-radius: 4px;
       display: inline-block;
-      height: 4px;
-      margin-right: 2px;
-      width: 4px;
+      height: 8px;
+      margin-right: 4px;
+      width: 8px;
   }
 
   @-webkit-keyframes mercuryTypingAnimation{

@@ -33,27 +33,23 @@
         </div>
         <!-- FOR MOBILE VIEW -->
         <div v-else id="mySidenav" :style="{width: menuWidth}" class="sidenav">
-            <ContactsList :mobileView="mobileView" @menuWidth="closeNav"
-                    :onlineuserslist="onlineuserslist"
-                    :allusers="contacts" :user="user"
-                    @selected="emitStartConversationWith"
-                    :group_permission="group_permission"
-                    ref="contactlistcompnentref">
+            <ContactsList
+                @menuWidth="closeNav" @selected="emitStartConversationWith"
+                :mobileView="mobileView" :onlineuserslist="onlineuserslist"
+                :allusers="contacts" :user="user"
+                :group_permission="group_permission"
+                ref="contactlistcompnentref">
             </ContactsList>
         </div>
 
         <div class="content">
             <Conversation :mobileView="mobileView"
-                @openNav = "openNav()"
-                @groupdeleted="groupdeleted"
-                @newMessage="gotnewMessage"
-                @paginate_data="paginate_data"
+                @openNav = "openNav()" @groupdeleted="groupdeleted"
+                @newMessage="gotnewMessage" @paginate_data="paginate_data"
                 :messages="messages" :user="user" 
-                :selectedContact="selectedContact" 
-                :allusers="contacts"
+                :selectedContact="selectedContact" :allusers="contacts"
                 :group_permission="group_permission"
-                :loading_more="loading_more"
-                :hasChatHistory="hasChatHistory"
+                :loading_more="loading_more" :hasChatHistory="hasChatHistory"
                 :loading_chat="loading_chat">
             </Conversation>    
         </div>

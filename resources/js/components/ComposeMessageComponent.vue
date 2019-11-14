@@ -1,52 +1,52 @@
 <template>
+  
   <div>
-	<div class="message-input shadow-lg">
-    <div class="row bg-white" style="margin:0">
-      <div class="input-field col-sm-1 col-2 text-center " style="padding: 0">
-        <button class="btn custom_btn m-l-26 " @click.prevent="uploadfileboxopen">
-          <i class='text-white' :class="(!openfileuploadingbox) ? 'fa fa-paperclip fa-lg attachment' : 'fa fa-arrow-down fa-lg'"
-              aria-hidden="true"
-          ></i>
-        </button>
+  	 <div class="message-input shadow-lg">
+          <div class="row bg-white" style="margin:0">
+            <div class="input-field col-sm-1 col-2 text-center " style="padding: 0">
+              <button class="btn custom_btn m-l-26 " @click.prevent="uploadfileboxopen">
+                <i class='text-white' :class="(!openfileuploadingbox) ? 'fa fa-paperclip fa-lg attachment' : 'fa fa-arrow-down fa-lg'"
+                    aria-hidden="true"
+                ></i>
+              </button>
+            </div>
+            <div class="input-field col-sm-10 col-8 bg-white" >
+              <at-ta :members="members" name-key="user_name">
+                <textarea id="textarea1"
+                	@keyup="auto_grow(this)"
+                  class="materialize-textarea"
+                  v-model="message"
+                  @keydown.enter.exact.prevent="sendMessage"
+                  @keydown="sendTypingEvent"
+                  placeholder="Type your message here" autofocus></textarea>
+                <!-- <label for="textarea1">Your Message... </label> -->
+              </at-ta>
+            </div>
+            <div class="input-field col-sm-1 col-2 text-center" style="padding: 0">
+              <button class="btn custom_btn" @click.prevent="sendMessage">
+                <i class="fa fa-paper-plane text-white" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <vue2Dropzone class="dropzoneUpPosition"
+            :useCustomSlot=true v-show="openfileuploadingbox"
+            ref="myVueDropzone" id="dropzone"
+            :options="dropzoneOptions"
+            v-on:vdropzone-sending="sendingEvent"
+            @vdropzone-queue-complete="vqueueComplete">
+
+           <div class="dropzone-custom-content">
+    	        <h6 v-if='mobileView' class="dropzone-custom-title">Drag and drop to upload content!</h6>
+    	        <h3 v-else class="dropzone-custom-title">Drag and drop to upload content!</h3>
+    	        <div class="subtitle">
+    	        	<span v-if="mobileView" style='font-size:12px'>...or click to select a file from your computer</span>
+    	        	<span v-else>...or click to select a file from your computer</span>
+    	        </div>
+    	      </div>
+          </vue2Dropzone>
       </div>
-      <div class="input-field col-sm-10 col-8 bg-white" >
-        <at-ta :members="members" name-key="user_name">
-          <textarea id="textarea1"
-          	@keyup="auto_grow(this)"
-            class="materialize-textarea"
-            v-model="message"
-            @keydown.enter.exact.prevent="sendMessage"
-            @keydown="sendTypingEvent"
-            placeholder="Type your message here" autofocus></textarea>
-          <!-- <label for="textarea1">Your Message... </label> -->
-        </at-ta>
-      </div>
-      <div class="input-field col-sm-1 col-2 text-center" style="padding: 0">
-        <button class="btn custom_btn" @click.prevent="sendMessage">
-          <i class="fa fa-paper-plane text-white" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-      <vue2Dropzone class="dropzoneUpPosition"
-        :useCustomSlot=true
-        v-show="openfileuploadingbox"
-        ref="myVueDropzone"
-        id="dropzone"
-        :options="dropzoneOptions"
-        v-on:vdropzone-sending="sendingEvent"
-        @vdropzone-queue-complete="vqueueComplete"
-      >
-       <div class="dropzone-custom-content">
-	        <h6 v-if='mobileView' class="dropzone-custom-title">Drag and drop to upload content!</h6>
-	        <h3 v-else class="dropzone-custom-title">Drag and drop to upload content!</h3>
-	        <div class="subtitle">
-	        	<span v-if="mobileView" style='font-size:12px'>...or click to select a file from your computer</span>
-	        	<span v-else>...or click to select a file from your computer</span>
-	        </div>
-	      </div>
-      </vue2Dropzone>
-    </div>
   </div>
+
 </template>
 <script>
 import AtTa from "vue-at/dist/vue-at-textarea";
