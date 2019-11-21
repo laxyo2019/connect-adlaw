@@ -8124,7 +8124,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n  background-color: #2196f3;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.indicator[data-v-84f8d1ac] {\n  position: absolute;\n  left: 40px;\n  top: 18px;\n}\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 4px;\n    display: inline-block;\n    height: 8px;\n    margin-right: 4px;\n    width: 8px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
+exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n  /*background-color: #2196f3;*/\n}\n.info-text[data-v-84f8d1ac] {\n  font-weight: 400;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.indicator[data-v-84f8d1ac] {\n  position: absolute;\n  left: 50px;\n  top: 18px;\n}\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 4px;\n    display: inline-block;\n    height: 8px;\n    margin-right: 4px;\n    width: 8px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
 
 // exports
 
@@ -53625,32 +53625,37 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "recent_chats" }, [
-      _c("span", [_vm._v("Online: " + _vm._s(_vm.onlineuserslist.length))]),
+      _vm._m(0),
       _vm._v(" "),
-      _c("span", { staticClass: "float-right" }, [
-        _vm.group_permission == 1
-          ? _c(
-              "a",
-              {
-                staticClass: "btn add_btn mr-2",
-                attrs: {
-                  id: "creategroup",
-                  "data-toggle": "modal",
-                  "data-target": "#createnewgroup",
-                  title: "New Group"
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "text-white fa fa-users fa-fw",
-                  attrs: { "aria-hidden": "true" }
-                })
-              ]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm._m(0)
-      ]),
+      _vm.group_permission == 1
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-secondary add_btn mr-2",
+              attrs: {
+                id: "creategroup",
+                "data-toggle": "modal",
+                "data-target": "#createnewgroup",
+                title: "New Group"
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-users fa-fw",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "strong",
+        {
+          staticClass: "text-success animated infinite pulse slow",
+          attrs: { title: "Users Online" }
+        },
+        [_vm._v("\n      " + _vm._s(_vm.onlineuserslist.length) + "  \n    ")]
+      ),
       _vm._v(" "),
       _c("hr", { staticClass: "mb-0" })
     ]),
@@ -53753,9 +53758,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "button",
       {
-        staticClass: "btn add_btn",
+        staticClass: "btn btn-sm btn-primary add_btn mr-2",
         attrs: {
           id: "addcontact",
           "data-toggle": "modal",

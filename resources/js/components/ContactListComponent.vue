@@ -19,17 +19,17 @@
     </div>
 
     <div class="recent_chats">
-      <span>Online: {{ onlineuserslist.length }}</span>
+      <button id="addcontact" data-toggle="modal" data-target="#addusermodal" class="btn btn-sm btn-primary add_btn mr-2" title="New Chat">
+        <i class="text-white fa fa-user-plus fa-fw" aria-hidden="true"></i>
+      </button>
 
-      <span class="float-right">
-        <a v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" class="btn add_btn mr-2" title="New Group">
-          <i class="text-white fa fa-users fa-fw" aria-hidden="true"></i>
-        </a>
+      <button v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" class="btn btn-sm btn-secondary add_btn mr-2" title="New Group">
+        <i class="fa fa-users fa-fw" aria-hidden="true"></i>
+      </button>
 
-        <a id="addcontact" data-toggle="modal" data-target="#addusermodal" class="btn add_btn" title="New Chat">
-          <i class="text-white fa fa-user-plus fa-fw" aria-hidden="true"></i>
-        </a>
-      </span>
+      <strong class="text-success animated infinite pulse slow" title="Users Online">
+        {{ onlineuserslist.length }}  
+      </strong>
       
       <hr class="mb-0">
     </div>
@@ -186,7 +186,11 @@
 
   .add_btn {
     border-radius: 40px;
-    background-color: #2196f3;
+    /*background-color: #2196f3;*/
+  }
+
+  .info-text {
+    font-weight: 400;
   }
 
   .dropdown_css li{
@@ -292,7 +296,7 @@
   /* typing indicator */
   .indicator {
     position: absolute;
-    left: 40px;
+    left: 50px;
     top: 18px;
   }
 

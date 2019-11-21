@@ -618,8 +618,8 @@ label:focus,
     font-weight: 600;
     text-transform: capitalize;
     position: relative;
-    left: 40px;
-    top: -10px;
+    left: 50px;
+    top: -8px;
 }
 
 #frame #sidepanel #contacts ul li.contact .wrap .meta .preview {
