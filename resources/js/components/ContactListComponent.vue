@@ -37,9 +37,10 @@
     <div id="contacts">
       <div v-if="allusers.length > 0">
         <ul class="contactlists">
+          <!-- v-for loop starts -->
           <li v-for="(contact, index) in orderedUsersLists"
               :key="index" class="contact"
-              v-bind:class="{ 'active' :room_id == contact.room_id}"
+              :class="{ 'active' :room_id == contact.room_id }"
               @click="selectContact(contact)">
               <div class="wrap">
                 <span class="contact-status" :class="[checkIfOnline(contact.user_id) ? 'online' : 'busy']"></span>
@@ -63,11 +64,14 @@
                 
               </div>
 
-              
-            <!-- <span class="last_message_info">{{ removetagsfromcontactlist(contact.lastmessage.slice(0,30)) }}</span> -->
-            <span v-show="contact.unreadcount > 0" class="badge badge-light" 
-              v-bind:class="'preunread_'+contact.room_id">{{ contact.unreadcount }}</span>
-          </li>
+            <!-- <span class="badge badge-light" :class="'preunread_'+contact.room_id" v-show="contact.unreadcount > 0">
+              {{ contact.unreadcount }}
+            </span> -->
+            <span class="badge badge-light" v-show="contact.unreadcount > 0">
+              {{ contact.unreadcount }}
+            </span>
+          </li> 
+          <!-- v-for loop ends -->
         </ul>
       </div>
       <div v-else>
@@ -115,6 +119,9 @@
     },
     created(){
       // this.usersOnline = this.onlineuserslist;
+      // axios.get('get_unreadcounts').then(response => {
+      //   console.log('unread_messages', response.data);
+      // }).catch(error => console.log(error.response.data));
     },
     methods: {
       checkIfOnline(uid){
@@ -123,8 +130,9 @@
       removetagsfromcontactlist(message){
         return message.replace(/<\/?[^>]+(>|$)/g, "");
       },
+
       selectContact(contact) {
-        $('.preunread_'+contact.room_id).hide();
+        // $('.preunread_'+contact.room_id).hide();
         this.room_id = contact.room_id;
         this.selected = contact;
         this.$emit("selected", contact);
@@ -163,7 +171,7 @@
       //   });
       // },
       orderedUsersLists: function () {
-        if(this.search!=''){
+        if(this.search != ''){
           return this.usercontactlist.filter(contact => {
             return contact.roomname.toLowerCase().match(this.search);
           });

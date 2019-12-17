@@ -237,9 +237,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                		<div class="form-group">
-                			<input v-model="searchForwardTo" type="text" class="form-control" placeholder="Search Name.." style="border-radius: 25px;" @keyup="filterForwardToList()">
-                		</div>
+            		<div class="form-group">
+            			<input v-model="searchForwardTo" type="text" class="form-control" placeholder="Search Name.." 
+                            style="border-radius: 25px;" @keyup="filterForwardToList()">
+            		</div>
                     <ul class="list-group messages" id="message_container" v-if="loading_chat" v-on:scroll="scrollevent()" v-chat-scroll="{always: false}">
                         <li class="list-group-item" v-for="(member,index) in forwardToList" :key="index">
                             <table style="width:100%;">
@@ -312,6 +313,13 @@
                 default:false
             },
         },
+        components: {
+            ComposeMessage,
+            multiselect,
+            TextAsMessage,
+            ImageAsMessage,
+            FileAsMessage
+        },
     data() {
             return {
                 searchForwardTo:'',
@@ -347,7 +355,7 @@
         	checkIsQuote(message){
         		let msg = JSON.parse(message);
         		if(msg.parent_id!=""){
-							return true;
+				    return true;
         		}
         		return false;
         	},
@@ -519,7 +527,6 @@
                 }
             },
             removeMembersfromGroup(user_id){
-               
                 axios.post('removeUserfromGroup', {
                     chatroom_id: this.selecteduser.room_id,
                     user_id :user_id
@@ -563,16 +570,6 @@
                 this.lastmessage = messages[0];
                 this.loading = false;
             }
-        },
-        mounted(){
-            // console.log(this.loading_chat)
-        },
-        components: {
-        	ComposeMessage,
-        	multiselect,
-        	TextAsMessage,
-		      ImageAsMessage,
-		      FileAsMessage
         }
     }
 </script>

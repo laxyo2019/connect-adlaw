@@ -100,11 +100,16 @@ class HomeController extends Controller
         return response(new ParticipantCollection($chatrooms));
     }
 
+    public function getUnreadCounts() {
+        $unreadcounts = UnreadMessage::where('user_id', auth()->user()->id)->get();
+        return $unreadcounts;
+    }
+
     //Get All Messages of single ChatRoom
     public function getRoomConversations($room_id){
-        if(!request()->has('page')){
+        // if(!request()->has('page')){
             UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->delete();
-        }
+        // }
         $data = ChatroomMessage::where('chatroom_id', $room_id)->orderBy('id','desc')->paginate(20);
         
         return (new MessageResourceCollection($data))->chatroom_id($room_id);

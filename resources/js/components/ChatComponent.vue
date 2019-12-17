@@ -95,19 +95,17 @@
     import Toasted from 'vue-toasted';
     Vue.use(Toasted)
 
-    var FaviconNotification = require('favicon-notification');
+    // var FaviconNotification = require('favicon-notification');
     import Conversation from './ConversationComponent';
     import ContactsList from './ContactListComponent';
     import ComposeMessage from './ComposeMessageComponent';
     import AddNewUser from './AddNewUserComponent';
     import CreateNewGroup from './CreateGroupComponent';
-    FaviconNotification.init({
-        // url: '/path/to/favicon.ico',
-        color: '#000000',
-        lineColor: '#FFFFFF'
-    });
+    // When your app loads
+    // FaviconNotification.init({
+    //   color: '#000000'
+    // });
     export default {
-
         props: {
             user: {
                 type: Object,
@@ -168,11 +166,11 @@
             this.getcontactlist();
             this.loading = true;
             // Remove Notification Indicator from tab
-            document.addEventListener("visibilitychange", function() {
-                if (document.visibilityState === 'visible') {
-                    FaviconNotification.remove();
-                }
-            }, false);
+            // document.addEventListener("visibilitychange", function() {
+            //     if (document.visibilityState === 'visible') {
+            //         FaviconNotification.remove();
+            //     }
+            // }, false);
             if (this.rooms.length > 0) 
             {
                 for (var i = 0; i < this.rooms.length; i++) 
@@ -295,18 +293,21 @@
 
             loadMoreMessages(room){
                 // console.log('from chat',room.room_id)
-                axios.get('get_room_conversations/' + room.room_id+'?page='+this.page)
-                    .then((response) => {
-                        if(response.data.links.next || response.data.meta.current_page <= response.data.meta.last_page){
-                            for(var i=0;i<response.data.data.length;i++){
-                                var moremessage = response.data.data;
-                                this.messages.unshift(moremessage[i])
-                            }
-                            this.loading_more = false
-                        }else{
-                            this.scrollends = true
+                axios.get('get_room_conversations/' + room.room_id+'?page='+this.page).then((response) => {
+                    if (response.data.links.next || response.data.meta.current_page <= response.data.meta.last_page)
+                    {
+                        for(var i=0;i<response.data.data.length;i++)
+                        {
+                            var moremessage = response.data.data;
+                            this.messages.unshift(moremessage[i])
                         }
-                    });
+                        this.loading_more = false
+                    }
+                    else
+                    {
+                        this.scrollends = true
+                    }
+                });
             },
 
             startConversationWith(room) {
@@ -336,12 +337,10 @@
             handleIncoming(message) {
                 this.gotnewMessage(message);
                 if(message.sender_id != this.user.id){
-                    // document.hidden, document.visibilityState
                     if (document.visibilityState === 'hidden') {
-                        FaviconNotification.add(); 
-                        this.showMessageNotificaiton(message);
-                    }else{
-                    } 
+                        // FaviconNotification.add(); 
+                        this.showMessageNotification(message);
+                    }
                 }
                 if (this.selectedContact.room_id === message.room_id) {
                     this.saveNewMessage(message);
@@ -367,7 +366,7 @@
                 // }
             },
 
-            showMessageNotificaiton(message){
+            showMessageNotification(message){
                 var iconURL = "/favicon.ico";
                 var title='';
                 var custommessage='';

@@ -1879,20 +1879,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a);
-
-var FaviconNotification = __webpack_require__(/*! favicon-notification */ "./node_modules/favicon-notification/src/index.js");
+Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotification = require('favicon-notification');
 
 
 
 
 
+ // When your app loads
+// FaviconNotification.init({
+//   color: '#000000'
+// });
 
-FaviconNotification.init({
-  // url: '/path/to/favicon.ico',
-  color: '#000000',
-  lineColor: '#FFFFFF'
-});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -1952,12 +1949,11 @@ FaviconNotification.init({
 
     this.getcontactlist();
     this.loading = true; // Remove Notification Indicator from tab
-
-    document.addEventListener("visibilitychange", function () {
-      if (document.visibilityState === 'visible') {
-        FaviconNotification.remove();
-      }
-    }, false);
+    // document.addEventListener("visibilitychange", function() {
+    //     if (document.visibilityState === 'visible') {
+    //         FaviconNotification.remove();
+    //     }
+    // }, false);
 
     if (this.rooms.length > 0) {
       for (var i = 0; i < this.rooms.length; i++) {
@@ -2110,11 +2106,10 @@ FaviconNotification.init({
       this.gotnewMessage(message);
 
       if (message.sender_id != this.user.id) {
-        // document.hidden, document.visibilityState
         if (document.visibilityState === 'hidden') {
-          FaviconNotification.add();
-          this.showMessageNotificaiton(message);
-        } else {}
+          // FaviconNotification.add(); 
+          this.showMessageNotification(message);
+        }
       }
 
       if (this.selectedContact.room_id === message.room_id) {
@@ -2141,7 +2136,7 @@ FaviconNotification.init({
       //     return;
       // }
     },
-    showMessageNotificaiton: function showMessageNotificaiton(message) {
+    showMessageNotification: function showMessageNotification(message) {
       var iconURL = "/favicon.ico";
       var title = '';
       var custommessage = '';
@@ -2576,6 +2571,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
@@ -2610,6 +2609,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {// this.usersOnline = this.onlineuserslist;
+    // axios.get('get_unreadcounts').then(response => {
+    //   console.log('unread_messages', response.data);
+    // }).catch(error => console.log(error.response.data));
   },
   methods: {
     checkIfOnline: function checkIfOnline(uid) {
@@ -2621,7 +2623,7 @@ __webpack_require__.r(__webpack_exports__);
       return message.replace(/<\/?[^>]+(>|$)/g, "");
     },
     selectContact: function selectContact(contact) {
-      $('.preunread_' + contact.room_id).hide();
+      // $('.preunread_'+contact.room_id).hide();
       this.room_id = contact.room_id;
       this.selected = contact;
       this.$emit("selected", contact); // ###r
@@ -2964,6 +2966,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3006,6 +3009,13 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": false
     }
+  },
+  components: {
+    ComposeMessage: _ComposeMessageComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
+    multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a,
+    TextAsMessage: _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ImageAsMessage: _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__["default"],
+    FileAsMessage: _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -3267,15 +3277,6 @@ __webpack_require__.r(__webpack_exports__);
       this.lastmessage = _messages[0];
       this.loading = false;
     }
-  },
-  mounted: function mounted() {// console.log(this.loading_chat)
-  },
-  components: {
-    ComposeMessage: _ComposeMessageComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a,
-    TextAsMessage: _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__["default"],
-    ImageAsMessage: _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__["default"],
-    FileAsMessage: _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -3526,6 +3527,28 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-context */ "./node_modules/vue-context/dist/js/vue-context.js");
 /* harmony import */ var vue_context__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_context__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_linkify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-linkify */ "./node_modules/vue-linkify/dist/vue-linkify.min.js");
+/* harmony import */ var vue_linkify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_linkify__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_clipboard2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-clipboard2 */ "./node_modules/vue-clipboard2/vue-clipboard.js");
+/* harmony import */ var vue_clipboard2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_clipboard2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3561,6 +3584,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
+Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_3___default.a);
+Vue.use(vue_clipboard2__WEBPACK_IMPORTED_MODULE_2___default.a);
+Vue.directive('linkified', vue_linkify__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['right', 'content', 'index', 'user', 'sender_name'],
   components: {
@@ -3572,6 +3601,19 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    doCopy: function doCopy() {
+      var quoted_msg = JSON.parse(this.content.msg_props)['msg'];
+      var main_msg = this.content.message;
+      var final_msg = quoted_msg.length > 0 ? quoted_msg + '\n' + main_msg : main_msg;
+      this.$copyText(final_msg).then(function (e) {
+        console.log(e);
+        Vue.toasted.success('Message Copied!', {
+          duration: 2000
+        });
+      }, function (e) {
+        console.log(e);
+      });
+    },
     checkIsQuote: function checkIsQuote(msgProps, message) {
       var quote = JSON.parse(msgProps);
 
@@ -8055,6 +8097,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/clipboard/dist/clipboard.min.js":
+/*!******************************************************!*\
+  !*** ./node_modules/clipboard/dist/clipboard.min.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * clipboard.js v2.0.4
+ * https://zenorocha.github.io/clipboard.js
+ * 
+ * Licensed MIT © Zeno Rocha
+ */
+!function(t,e){ true?module.exports=e():undefined}(this,function(){return function(n){var o={};function r(t){if(o[t])return o[t].exports;var e=o[t]={i:t,l:!1,exports:{}};return n[t].call(e.exports,e,e.exports,r),e.l=!0,e.exports}return r.m=n,r.c=o,r.d=function(t,e,n){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=0)}([function(t,e,n){"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},i=function(){function o(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(t,e,n){return e&&o(t.prototype,e),n&&o(t,n),t}}(),a=o(n(1)),c=o(n(3)),u=o(n(4));function o(t){return t&&t.__esModule?t:{default:t}}var l=function(t){function o(t,e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,o);var n=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(o.__proto__||Object.getPrototypeOf(o)).call(this));return n.resolveOptions(e),n.listenClick(t),n}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(o,c.default),i(o,[{key:"resolveOptions",value:function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:{};this.action="function"==typeof t.action?t.action:this.defaultAction,this.target="function"==typeof t.target?t.target:this.defaultTarget,this.text="function"==typeof t.text?t.text:this.defaultText,this.container="object"===r(t.container)?t.container:document.body}},{key:"listenClick",value:function(t){var e=this;this.listener=(0,u.default)(t,"click",function(t){return e.onClick(t)})}},{key:"onClick",value:function(t){var e=t.delegateTarget||t.currentTarget;this.clipboardAction&&(this.clipboardAction=null),this.clipboardAction=new a.default({action:this.action(e),target:this.target(e),text:this.text(e),container:this.container,trigger:e,emitter:this})}},{key:"defaultAction",value:function(t){return s("action",t)}},{key:"defaultTarget",value:function(t){var e=s("target",t);if(e)return document.querySelector(e)}},{key:"defaultText",value:function(t){return s("text",t)}},{key:"destroy",value:function(){this.listener.destroy(),this.clipboardAction&&(this.clipboardAction.destroy(),this.clipboardAction=null)}}],[{key:"isSupported",value:function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:["copy","cut"],e="string"==typeof t?[t]:t,n=!!document.queryCommandSupported;return e.forEach(function(t){n=n&&!!document.queryCommandSupported(t)}),n}}]),o}();function s(t,e){var n="data-clipboard-"+t;if(e.hasAttribute(n))return e.getAttribute(n)}t.exports=l},function(t,e,n){"use strict";var o,r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},i=function(){function o(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(t,e,n){return e&&o(t.prototype,e),n&&o(t,n),t}}(),a=n(2),c=(o=a)&&o.__esModule?o:{default:o};var u=function(){function e(t){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),this.resolveOptions(t),this.initSelection()}return i(e,[{key:"resolveOptions",value:function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:{};this.action=t.action,this.container=t.container,this.emitter=t.emitter,this.target=t.target,this.text=t.text,this.trigger=t.trigger,this.selectedText=""}},{key:"initSelection",value:function(){this.text?this.selectFake():this.target&&this.selectTarget()}},{key:"selectFake",value:function(){var t=this,e="rtl"==document.documentElement.getAttribute("dir");this.removeFake(),this.fakeHandlerCallback=function(){return t.removeFake()},this.fakeHandler=this.container.addEventListener("click",this.fakeHandlerCallback)||!0,this.fakeElem=document.createElement("textarea"),this.fakeElem.style.fontSize="12pt",this.fakeElem.style.border="0",this.fakeElem.style.padding="0",this.fakeElem.style.margin="0",this.fakeElem.style.position="absolute",this.fakeElem.style[e?"right":"left"]="-9999px";var n=window.pageYOffset||document.documentElement.scrollTop;this.fakeElem.style.top=n+"px",this.fakeElem.setAttribute("readonly",""),this.fakeElem.value=this.text,this.container.appendChild(this.fakeElem),this.selectedText=(0,c.default)(this.fakeElem),this.copyText()}},{key:"removeFake",value:function(){this.fakeHandler&&(this.container.removeEventListener("click",this.fakeHandlerCallback),this.fakeHandler=null,this.fakeHandlerCallback=null),this.fakeElem&&(this.container.removeChild(this.fakeElem),this.fakeElem=null)}},{key:"selectTarget",value:function(){this.selectedText=(0,c.default)(this.target),this.copyText()}},{key:"copyText",value:function(){var e=void 0;try{e=document.execCommand(this.action)}catch(t){e=!1}this.handleResult(e)}},{key:"handleResult",value:function(t){this.emitter.emit(t?"success":"error",{action:this.action,text:this.selectedText,trigger:this.trigger,clearSelection:this.clearSelection.bind(this)})}},{key:"clearSelection",value:function(){this.trigger&&this.trigger.focus(),window.getSelection().removeAllRanges()}},{key:"destroy",value:function(){this.removeFake()}},{key:"action",set:function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:"copy";if(this._action=t,"copy"!==this._action&&"cut"!==this._action)throw new Error('Invalid "action" value, use either "copy" or "cut"')},get:function(){return this._action}},{key:"target",set:function(t){if(void 0!==t){if(!t||"object"!==(void 0===t?"undefined":r(t))||1!==t.nodeType)throw new Error('Invalid "target" value, use a valid Element');if("copy"===this.action&&t.hasAttribute("disabled"))throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');if("cut"===this.action&&(t.hasAttribute("readonly")||t.hasAttribute("disabled")))throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');this._target=t}},get:function(){return this._target}}]),e}();t.exports=u},function(t,e){t.exports=function(t){var e;if("SELECT"===t.nodeName)t.focus(),e=t.value;else if("INPUT"===t.nodeName||"TEXTAREA"===t.nodeName){var n=t.hasAttribute("readonly");n||t.setAttribute("readonly",""),t.select(),t.setSelectionRange(0,t.value.length),n||t.removeAttribute("readonly"),e=t.value}else{t.hasAttribute("contenteditable")&&t.focus();var o=window.getSelection(),r=document.createRange();r.selectNodeContents(t),o.removeAllRanges(),o.addRange(r),e=o.toString()}return e}},function(t,e){function n(){}n.prototype={on:function(t,e,n){var o=this.e||(this.e={});return(o[t]||(o[t]=[])).push({fn:e,ctx:n}),this},once:function(t,e,n){var o=this;function r(){o.off(t,r),e.apply(n,arguments)}return r._=e,this.on(t,r,n)},emit:function(t){for(var e=[].slice.call(arguments,1),n=((this.e||(this.e={}))[t]||[]).slice(),o=0,r=n.length;o<r;o++)n[o].fn.apply(n[o].ctx,e);return this},off:function(t,e){var n=this.e||(this.e={}),o=n[t],r=[];if(o&&e)for(var i=0,a=o.length;i<a;i++)o[i].fn!==e&&o[i].fn._!==e&&r.push(o[i]);return r.length?n[t]=r:delete n[t],this}},t.exports=n},function(t,e,n){var d=n(5),h=n(6);t.exports=function(t,e,n){if(!t&&!e&&!n)throw new Error("Missing required arguments");if(!d.string(e))throw new TypeError("Second argument must be a String");if(!d.fn(n))throw new TypeError("Third argument must be a Function");if(d.node(t))return s=e,f=n,(l=t).addEventListener(s,f),{destroy:function(){l.removeEventListener(s,f)}};if(d.nodeList(t))return a=t,c=e,u=n,Array.prototype.forEach.call(a,function(t){t.addEventListener(c,u)}),{destroy:function(){Array.prototype.forEach.call(a,function(t){t.removeEventListener(c,u)})}};if(d.string(t))return o=t,r=e,i=n,h(document.body,o,r,i);throw new TypeError("First argument must be a String, HTMLElement, HTMLCollection, or NodeList");var o,r,i,a,c,u,l,s,f}},function(t,n){n.node=function(t){return void 0!==t&&t instanceof HTMLElement&&1===t.nodeType},n.nodeList=function(t){var e=Object.prototype.toString.call(t);return void 0!==t&&("[object NodeList]"===e||"[object HTMLCollection]"===e)&&"length"in t&&(0===t.length||n.node(t[0]))},n.string=function(t){return"string"==typeof t||t instanceof String},n.fn=function(t){return"[object Function]"===Object.prototype.toString.call(t)}},function(t,e,n){var a=n(7);function i(t,e,n,o,r){var i=function(e,n,t,o){return function(t){t.delegateTarget=a(t.target,n),t.delegateTarget&&o.call(e,t)}}.apply(this,arguments);return t.addEventListener(n,i,r),{destroy:function(){t.removeEventListener(n,i,r)}}}t.exports=function(t,e,n,o,r){return"function"==typeof t.addEventListener?i.apply(null,arguments):"function"==typeof n?i.bind(null,document).apply(null,arguments):("string"==typeof t&&(t=document.querySelectorAll(t)),Array.prototype.map.call(t,function(t){return i(t,e,n,o,r)}))}},function(t,e){if("undefined"!=typeof Element&&!Element.prototype.matches){var n=Element.prototype;n.matches=n.matchesSelector||n.mozMatchesSelector||n.msMatchesSelector||n.oMatchesSelector||n.webkitMatchesSelector}t.exports=function(t,e){for(;t&&9!==t.nodeType;){if("function"==typeof t.matches&&t.matches(e))return t;t=t.parentNode}}}])});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css":
 /*!**********************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css ***!
@@ -8219,7 +8278,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.after_msg .text-muted{\r\n  color: #fff!important;\n}\n.context-parent_div {\r\n\t\tposition:relative;\n}\n.context-menu {\r\n\t\ttop: 25px !important;\r\n\t\tposition: absolute;\r\n\t\tpadding: 0 !important;\n}\n.context-menu-right {\r\n    left: auto !important;\r\n\t\tright: 0 !important;\n}\n.context-menu-left {\r\n    left: 0 !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.after_msg .text-muted{\n\t  color: #fff !important;\n}\n.context-parent_div {\n\t\tposition:relative;\n}\n.context-menu {\n\t\ttop: 25px !important;\n\t\tposition: absolute;\n\t\tpadding: 0 !important;\n}\n.context-menu-right {\n    left: auto !important;\n\t\tright: 0 !important;\n}\n.context-menu-left {\n    left: 0 !important;\n}\n", ""]);
 
 // exports
 
@@ -8328,150 +8387,6 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/favicon-notification/src/index.js":
-/*!********************************************************!*\
-  !*** ./node_modules/favicon-notification/src/index.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {
-    if (true) {
-        // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-}(this, function() {
-
-    // Just return a value to define the module export.
-    // This example returns an object, but the module
-    // can return a function as the exported value.
-
-    // Only run in browser
-    if (typeof document === 'undefined') {
-      console.log('This script only run in browsers.');
-      return;
-    }
-
-    // Private properties
-    var _options = {};
-
-    var _defaults = {
-      url: '/favicon.ico',
-      color: '#eb361e',
-      lineColor: '#ffffff'
-    };
-
-    var _generatedFavicon;
-    var _iconElement;
-
-    // Provate methods
-    var _addFavicon = function(src) {
-      var head = document.getElementsByTagName('head')[0];
-      _iconElement = document.createElement('link');
-      _iconElement.type = 'image/x-icon';
-      _iconElement.rel = 'icon';
-      _iconElement.href = src;
-
-      // remove existing favicons
-      var links = document.getElementsByTagName('link');
-      for(var i=0, len=links.length; i < len; i++) {
-    		var exists = (typeof(links[i]) !== 'undefined');
-    		if (exists && (links[i].getAttribute('rel') || '').match(/\bicon\b/)) {
-    			head.removeChild(links[i]);
-    		}
-    	}
-
-      head.appendChild(_iconElement);
-    };
-
-    var _generateIcon = function(cb) {
-      var img = document.createElement('img');
-      img.src = _options.url;
-
-      img.onload = function() {
-        var lineWidth = 2;
-        var canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, img.width, img.height);
-        context.drawImage(img, 0, 0);
-
-        var centerX = img.width - (img.width / 4.5) - lineWidth;
-        var centerY = img.height - (img.height / 4.5) - lineWidth;
-        var radius = img.width / 4.5;
-
-        context.fillStyle = _options.color;
-        context.strokeStyle = _options.lineColor;
-        context.lineWidth = lineWidth;
-
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
-        context.closePath();
-        context.fill();
-        context.stroke();
-
-        cb(null, context.canvas.toDataURL());
-      };
-    };
-
-    var _setOptions = function(options) {
-      if (!options) {
-        _options = _defaults;
-        return;
-      }
-
-      _options = {};
-
-      for(var key in _defaults){
-           _options[key] = options.hasOwnProperty(key) ? options[key] : _defaults[key];
-      }
-    };
-
-    var FaviconNotification = {
-      init: function(options) {
-
-        _setOptions(options);
-
-        _generateIcon(function(err, url){
-          _generatedFavicon = url;
-        });
-
-        _addFavicon(_options.url);
-
-      },
-
-      add: function() {
-        if (!_generatedFavicon && !_iconElement) {
-          _setOptions();
-          _generateIcon(function(err, url) {
-            _generatedFavicon = url;
-            _addFavicon(url);
-          });
-        } else {
-          _iconElement.href = _generatedFavicon;
-        }
-
-      },
-
-      remove: function() {
-        _iconElement.href = _options.url;
-      }
-    };
-
-
-    return FaviconNotification;
-
-
-}));
 
 
 /***/ }),
@@ -52973,6 +52888,100 @@ return VueChatScroll;
 
 /***/ }),
 
+/***/ "./node_modules/vue-clipboard2/vue-clipboard.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-clipboard2/vue-clipboard.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Clipboard = __webpack_require__(/*! clipboard/dist/clipboard.min.js */ "./node_modules/clipboard/dist/clipboard.min.js") // FIXME: workaround for browserify
+
+var VueClipboardConfig = {
+  autoSetContainer: false,
+  appendToBody: true // This fixes IE, see #50
+}
+
+var VueClipboard = {
+  install: function (Vue) {
+    Vue.prototype.$clipboardConfig = VueClipboardConfig
+    Vue.prototype.$copyText = function (text, container) {
+      return new Promise(function (resolve, reject) {
+        var fakeElement = document.createElement('button')
+        var clipboard = new Clipboard(fakeElement, {
+          text: function () { return text },
+          action: function () { return 'copy' },
+          container: typeof container === 'object' ? container : document.body
+        })
+        clipboard.on('success', function (e) {
+          clipboard.destroy()
+          resolve(e)
+        })
+        clipboard.on('error', function (e) {
+          clipboard.destroy()
+          reject(e)
+        })
+        if (VueClipboardConfig.appendToBody) document.body.appendChild(fakeElement)
+        fakeElement.click()
+        if (VueClipboardConfig.appendToBody) document.body.removeChild(fakeElement)
+      })
+    }
+
+    Vue.directive('clipboard', {
+      bind: function (el, binding, vnode) {
+        if (binding.arg === 'success') {
+          el._vClipboard_success = binding.value
+        } else if (binding.arg === 'error') {
+          el._vClipboard_error = binding.value
+        } else {
+          var clipboard = new Clipboard(el, {
+            text: function () { return binding.value },
+            action: function () { return binding.arg === 'cut' ? 'cut' : 'copy' },
+            container: VueClipboardConfig.autoSetContainer ? el : undefined
+          })
+          clipboard.on('success', function (e) {
+            var callback = el._vClipboard_success
+            callback && callback(e)
+          })
+          clipboard.on('error', function (e) {
+            var callback = el._vClipboard_error
+            callback && callback(e)
+          })
+          el._vClipboard = clipboard
+        }
+      },
+      update: function (el, binding) {
+        if (binding.arg === 'success') {
+          el._vClipboard_success = binding.value
+        } else if (binding.arg === 'error') {
+          el._vClipboard_error = binding.value
+        } else {
+          el._vClipboard.text = function () { return binding.value }
+          el._vClipboard.action = function () { return binding.arg === 'cut' ? 'cut' : 'copy' }
+        }
+      },
+      unbind: function (el, binding) {
+        if (binding.arg === 'success') {
+          delete el._vClipboard_success
+        } else if (binding.arg === 'error') {
+          delete el._vClipboard_error
+        } else {
+          el._vClipboard.destroy()
+          delete el._vClipboard
+        }
+      }
+    })
+  },
+  config: VueClipboardConfig
+}
+
+if (true) {
+  module.exports = VueClipboard
+} else {}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-context/dist/js/vue-context.js":
 /*!*********************************************************!*\
   !*** ./node_modules/vue-context/dist/js/vue-context.js ***!
@@ -53737,10 +53746,15 @@ var render = function() {
                             expression: "contact.unreadcount > 0"
                           }
                         ],
-                        staticClass: "badge badge-light",
-                        class: "preunread_" + contact.room_id
+                        staticClass: "badge badge-light"
                       },
-                      [_vm._v(_vm._s(contact.unreadcount))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(contact.unreadcount) +
+                            "\n          "
+                        )
+                      ]
                     )
                   ]
                 )
@@ -55171,48 +55185,56 @@ var render = function() {
             ? _c(
                 "p",
                 {
+                  directives: [
+                    {
+                      name: "linkified",
+                      rawName: "v-linkified:options",
+                      value: { className: "font-italic text-info" },
+                      expression: "{ className: 'font-italic text-info' }",
+                      arg: "options"
+                    }
+                  ],
                   staticClass: "after_msg",
                   style: {
                     maxWidth: _vm.content.message.length > 150 ? "80%" : ""
                   }
                 },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "quote_msg_div",
-                      staticStyle: {
-                        "margin-bottom": "10px",
-                        "padding-bottom": "10px"
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-quote-left fa-1x" }),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "quote_msg" }, [
-                        _vm._v(_vm._s(JSON.parse(_vm.content.msg_props)["msg"]))
-                      ]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("span", [
-                        _vm._v(
-                          "~ " +
-                            _vm._s(
-                              JSON.parse(_vm.content.msg_props)["sender_name"]
-                            )
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br")
-                    ]
-                  ),
+                  _c("span", { staticClass: "quote_msg_div mb-3 pb-3" }, [
+                    _c("i", { staticClass: "fa fa-quote-left fa-1x" }),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "quote_msg" }, [
+                      _vm._v(_vm._s(JSON.parse(_vm.content.msg_props)["msg"]))
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-muted" }, [
+                      _vm._v(
+                        "~ " +
+                          _vm._s(
+                            JSON.parse(_vm.content.msg_props)["sender_name"]
+                          )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("br")
+                  ]),
                   _vm._v(_vm._s(_vm.content.message) + "\n\t\t")
                 ]
               )
             : _c("p", {
+                directives: [
+                  {
+                    name: "linkified",
+                    rawName: "v-linkified:options",
+                    value: { className: "font-italic text-info" },
+                    expression: "{ className: 'font-italic text-info' }",
+                    arg: "options"
+                  }
+                ],
                 staticClass: "after_msg",
                 style: {
                   maxWidth: _vm.content.message.length > 150 ? "80%" : ""
@@ -55243,6 +55265,23 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
+                              return _vm.doCopy()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-files-o" }),
+                          _vm._v("Copy\n\t\t        ")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
                               return _vm.$emit(
                                 "forwardMessageModal",
                                 _vm.content,
@@ -55253,7 +55292,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-share" }),
-                          _vm._v("Forward")
+                          _vm._v("Forward\n\t\t\t    \t")
                         ]
                       ),
                       _vm._v(" "),
@@ -55270,7 +55309,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-quote-left" }),
-                          _vm._v("Quote")
+                          _vm._v("Quote\n\t\t\t    \t")
                         ]
                       ),
                       _vm._v(" "),
@@ -55293,7 +55332,10 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("i", { staticClass: "fa fa-edit" }), _vm._v("Edit")]
+                        [
+                          _c("i", { staticClass: "fa fa-edit" }),
+                          _vm._v("Edit\n\t\t\t    \t")
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -55317,7 +55359,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-trash" }),
-                          _vm._v("Delete")
+                          _vm._v("Delete\n\t\t        ")
                         ]
                       )
                     ])
