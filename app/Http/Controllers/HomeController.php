@@ -213,11 +213,12 @@ class HomeController extends Controller
         $deletedMessage = ChatroomMessage::where('id',$request->message_id)->first();
 
         $media = DB::table('media')->where('model_id', $request->message_id)->first();
-        Storage::disk('do_chat')->delete($media->id . '/' . $media->file_name);
-        DB::table('media')->where('model_id', $request->message_id)->delete();
-
+        if($media){
+            Storage::disk('do_chat')->delete($media->id . '/' . $media->file_name);
+            DB::table('media')->where('model_id', $request->message_id)->delete();
+        }
+        
         ChatroomMessage::where('id', $request->message_id)->delete();
-
         broadcast(new DeleteMessage($deletedMessage, $request->index));
     }
 
