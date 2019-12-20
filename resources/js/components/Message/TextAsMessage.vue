@@ -104,7 +104,7 @@
 			deleteMsg() {
 				axios.post(`deleteMessage`,{message_id:this.content.message_id,index:this.index}).then((response) => {
            this.$emit('deleted', this.content.message_id);
-        }).catch(error => console.log(error.response));
+        }).catch(error => console.log(error.response.data));
 			}
 		}
 	}

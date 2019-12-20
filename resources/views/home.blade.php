@@ -9,7 +9,7 @@
 			<chat-component :user="{{ auth()->user() }}" 
 			:allusers="{{ $allusers }}" :allcontacts="{{ $allcontacts }}" 
 			:rooms="{{ $rooms }}" 
-			:group_permission="{{ $create }}">
+			:group_permission="{{ 1 }}">
 			</chat-component>
 		</div>
 	</div>

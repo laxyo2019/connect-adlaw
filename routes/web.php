@@ -25,4 +25,4 @@ Route::get('getallusernotingroup/{chatroom_id}', 'HomeController@getallusernotin
 Route::post('uploadfile', 'HomeController@uploadfile')->name('uploadfile');
 Route::resource('/media', 'MediaController');
 
-Route::get('get_unreadcounts', 'HomeController@getUnreadCounts');
+Route::patch('read_messages/{room_id}', 'HomeController@readMessages');

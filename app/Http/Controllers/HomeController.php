@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Chatroom;
-use App\User;
-use App\Models\ChatroomUser;
-use App\Models\ChatroomMessage;
-use App\Models\UnreadMessage;
-use App\Events\NewMessage;
-use App\Events\EditMessage;
 use App\Events\DeleteMessage;
+use App\Events\EditMessage;
 use App\Events\GroupDelete;
+use App\Events\NewMessage;
 use App\Events\NewRoom;
 use App\Http\Resources\ContactCollection;
 use App\Http\Resources\GroupMemberCollection;
@@ -19,12 +13,19 @@ use App\Http\Resources\MessageResource;
 use App\Http\Resources\MessageResourceCollection;
 use App\Http\Resources\Participant;
 use App\Http\Resources\ParticipantCollection;
+use App\Models\Chatroom;
+use App\Models\ChatroomMessage;
+use App\Models\ChatroomUser;
+use App\Models\UnreadMessage;
+use App\User;
 use Auth;
-use Storage;
 use File;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\Models\Media;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -100,68 +101,48 @@ class HomeController extends Controller
         return response(new ParticipantCollection($chatrooms));
     }
 
-    public function getUnreadCounts() {
-        $unreadcounts = UnreadMessage::where('user_id', auth()->user()->id)->get();
-        return $unreadcounts;
+    public function readMessages($room_id) {
+        UnreadMessage::where([
+            'chatroom_id' => $room_id,
+            'user_id' => auth()->user()->id
+        ])->update(['read_at' => date('Y-m-d H:i:s')]);
     }
 
     //Get All Messages of single ChatRoom
-    public function getRoomConversations($room_id){
-        // if(!request()->has('page')){
-            UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->delete();
-        // }
+    public function getRoomConversations($room_id) {
+        $this->readMessages($room_id);
         $data = ChatroomMessage::where('chatroom_id', $room_id)->orderBy('id','desc')->paginate(20);
-        
         return (new MessageResourceCollection($data))->chatroom_id($room_id);
-        // return response(new MessageResourceCollection($data));
     }
 
     // Send Message
-    public function sendMessage(Request $request){
+    public function sendMessage(Request $request) {
     	$msg_props = array(
     		'parent_id' => "",
     		'sender_id' => "",
     		'sender_name' => "",
     		'msg' => "",
-    		'quoted'=>"",
-    		'edited'=>""
+    		'quoted'=> "",
+    		'edited'=> ""
     	);
 
-        // $messagebody = '';
-        if($request->quoting){
-        			$msg_props['parent_id'] = $request->qotemessageid;
-        			$msg_props['sender_name'] = $request->qoutesendername;
-        			$msg_props['sender_id'] = $request->qoutesenderid;
-        			$msg_props['msg'] = $request->quotemessagebody;
-            // $messagebody .= $request->qoutemessagebody;
+        if($request->quoting)
+        {
+			$msg_props['parent_id'] = $request->qotemessageid;
+			$msg_props['sender_name'] = $request->qoutesendername;
+			$msg_props['sender_id'] = $request->qoutesenderid;
+			$msg_props['msg'] = $request->quotemessagebody;
         }
-        // $messagebody1 = $request->message;
-        // $array = explode(' ',$messagebody1);
-        // foreach($array as $arr){
-        //     if(strpos( $arr, '@' ) !== false) {
-        //         $highlight = '<a href="#">'.$arr.'</a>';
-        //         $messagebody1 = str_replace($arr,$highlight,$messagebody1);
-        //     }
-        // }
 
-        $messagebody =  $request->message;
-        // $messagebody = $messagebody . $messagebody1;
         $user_id = Auth::user()->id;
-        $newMessage = new ChatroomMessage;
 
-        if ($request->hasfile('file')) {
-           
-            $newMessage->is_file = 1;
-            $newMessage->message = $messagebody;
-        } else {
-            $newMessage->is_file = 0;
-            $newMessage->message = $messagebody;
-        }
+        $newMessage = new ChatroomMessage;
+        $newMessage->is_file = ($request->hasfile('file')) ? 1 : 0; 
+        $newMessage->message = $request->message;
         $newMessage->msg_props = json_encode($msg_props);
         $newMessage->chatroom_id = $request->room_id;
         $newMessage->sender_id = $user_id;
         $newMessage->save();
-
         
         $chatroomusers = ChatroomUser::where('chatroom_id', $request->room_id)->pluck('user_id');
         foreach ($chatroomusers as $key => $value) {
@@ -193,55 +174,51 @@ class HomeController extends Controller
     public function createNewGroup(Request $request){
         $group_participants = rtrim($request->users, ',');
         $group_participants = explode(',', $group_participants);
-        
-        $auth_user_id = Auth::user()->id;
+
         //create new chat room
-        $chatroom = new Chatroom;
-        $chatroom->title = $request->groupname;
-        $chatroom->type = 'group';
-        $chatroom->initiator_id = $auth_user_id;
-        // $chatroom->room_status = 'active';
-        
+        $chatroom = Chatroom::create([
+            'title' => $request->groupname,
+            'type' => 'group',
+            'initiator_id' => auth()->user()->id
+        ]);
+
         // Upload Logo 
-        if ($request->hasfile('logo')) {
-            $file = $request->file('logo');
-            $filename = time() . $file->getClientOriginalName();
-            Storage::disk('public')->put($filename, File::get($request->logo));
-            $chatroom->icon = $filename;
-        } 
-        $chatroom->save();
+        // if ($request->hasfile('logo')) {
+        //     $file = $request->file('logo');
+        //     $filename = time() . $file->getClientOriginalName();
+        //     Storage::disk('public')->put($filename, File::get($request->logo));
+        //     $chatroom->icon = $filename;
+        // }
 
-        if ($chatroom) {
-            //All Users insertion begins
-            foreach ($group_participants as $value) {
-
-                $chatParticipants = new ChatroomUser;
-                $chatParticipants->chatroom_id = $chatroom->id;
-                $chatParticipants->user_id = $value;
-                $chatParticipants->save();
-
-                broadcast(new NewRoom($chatParticipants));
-            }
-            //All Users insertion end
-
-            //Current Login User insertion begins    
+        // All Users insertion begins
+        foreach ($group_participants as $value) {
             $chatParticipants = new ChatroomUser;
             $chatParticipants->chatroom_id = $chatroom->id;
-            $chatParticipants->user_id = auth()->user()->id;
+            $chatParticipants->user_id = $value;
             $chatParticipants->save();
+
             broadcast(new NewRoom($chatParticipants));
-            //Current Login User insertion ends
         }
 
+        $chatParticipants = new ChatroomUser;
+        $chatParticipants->chatroom_id = $chatroom->id;
+        $chatParticipants->user_id = auth()->user()->id;
+        $chatParticipants->save();
 
+        broadcast(new NewRoom($chatParticipants));
         return response()->json(['success' => 1]);
-        
     }
 
     public function deleteMessage(Request $request){
         $deletedMessage = ChatroomMessage::where('id',$request->message_id)->first();
-        ChatroomMessage::where('id',$request->message_id)->delete();
-        broadcast(new DeleteMessage($deletedMessage,$request->index));
+
+        $media = DB::table('media')->where('model_id', $request->message_id)->first();
+        Storage::disk('do_chat')->delete($media->id . '/' . $media->file_name);
+        DB::table('media')->where('model_id', $request->message_id)->delete();
+
+        ChatroomMessage::where('id', $request->message_id)->delete();
+
+        broadcast(new DeleteMessage($deletedMessage, $request->index));
     }
 
     public function getGroupMembers($chatroom_id){

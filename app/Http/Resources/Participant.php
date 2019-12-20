@@ -47,7 +47,13 @@ class Participant extends JsonResource
 			  	$display_date = $lastMessage_time->format('D');
 			  }
         // End of code
-        $unreadcount = UnreadMessage::where('chatroom_id',$this->id)->where('user_id',auth()->user()->id)->count();
+              
+        $unreadcount = UnreadMessage::where([
+            'chatroom_id' => $this->id,
+            'user_id' => auth()->user()->id,
+            'read_at' => null
+        ])->count();
+
         return [
             'room_id'         => $this->id,
             'user_id'         => $user_id,

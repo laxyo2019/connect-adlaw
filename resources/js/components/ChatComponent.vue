@@ -84,11 +84,9 @@
                     <div class="modal-body">
                         <CreateNewGroup :allcontacts="allcontacts"></CreateNewGroup>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -157,6 +155,7 @@
         },
 
         mounted(){
+            this.windowChecker();
             // ###r
             if( window.screen.availWidth <= 500 ){
                 this.mobileView         = true;
@@ -228,21 +227,50 @@
         },
 
         methods:{
+            windowChecker() {
+                var count = 0;
+                var myInterval;
+                let x = this;
+                
+                window.addEventListener('focus', startTimer); // Active
+                window.addEventListener('blur', stopTimer); // Inactive
+
+                function timerHandler() {
+                    count++;
+                }
+
+                function startTimer() { // Start timer
+                    console.log('focus');
+                    x.readMessages();
+                    if(this.mobileView) {
+                        window.reload();
+                    }
+                    myInterval = window.setInterval(timerHandler, 1000);
+                }
+                
+                function stopTimer() { // Stop timer
+                    window.clearInterval(myInterval);
+                }
+            },
+
+            readMessages() {
+                axios.patch(`read_messages/${this.selectedContact.room_id}`, {}).then(response => {
+                    console.log(response.data);
+                }).catch(error => console.log(error.response.data));
+            },
 
             updateTypingStatus(room_id, status)
             {
                 this.contacts.forEach((e) => {
-                    if(e.room_id == room_id)
-                    {
-                        console.log('updated');
+                    if(e.room_id == room_id) {
                         e.typing = status;
                     }
                 });
             },
 
-        	emitStartConversationWith(room){
+        	emitStartConversationWith(contact){
         		this.newChat = true;
-        		this.startConversationWith(room);
+        		this.startConversationWith(contact);
             },
             
             // ABANDONED
@@ -310,16 +338,16 @@
                 });
             },
 
-            startConversationWith(room) {
+            startConversationWith(contact) {
                 this.messages = [];
                 this.scrollends = false
                 this.loading_chat = false
                 this.hasChatHistory = false
                 this.page = 1;
-                axios.get('get_room_conversations/' + room.room_id)
+                axios.get('get_room_conversations/' + contact.room_id)
                     .then((response) => { 
                         this.messages = response.data.data.slice(0).reverse()
-                        this.selectedContact = room;
+                        this.selectedContact = contact;
                         this.loading = false;
                         if(response.data.meta.sayhi>0){
                             this.hasChatHistory = true;
@@ -358,12 +386,7 @@
             },
 
             handleDeletedMessage(message){
-                // this.messages.splice(message.message_index, 1);
-                this.messages.filter(m => message.message_id != message.message_id);
-                // if (this.selectedContact.room_id === message.room_id) {
-                //     this.saveNewMessage(message);
-                //     return;
-                // }
+                this.messages = this.messages.filter(m => m.message_id != message.message_id);
             },
 
             showMessageNotification(message){
@@ -371,8 +394,7 @@
                 var title='';
                 var custommessage='';
                 
-                if(message.is_file == 1)
-                {
+                if(message.is_file == 1) {
                     title = message.sender_name + ' Shared a File';
                     custommessage = message.file_name;
                     var audio = new Audio('audio/notification.mp3');
@@ -380,19 +402,14 @@
                 }
                 else
                 {
-                    // @ Mention Notification
-                    if(message.message.includes('@'+this.user.name.split(" ")[0])>0)
-                    {
+                    if (message.message.includes('@'+this.user.name.split(" ")[0]) > 0) { // @ Mention Notification
                         title = message.sender_name + ' has mentioned you in ' + message.chatroom_title;
                         custommessage = message.message;
                         custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
                         var audio = new Audio('audio/mention.mp3');
                         audio.play();
-
-                    
                     }
-                    else // New Message Notification
-                    {
+                    else { // New Message Notification
                         title = 'New Message From '+message.sender_name;
                         custommessage = message.message;
                         custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
@@ -416,30 +433,30 @@
                     });
             },
 
-            showNewUserNotificaiton(newRoomData){
+            showNewUserNotification(newRoomData){
                 var iconURL = "/favicon.ico";
-                var title='';
-                var message='';
-                if(newRoomData.chatroom.type=='group'){
+                var title = '';
+                var message = '';
+                if (newRoomData.chatroom.type == 'group') {
                     title = 'New Group '+newRoomData.chatroom.title;
                     message = 'Added in '+newRoomData.chatroom.title;
-                }else{
+                } else {
                     title = 'New Room';
                     message = 'New Chat is initiated';
                 }
                 Notification.requestPermission(permission => {
-                        let notificationabc = new Notification(title, {
-                            body: message, // content for the alert
-                            icon: iconURL // optional image url
-                        });
+                    let notificationabc = new Notification(title, {
+                        body: message, // content for the alert
+                        icon: iconURL // optional image url
                     });
+                });
             },
 
             newRoomListner(){
                 Echo.private(`newroomcreated.${this.user.id}`)
                     .listen('NewRoom', (e) => {
                         this.updateRoomListners(e.newroomdata);
-                        this.showNewUserNotificaiton(e.newroomdata);
+                        this.showNewUserNotification(e.newroomdata);
                         this.getcontactlist();
                         // this.selectedContact = e.newRoomData;
                         // $('#contact_no_'+e.newroomdata.user_id).removeClass('busy');
@@ -447,31 +464,33 @@
                 });
             },
 
-            updateRoomListners(newlyaddedroom){
+            updateRoomListners(newlyaddedroom) {
                 this.getcontactlist();
 
                 Echo.private(`EditMessage.${newlyaddedroom.chatroom_id}`)
-                        .listen('EditMessage', (e) => {
-                            this.handleEditedMessage(e.editedmessage)
-                        });
+                    .listen('EditMessage', (e) => {
+                        console.log('edit_id', e);
+                        this.handleEditedMessage(e.editedmessage)
+                    });
                 Echo.private(`DeleteMessage.${newlyaddedroom.chatroom_id}`)
-                        .listen('DeleteMessage', (e) => {
-                            this.handleDeletedMessage(e.deletedmessage)
-                        });
+                    .listen('DeleteMessage', (e) => {
+                        console.log('delete_id', e);
+                        this.handleDeletedMessage(e.deletedmessage)
+                    });
                 Echo.private(`newMessage.${newlyaddedroom.chatroom_id}`)
-                        .listen('NewMessage', (e) => {
-                            this.handleIncoming(e.message);
-                        })
-                        .listenForWhisper('typing', (e) => {
-                            if(this.typingStatus) {
-                                this.updateTypingStatus(e.chatroom_id, true);
-                                clearTimeout(this.typingStatus);
-                            }
+                    .listen('NewMessage', (e) => {
+                        this.handleIncoming(e.message);
+                    })
+                    .listenForWhisper('typing', (e) => {
+                        if(this.typingStatus) {
+                            this.updateTypingStatus(e.chatroom_id, true);
+                            clearTimeout(this.typingStatus);
+                        }
 
-                            this.typingStatus = setTimeout(() => {
-                                this.updateTypingStatus(e.chatroom_id, false);
-                            }, 2000);
-                        });                      
+                        this.typingStatus = setTimeout(() => {
+                            this.updateTypingStatus(e.chatroom_id, false);
+                        }, 2000);
+                    });                      
             },
 
             groupdeleted(group){
@@ -480,8 +499,7 @@
             // ###r
             openNav() {
                 this.menuWidth = '100%';
-                
-                },
+            },
             closeNav() {
                 this.menuWidth = '0px';
             }

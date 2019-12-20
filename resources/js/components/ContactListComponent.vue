@@ -23,7 +23,8 @@
         <i class="text-white fa fa-user-plus fa-fw" aria-hidden="true"></i>
       </button>
 
-      <button v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" class="btn btn-sm btn-secondary add_btn mr-2" title="New Group">
+      <button v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" 
+        class="btn btn-sm btn-secondary add_btn mr-2" title="New Group">
         <i class="fa fa-users fa-fw" aria-hidden="true"></i>
       </button>
 
@@ -40,7 +41,7 @@
           <!-- v-for loop starts -->
           <li v-for="(contact, index) in orderedUsersLists"
               :key="index" class="contact"
-              :class="{ 'active' :room_id == contact.room_id }"
+              :class="{ 'active' : selected.room_id == contact.room_id }"
               @click="selectContact(contact)">
               <div class="wrap">
                 <span class="contact-status" :class="[checkIfOnline(contact.user_id) ? 'online' : 'busy']"></span>
@@ -64,9 +65,6 @@
                 
               </div>
 
-            <!-- <span class="badge badge-light" :class="'preunread_'+contact.room_id" v-show="contact.unreadcount > 0">
-              {{ contact.unreadcount }}
-            </span> -->
             <span class="badge badge-light" v-show="contact.unreadcount > 0">
               {{ contact.unreadcount }}
             </span>
@@ -109,8 +107,8 @@
       return {
         // openMenu:false,
         contacts: [],
-        room_id: "",
-        selected: "",
+        // room_id: "",
+        selected: {},
         usercontactlist: [],
         search: "",
         profile_pre: "/custom/alphabets/",
@@ -132,8 +130,7 @@
       },
 
       selectContact(contact) {
-        // $('.preunread_'+contact.room_id).hide();
-        this.room_id = contact.room_id;
+        contact.unreadcount = 0;
         this.selected = contact;
         this.$emit("selected", contact);
         // ###r
@@ -184,17 +181,15 @@
       allusers(contacts) {
         contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
         this.usercontactlist = contacts;
-        this.room_id = contacts[0].room_id;
+        this.selected = contacts[0];
       }
     }
   };
 </script>
 
 <style scoped>
-
   .add_btn {
     border-radius: 40px;
-    /*background-color: #2196f3;*/
   }
 
   .info-text {

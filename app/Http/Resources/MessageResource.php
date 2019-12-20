@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\MediaLibrary\Models\Media;
 use App\Models\ChatroomMessage;
 use Storage;
+
 class MessageResource extends JsonResource
 {
     /**
@@ -21,6 +22,7 @@ class MessageResource extends JsonResource
         $this->index = $value;
         return $this;
     }
+    
     public function toArray($request,$index=null)
     {
         $fileurl = '';

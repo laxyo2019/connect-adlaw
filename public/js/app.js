@@ -1876,8 +1876,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotification = require('favicon-notification');
 
@@ -1940,7 +1938,8 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
   mounted: function mounted() {
     var _this = this;
 
-    // ###r
+    this.windowChecker(); // ###r
+
     if (window.screen.availWidth <= 500) {
       this.mobileView = true;
       this.bigScreenView = false;
@@ -2004,17 +2003,52 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
     });
   },
   methods: {
+    windowChecker: function windowChecker() {
+      var count = 0;
+      var myInterval;
+      var x = this;
+      window.addEventListener('focus', startTimer); // Active
+
+      window.addEventListener('blur', stopTimer); // Inactive
+
+      function timerHandler() {
+        count++;
+      }
+
+      function startTimer() {
+        // Start timer
+        console.log('focus');
+        x.readMessages();
+
+        if (this.mobileView) {
+          window.reload();
+        }
+
+        myInterval = window.setInterval(timerHandler, 1000);
+      }
+
+      function stopTimer() {
+        // Stop timer
+        window.clearInterval(myInterval);
+      }
+    },
+    readMessages: function readMessages() {
+      axios.patch("read_messages/".concat(this.selectedContact.room_id), {}).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        return console.log(error.response.data);
+      });
+    },
     updateTypingStatus: function updateTypingStatus(room_id, status) {
       this.contacts.forEach(function (e) {
         if (e.room_id == room_id) {
-          console.log('updated');
           e.typing = status;
         }
       });
     },
-    emitStartConversationWith: function emitStartConversationWith(room) {
+    emitStartConversationWith: function emitStartConversationWith(contact) {
       this.newChat = true;
-      this.startConversationWith(room);
+      this.startConversationWith(contact);
     },
     // ABANDONED
     // updateusersstatus(){
@@ -2078,7 +2112,7 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
         }
       });
     },
-    startConversationWith: function startConversationWith(room) {
+    startConversationWith: function startConversationWith(contact) {
       var _this5 = this;
 
       this.messages = [];
@@ -2086,9 +2120,9 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
       this.loading_chat = false;
       this.hasChatHistory = false;
       this.page = 1;
-      axios.get('get_room_conversations/' + room.room_id).then(function (response) {
+      axios.get('get_room_conversations/' + contact.room_id).then(function (response) {
         _this5.messages = response.data.data.slice(0).reverse();
-        _this5.selectedContact = room;
+        _this5.selectedContact = contact;
         _this5.loading = false;
 
         if (response.data.meta.sayhi > 0) {
@@ -2128,13 +2162,9 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
       this.messages[index].msg_props = message.msg_props;
     },
     handleDeletedMessage: function handleDeletedMessage(message) {
-      // this.messages.splice(message.message_index, 1);
-      this.messages.filter(function (m) {
-        return message.message_id != message.message_id;
-      }); // if (this.selectedContact.room_id === message.room_id) {
-      //     this.saveNewMessage(message);
-      //     return;
-      // }
+      this.messages = this.messages.filter(function (m) {
+        return m.message_id != message.message_id;
+      });
     },
     showMessageNotification: function showMessageNotification(message) {
       var iconURL = "/favicon.ico";
@@ -2147,21 +2177,21 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
         var audio = new Audio('audio/notification.mp3');
         audio.play();
       } else {
-        // @ Mention Notification
         if (message.message.includes('@' + this.user.name.split(" ")[0]) > 0) {
+          // @ Mention Notification
           title = message.sender_name + ' has mentioned you in ' + message.chatroom_title;
           custommessage = message.message;
           custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
           var audio = new Audio('audio/mention.mp3');
           audio.play();
-        } else // New Message Notification
-          {
-            title = 'New Message From ' + message.sender_name;
-            custommessage = message.message;
-            custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
-            var audio = new Audio('audio/notification1.mp3');
-            audio.play();
-          }
+        } else {
+          // New Message Notification
+          title = 'New Message From ' + message.sender_name;
+          custommessage = message.message;
+          custommessage = custommessage.replace(/<\/?[^>]+(>|$)/g, "");
+          var audio = new Audio('audio/notification1.mp3');
+          audio.play();
+        }
       }
 
       Notification.requestPermission(function (permission) {
@@ -2181,7 +2211,7 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
         };
       });
     },
-    showNewUserNotificaiton: function showNewUserNotificaiton(newRoomData) {
+    showNewUserNotification: function showNewUserNotification(newRoomData) {
       var iconURL = "/favicon.ico";
       var title = '';
       var message = '';
@@ -2209,7 +2239,7 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
       Echo["private"]("newroomcreated.".concat(this.user.id)).listen('NewRoom', function (e) {
         _this6.updateRoomListners(e.newroomdata);
 
-        _this6.showNewUserNotificaiton(e.newroomdata);
+        _this6.showNewUserNotification(e.newroomdata);
 
         _this6.getcontactlist(); // this.selectedContact = e.newRoomData;
         // $('#contact_no_'+e.newroomdata.user_id).removeClass('busy');
@@ -2222,9 +2252,13 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
 
       this.getcontactlist();
       Echo["private"]("EditMessage.".concat(newlyaddedroom.chatroom_id)).listen('EditMessage', function (e) {
+        console.log('edit_id', e);
+
         _this7.handleEditedMessage(e.editedmessage);
       });
       Echo["private"]("DeleteMessage.".concat(newlyaddedroom.chatroom_id)).listen('DeleteMessage', function (e) {
+        console.log('delete_id', e);
+
         _this7.handleDeletedMessage(e.deletedmessage);
       });
       Echo["private"]("newMessage.".concat(newlyaddedroom.chatroom_id)).listen('NewMessage', function (e) {
@@ -2573,8 +2607,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
@@ -2600,8 +2632,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       // openMenu:false,
       contacts: [],
-      room_id: "",
-      selected: "",
+      // room_id: "",
+      selected: {},
       usercontactlist: [],
       search: "",
       profile_pre: "/custom/alphabets/" // usersOnline: []
@@ -2623,8 +2655,7 @@ __webpack_require__.r(__webpack_exports__);
       return message.replace(/<\/?[^>]+(>|$)/g, "");
     },
     selectContact: function selectContact(contact) {
-      // $('.preunread_'+contact.room_id).hide();
-      this.room_id = contact.room_id;
+      contact.unreadcount = 0;
       this.selected = contact;
       this.$emit("selected", contact); // ###r
 
@@ -2675,7 +2706,7 @@ __webpack_require__.r(__webpack_exports__);
     allusers: function allusers(contacts) {
       contacts = _.orderBy(contacts, 'lastmessagetime', 'desc');
       this.usercontactlist = contacts;
-      this.room_id = contacts[0].room_id;
+      this.selected = contacts[0];
     }
   }
 });
@@ -2697,6 +2728,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message/TextAsMessage */ "./resources/js/components/Message/TextAsMessage.vue");
 /* harmony import */ var _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message/ImageAsMessage */ "./resources/js/components/Message/ImageAsMessage.vue");
 /* harmony import */ var _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message/FileAsMessage */ "./resources/js/components/Message/FileAsMessage.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3022,7 +3059,7 @@ __webpack_require__.r(__webpack_exports__);
       searchForwardTo: '',
       forwardToList: '',
       selectedMembers: [],
-      selecteduser: null,
+      // selecteduser:null,
       editmessage: '',
       edit_text_prefix: 'edit_message_',
       edit_button_prefix: 'edit_button_',
@@ -3221,13 +3258,13 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         axios.post('addUserToGroup', {
-          chatroom_id: this.selecteduser.room_id,
+          chatroom_id: this.selectedContact.room_id,
           users: this.selectedUserIds
         }).then(function (response) {
-          axios.get('getGroupMembers/' + _this3.selecteduser.room_id).then(function (response) {
+          axios.get('getGroupMembers/' + _this3.selectedContact.room_id).then(function (response) {
             _this3.groupmembers = response.data;
           });
-          axios.get('getallusernotingroup/' + _this3.selecteduser.room_id).then(function (response) {
+          axios.get('getallusernotingroup/' + _this3.selectedContact.room_id).then(function (response) {
             _this3.addnewtogrouplist = response.data;
           });
           _this3.selectedMembers = [];
@@ -3239,29 +3276,27 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.post('removeUserfromGroup', {
-        chatroom_id: this.selecteduser.room_id,
+        chatroom_id: this.selectedContact.room_id,
         user_id: user_id
       }).then(function (response) {
-        axios.get('getGroupMembers/' + _this4.selecteduser.room_id).then(function (response) {
+        axios.get('getGroupMembers/' + _this4.selectedContact.room_id).then(function (response) {
           _this4.groupmembers = response.data;
         });
-        axios.get('getallusernotingroup/' + _this4.selecteduser.room_id).then(function (response) {
+        axios.get('getallusernotingroup/' + _this4.selectedContact.room_id).then(function (response) {
           _this4.addnewtogrouplist = response.data;
         });
       });
     },
     deletegroup: function deletegroup() {
-      this.$emit('groupdeleted', this.selecteduser);
+      this.$emit('groupdeleted', this.selectedContact);
       axios.post('deletegroup', {
-        chatroom: this.selecteduser
+        chatroom: this.selectedContact
       }).then(function (response) {});
     }
   },
   watch: {
     selectedContact: function selectedContact(room) {
       var _this5 = this;
-
-      this.selecteduser = room;
 
       if (room.room_type != 'private') {
         axios.get('getGroupMembers/' + room.room_id).then(function (response) {
@@ -3644,7 +3679,7 @@ Vue.directive('linkified', vue_linkify__WEBPACK_IMPORTED_MODULE_1___default.a);
       }).then(function (response) {
         _this.$emit('deleted', _this.content.message_id);
       })["catch"](function (error) {
-        return console.log(error.response);
+        return console.log(error.response.data);
       });
     }
   }
@@ -8183,7 +8218,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n  /*background-color: #2196f3;*/\n}\n.info-text[data-v-84f8d1ac] {\n  font-weight: 400;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.indicator[data-v-84f8d1ac] {\n  position: absolute;\n  left: 50px;\n  top: 18px;\n}\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 4px;\n    display: inline-block;\n    height: 8px;\n    margin-right: 4px;\n    width: 8px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
+exports.push([module.i, "\n.add_btn[data-v-84f8d1ac] {\n  border-radius: 40px;\n}\n.info-text[data-v-84f8d1ac] {\n  font-weight: 400;\n}\n.dropdown_css li[data-v-84f8d1ac]{\n  line-height: 33px;\n  padding-left:10px;\n}\n.dropdown_css li a[data-v-84f8d1ac] {\n  color:#7d7e7f;\n  display:block;\n  cursor:pointer;\n}\n.dropdown_css[data-v-84f8d1ac]{\n  list-style-type: none;\n  width:150px;\n  position: absolute;\n  right: 0;\n  top: 20px;\n  padding: 5px 10px;\n  background: #fff;\n  z-index:999;\n  margin:0;\n  border: solid #e6dede 1px;\n}\n#frame #sidepanel #contacts ul li.contact .wrap .avatar[data-v-84f8d1ac] {\n  width: 45px !important;\n  height: 45px !important;\n  border-radius: 50%;\n  float: left;\n  margin-right: 10px;\n  vertical-align: middle;\n  border-style: none;\n  display: unset !important;\n}\n.avatar span[data-v-84f8d1ac] {\n  margin-left: -5px;\n}\n.sender-avatar-icon[data-v-84f8d1ac]{\n    height: 35px;\n    width: 35px;\n    text-align: center;\n    color: white;\n    background-color:#71e5ec;\n    float: left;\n    border-radius: 50%;\n    display: inline-block;\n    margin: 10px;\n    position: relative;\n    line-height: 35px;\n}\n.search_box_icon[data-v-84f8d1ac]{\n    position: absolute;\n    top: 13px;\n    left: 32px;\n    font-size: 16px;\n    color: #a9acad;\n}\n.search_box[data-v-84f8d1ac]:focus{\n  box-shadow:none!important;\n}\n.profile_avatar_s[data-v-84f8d1ac]{\n    width: 40px;\n    background: #e5e4e8;\n    line-height: 40px;\n    color: #000;\n    height: 40px;\n    font-weight: 600;\n}\n.badge-light[data-v-84f8d1ac] {\n  position: absolute;\n  color: #ffffff;\n  right: 5%;\n  top: 50%;\n  background-color: #ff5252;\n  border-radius: 50%;\n  width: 20px;\n  font-size: .75rem;\n}\nspan.last_messge_time[data-v-84f8d1ac] {\n    right: 0;\n    position: absolute;\n    top: .68rem;\n    color: grey !important;\n    font-size: 8px;\n    background: #ffffff00 !important;\n}\n.onlineuserscount[data-v-84f8d1ac]{\n  margin-top: 10%;\n  margin-right: 10%;\n  position: unset;\n}\n\n/* typing indicator */\n.indicator[data-v-84f8d1ac] {\n  position: absolute;\n  left: 50px;\n  top: 18px;\n}\n.tiblock[data-v-84f8d1ac] {\n  -webkit-align-items: center;\n          align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  height: 20px;\n  width: 80%;\n  margin: 0 auto;\n}\n.ticontainer .tidot[data-v-84f8d1ac] {\n    background-color: #90949c;\n}\n.tidot[data-v-84f8d1ac] {\n    -webkit-animation: mercuryTypingAnimation-data-v-84f8d1ac 1.5s infinite ease-in-out;\n    border-radius: 4px;\n    display: inline-block;\n    height: 8px;\n    margin-right: 4px;\n    width: 8px;\n}\n@-webkit-keyframes mercuryTypingAnimation-data-v-84f8d1ac{\n0%{\n  -webkit-transform:translateY(0px)\n}\n28%{\n  -webkit-transform:translateY(-5px)\n}\n44%{\n  -webkit-transform:translateY(0px)\n}\n}\n.tidot[data-v-84f8d1ac]:nth-child(1){\n-webkit-animation-delay:200ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(2){\n-webkit-animation-delay:300ms;\n}\n.tidot[data-v-84f8d1ac]:nth-child(3){\n-webkit-animation-delay:400ms;\n}\n\n", ""]);
 
 // exports
 
@@ -53681,7 +53716,7 @@ var render = function() {
                   {
                     key: index,
                     staticClass: "contact",
-                    class: { active: _vm.room_id == contact.room_id },
+                    class: { active: _vm.selected.room_id == contact.room_id },
                     on: {
                       click: function($event) {
                         return _vm.selectContact(contact)
@@ -53851,7 +53886,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "contact-profile" }, [
-        _vm.selecteduser
+        _vm.selectedContact
           ? _c(
               "span",
               {
@@ -53867,15 +53902,17 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.selecteduser.roomname.toUpperCase().charAt(0)) +
+                    _vm._s(
+                      _vm.selectedContact.roomname.toUpperCase().charAt(0)
+                    ) +
                     "\n                "
                 )
               ]
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.selecteduser
-          ? _c("p", [_c("b", [_vm._v(_vm._s(_vm.selecteduser.roomname))])])
+        _vm.selectedContact
+          ? _c("p", [_c("b", [_vm._v(_vm._s(_vm.selectedContact.roomname))])])
           : _c("p", [_vm._v("Start a new chat")]),
         _vm._v(" "),
         !_vm.isEmpty(_vm.selectedContact) && _vm.selectedContact.typing
@@ -53982,7 +54019,7 @@ var render = function() {
                                               right: true,
                                               content: message,
                                               sender_name:
-                                                _vm.selecteduser.room_type ==
+                                                _vm.selectedContact.room_type ==
                                                 "group"
                                                   ? message.sender_name.split(
                                                       " "
@@ -54015,7 +54052,7 @@ var render = function() {
                                               file_id: message.file_id,
                                               created_at: message.created_at,
                                               sender_name:
-                                                _vm.selecteduser.room_type ==
+                                                _vm.selectedContact.room_type ==
                                                 "group"
                                                   ? message.sender_name.split(
                                                       " "
@@ -54041,7 +54078,7 @@ var render = function() {
                                               index: index,
                                               content: message,
                                               sender_name:
-                                                _vm.selecteduser.room_type ==
+                                                _vm.selectedContact.room_type ==
                                                 "group"
                                                   ? message.sender_name.split(
                                                       " "
@@ -54091,7 +54128,7 @@ var render = function() {
                                             content: message,
                                             index: index,
                                             sender_name:
-                                              _vm.selecteduser.room_type ==
+                                              _vm.selectedContact.room_type ==
                                               "group"
                                                 ? message.sender_name.split(
                                                     " "
@@ -54118,7 +54155,7 @@ var render = function() {
                                             content: message,
                                             right: false,
                                             sender_name:
-                                              _vm.selecteduser.room_type ==
+                                              _vm.selectedContact.room_type ==
                                               "group"
                                                 ? message.sender_name.split(
                                                     " "
@@ -54144,7 +54181,7 @@ var render = function() {
                                             content: message,
                                             index: index,
                                             sender_name:
-                                              _vm.selecteduser.room_type ==
+                                              _vm.selectedContact.room_type ==
                                               "group"
                                                 ? message.sender_name.split(
                                                     " "
@@ -54235,10 +54272,10 @@ var render = function() {
             [
               _c("div", { staticClass: "modal-content" }, [
                 _c("div", { staticClass: "modal-header" }, [
-                  _vm.selecteduser
+                  _vm.selectedContact
                     ? _c("p", [
                         _vm._v(
-                          _vm._s(_vm.selecteduser.roomname) +
+                          _vm._s(_vm.selectedContact.roomname) +
                             " \n                            "
                         ),
                         _vm.group_permission === 1
@@ -54264,9 +54301,9 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _vm.selecteduser &&
+                  _vm.selectedContact &&
                   _vm.group_permission === 1 &&
-                  _vm.selecteduser.room_type == "group"
+                  _vm.selectedContact.room_type == "group"
                     ? _c("div", { staticStyle: { width: "100%" } }, [
                         _c(
                           "div",
@@ -54340,7 +54377,8 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.selecteduser && _vm.selecteduser.room_type == "private"
+                  _vm.selectedContact &&
+                  _vm.selectedContact.room_type == "private"
                     ? _c("p", { staticClass: "text-danger" }, [
                         _vm._v(
                           "All the Chat history will clear out in case of delete"
@@ -54352,7 +54390,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "clearfix" }),
                   _vm._v(" "),
-                  _vm.selecteduser && _vm.selecteduser.room_type == "group"
+                  _vm.selectedContact &&
+                  _vm.selectedContact.room_type == "group"
                     ? _c(
                         "ul",
                         { staticClass: "list-group" },

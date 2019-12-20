@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\ChatroomMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Chatroom extends Model
 {
     use SoftDeletes;
@@ -18,12 +19,12 @@ class Chatroom extends Model
     public function messages() {
         return $this->hasMany(ChatroomMessage::class);
     }
-    public function participants()
-    {
+
+    public function participants() {
         return $this->hasMany(ChatroomUser::class, 'chatroom_id', 'id');
     }
 
-    public function lastmessage(){
+    public function lastmessage() {
         return $this->hasMany(ChatroomMessage::class, 'chatroom_id', 'id');
     }
 }

@@ -7,15 +7,15 @@
 	    <div class="contact-profile">
             <span 
 				:style="[mobileView ? {'margin-left':'28px !important'}:'']"
-            	v-if="selecteduser" 
+            	v-if="selectedContact" 
                 class="sender-avatar-icon"
                 data-toggle="modal" 
                 data-target="#groupMembersModal">
-                {{ selecteduser.roomname.toUpperCase().charAt(0) }}
+                {{ selectedContact.roomname.toUpperCase().charAt(0) }}
                 <!-- <span class='online-dot-profile'></span> -->
             </span>
 
-            <p v-if="selecteduser"><b>{{ selecteduser.roomname}}</b></p>
+            <p v-if="selectedContact"><b>{{ selectedContact.roomname}}</b></p>
             <p v-else>Start a new chat</p>
 
             <span class="typing_indicator float-right mt-3" v-if="!isEmpty(selectedContact) && selectedContact.typing">
@@ -36,76 +36,82 @@
                 <h4 style="position:absolute;top:40%;left:44%;">No Messages Yet</h4>
                 <button class="btn btn-primary" style="position:absolute;top:50%;left:50%;" @click="sendFirstHi()">Say Hi</button>
             </div> -->
-            <ul class="messages"  v-if="loading_chat" v-on:scroll="scrollevent()" v-chat-scroll="{always: false}" id="message_container">
-                <li class="sent message sent_message" :id="message.message_id" v-for="(message,index) in messages" :key="index" v-if="message.sender_id== user.id">
+            <ul class="messages" v-if="loading_chat" v-on:scroll="scrollevent()" 
+                v-chat-scroll="{always: false}" id="message_container">
+                <li class="sent message sent_message" :id="message.message_id" v-for="(message,index) in messages" 
+                    :key="index" v-if="message.sender_id== user.id">
                 	<div class="text-center">
-		            		<span v-if="checkdate(message)" class="date_line">
-                     <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
-                 		</span>
-				          </div>
+        		      <span v-if="checkdate(message)" class="date_line">
+                        <span class="subtitle fancy">
+                            <span>{{message.group_at}}</span>
+                        </span>
+     		          </span>
+				    </div>
                 	<div v-if="message.message_deleted=='0'">
-				            <div class="chat-body">
-				              <span v-if="message.is_file=='0'">
+				        <div class="chat-body">
+				            <span v-if="message.is_file=='0'">
 				                <TextAsMessage :right="true"
-				                		@forwardMessageModal = 'forwardMessageModal'
-				                		@edit='openEditMessageEditor'
-				                		@quote='quoteMessage'
-				                		@deleted = 'deleteMessage'
+			                		@forwardMessageModal = 'forwardMessageModal'
+			                		@edit='openEditMessageEditor'
+			                		@quote='quoteMessage'
+			                		@deleted = 'deleteMessage'
 				                    :content="message"
-				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :index="index"
 				                    :user="user" />
-				              </span>
-				              <span v-else-if="message.is_image">
+				            </span>
+				            <span v-else-if="message.is_image">
 				                <ImageAsMessage 
-				                		:right="true" 
-				                		:index="index"
-				                		@deleted = 'deleteMessage'
-				                		:user="user"
+			                		:right="true" 
+			                		:index="index"
+			                		@deleted = 'deleteMessage'
+			                		:user="user"
 				                    :content="message"
 				                    :file_id="message.file_id" 
 				                    :created_at="message.created_at" 
-				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :fileurl="message.fileurl" />
-				              </span>
-				  	          <span v-else>
+				            </span>
+				  	        <span v-else>
 				                <FileAsMessage :right="true" 
-				                		@deleted = 'deleteMessage'
+			                		@deleted = 'deleteMessage'
 				                    :link="message.file_id" 
 				                    :created_at="message.created_at" 
 				                    :filename="message.file_name" 
-				                     :user="user"
-				                      :index="index"
-				                     :content="message"
-				                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                        :user="user"
+				                    :index="index"
+				                    :content="message"
+				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 				                    :filesize="message.file_size" />
-				              </span>
-				            </div>
-				           </div>
+				            </span>
+				        </div>
+				    </div>
                 </li>
                 <li v-else class="replies message received_message">
                 	<div class="text-center">
-		            		<span v-if="checkdate(message)" class="date_line">
-                     <span class="subtitle fancy"><span>{{message.group_at}}</span></span>
+	            		<span v-if="checkdate(message)" class="date_line">
+                            <span class="subtitle fancy">
+                                <span>{{message.group_at}}</span>
+                            </span>
                  		</span>
-				          </div>
+				    </div>
 	                <div class="chat-body" v-if="message.message_deleted=='0'">
 			              <span v-if="message.is_file=='0'">
 			                <TextAsMessage :right="false" 
-			                		@forwardMessageModal = 'forwardMessageModal'
-				                	@quote='quoteMessage'
+			                	@forwardMessageModal = 'forwardMessageModal'
+				                @quote='quoteMessage'
 			                    :content="message" 
 			                    :index="index"
-			                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-			                     :user="user"/>
+			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                    :user="user"/>
 			              </span>
 			              <span v-else-if="message.is_image">
 			                <ImageAsMessage 
-			                		@deleted = 'deleteMessage'
-			                		:user="user"
+		                		@deleted = 'deleteMessage'
+		                		:user="user"
 			                    :content="message"
-			                		:right="false" 
-			                		:sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+		                		:right="false" 
+		                		:sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 			                    :file_id="message.file_id" 
 			                    :created_at="message.created_at" 
 			                    :fileurl="message.fileurl" />
@@ -114,9 +120,9 @@
 			                <FileAsMessage :right="false" 
 			                    :link="message.file_id" 
 			                    :user="user"
-				                  :content="message"
-				                  :index="index"
-			                    :sender_name="selecteduser.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+				                :content="message"
+				                :index="index"
+			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 			                    :created_at="message.created_at" 
 			                    :filename="message.file_name" 
 			                    :filesize="message.file_size" />
@@ -151,7 +157,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <p v-if="selecteduser">{{ selecteduser.roomname}} 
+                        <p v-if="selectedContact">{{ selectedContact.roomname}} 
                             <button v-if="group_permission===1" type="button" 
                                     class="btn btn-primary deletegroupbutton" 
                                     data-toggle="modal" 
@@ -165,7 +171,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div style="width:100%;" v-if="selecteduser && group_permission===1 && selecteduser.room_type == 'group'">
+                        <div style="width:100%;" v-if="selectedContact && group_permission===1 && selectedContact.room_type == 'group'">
                             <div style="width:80%;float:left;">
                                 <multiselect v-model="selectedMembers"  
                                         track-by="name" label="name" 
@@ -183,10 +189,10 @@
                                 <button class="btn btn-success" style="height: 45px;" @click="addMemberstoGroup()"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
-                        <p class="text-danger" v-if="selecteduser && selecteduser.room_type == 'private'">All the Chat history will clear out in case of delete</p>
+                        <p class="text-danger" v-if="selectedContact && selectedContact.room_type == 'private'">All the Chat history will clear out in case of delete</p>
                         <br>
                         <div class="clearfix"></div>
-                        <ul class="list-group" v-if="selecteduser && selecteduser.room_type == 'group'">
+                        <ul class="list-group" v-if="selectedContact && selectedContact.room_type == 'group'">
                             <li class="list-group-item" v-for="(member,index) in groupmembers" :key="index">
                                 <table style="width:100%;">
                                     <tr>
@@ -276,7 +282,7 @@
     import FileAsMessage from './Message/FileAsMessage';
 
     export default {
-       props: {
+        props: {
        		mobileView:{
        			type:Boolean
        		},
@@ -320,12 +326,12 @@
             ImageAsMessage,
             FileAsMessage
         },
-    data() {
+        data() {
             return {
                 searchForwardTo:'',
                 forwardToList:'',
                 selectedMembers:[],
-                selecteduser:null,
+                // selecteduser:null,
                 editmessage:'',
                 edit_text_prefix:'edit_message_',
                 edit_button_prefix:'edit_button_',
@@ -354,7 +360,7 @@
         methods:{
         	checkIsQuote(message){
         		let msg = JSON.parse(message);
-        		if(msg.parent_id!=""){
+        		if(msg.parent_id != ""){
 				    return true;
         		}
         		return false;
@@ -493,7 +499,7 @@
                $('#groupMembersModal').modal('hide')
             },
             deleteMessage(message_id){
-            	console.log('message_id',message_id);
+            	console.log('message_id', message_id);
             	let key = '';
             	this.messages.forEach(function(v,k){
             		if(v.message_id == message_id){
@@ -510,14 +516,14 @@
                         this.selectedUserIds = this.selectedUserIds.concat(',');
                     }
                     axios.post('addUserToGroup', {
-                        chatroom_id: this.selecteduser.room_id,
+                        chatroom_id: this.selectedContact.room_id,
                         users :this.selectedUserIds
                     }).then((response) => {
-                        axios.get('getGroupMembers/' + this.selecteduser.room_id)
+                        axios.get('getGroupMembers/' + this.selectedContact.room_id)
                         .then((response) => {
                             this.groupmembers = response.data;
                         });
-                        axios.get('getallusernotingroup/' + this.selecteduser.room_id)
+                        axios.get('getallusernotingroup/' + this.selectedContact.room_id)
                         .then((response) => {
                             this.addnewtogrouplist = response.data;
                         });
@@ -528,23 +534,23 @@
             },
             removeMembersfromGroup(user_id){
                 axios.post('removeUserfromGroup', {
-                    chatroom_id: this.selecteduser.room_id,
+                    chatroom_id: this.selectedContact.room_id,
                     user_id :user_id
                 }).then((response) => {
-                    axios.get('getGroupMembers/' + this.selecteduser.room_id)
+                    axios.get('getGroupMembers/' + this.selectedContact.room_id)
                     .then((response) => {
                         this.groupmembers = response.data;
                     });
-                    axios.get('getallusernotingroup/' + this.selecteduser.room_id)
+                    axios.get('getallusernotingroup/' + this.selectedContact.room_id)
                     .then((response) => {
                         this.addnewtogrouplist = response.data;
                     });
                 });
             },
             deletegroup(){
-                this.$emit('groupdeleted', this.selecteduser);
+                this.$emit('groupdeleted', this.selectedContact);
                 axios.post('deletegroup', {
-                    chatroom: this.selecteduser,
+                    chatroom: this.selectedContact,
                 }).then((response) => {
 
                 });
@@ -552,7 +558,6 @@
         },
         watch: {
             selectedContact (room) {
-                this.selecteduser = room;
                 if(room.room_type !='private'){
                     axios.get('getGroupMembers/' + room.room_id)
                     .then((response) => {
