@@ -173,7 +173,7 @@ export default {
         });
 
       // Echo.join('chat')
-      //     .whisper('typing', this.user);
+      // .whisper('typing', this.user);
     }
   },
   watch: {
@@ -192,26 +192,28 @@ export default {
 </script>
 
 <style scoped>
-.dropzone-custom-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+  .dropzone-custom-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 
-.dropzone-custom-title {
-  margin-top: 0;
-  color: #00b782;
-}
+  .dropzone-custom-title {
+    margin-top: 0;
+    color: #00b782;
+  }
 
-.subtitle {
-  color: #314b5f;
-}
-#textarea1:focus {
+  .subtitle {
+    color: #314b5f;
+  }
+
+  #textarea1:focus {
     border-bottom: 1px solid #ff4081;
-    }
-#textarea1{
+  }
+
+  #textarea1{
 		height:2.5rem;
 		resize: none;
     overflow-y: auto;
@@ -227,9 +229,9 @@ export default {
     outline: none;
     background-color: transparent;
     box-shadow: none;
-}
-<style>
-textarea[data-v-c48dbc66] {
+  }
+
+  textarea[data-v-c48dbc66] {
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
     float: left;
     border: none;
@@ -241,154 +243,149 @@ textarea[data-v-c48dbc66] {
     white-space: pre-wrap;
     height: 50px;
     border-radius: 10px;
-}
-table{
+  }
+
+  table{
     margin-bottom: unset;
-    /* background:#eaeaea; */
     background: #f5f5f5;
     width: 100%;
-     margin: auto;
-}
-.table th, .table td {
+    margin: auto;
+  }
+  .table th, .table td {
     border: 1px solid #eeeeee;
     vertical-align: middle;
     text-align: center;
-    /* padding: 0.2rem; */
-}
-.fa-arrow-down {
-  z-index: 4;
-  font-size: 1.1em;
-  color: #73777c;
-  opacity: 0.5;
-  cursor: pointer;
-}
-textarea {
-  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
-  float: left;
-  border: none;
-  width: 100%;
-  padding: 14px 32px 10px 8px;
-  font-size: 1em;
-  color: #32465a;
-  resize: none;
-  white-space: pre-wrap;
-  height: 50px;
-  border-radius: 10px;
-}
-.fa-paperclip{
-    color:#73777c;
-}
-
-.dropzoneUpPosition{
-  position: absolute; 
-  bottom: 78px; 
-  width:100%; 
-  /* left: 7%;  */
-  /* margin: auto; */
-}
-
-
-
-
-/* .emoji-invoker {
-  position: absolute;
-  top: 39px;
-  right: 115px;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.emoji-invoker:hover {
-  transform: scale(1.1);
-}
-.emoji-invoker > svg {
-  fill: #b1c6d0;
-}
-
-.emoji-picker {
-  position: relative;
-  z-index: 1;
-  font-family: Montserrat;
-  border: 1px solid #ccc;
-  width: 15rem;
-  height: 20rem;
-  overflow: scroll;
-  padding: 1rem;
-  box-sizing: border-box;
-  border-radius: 0.5rem;
-  background: #fff;
-  box-shadow: 1px 1px 8px #c7dbe6;
-}
-.emoji-picker__search {
-  display: flex;
-}
-.emoji-picker__search > input {
-  flex: 1;
-  border-radius: 10rem;
-  border: 1px solid #ccc;
-  padding: 0.5rem 1rem;
-  outline: none;
-}
-.emoji-picker h5 {
-  margin-bottom: 0;
-  color: #b1b1b1;
-  text-transform: uppercase;
-  font-size: 0.5rem;
-  cursor: default;
-}
-.emoji-picker .emojis {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.emoji-picker .emojis:after {
-  content: "";
-  flex: auto;
-}
-.emoji-picker .emojis span {
-  padding: 0.2rem;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.emoji-picker .emojis span:hover {
-  background: #ececec;
-  cursor: pointer;
-} */
-.tabletd1 {
-  width: 5%;
-}
-.tabletd3 {
-    width: 6%;
-}
-
-.tabletd2 {
-      width: 70%;
-    padding: 27px;
-}
-@media screen and (max-width: 768px){
-  table{
+  }
+  .fa-arrow-down {
+    z-index: 4;
+    font-size: 1.1em;
+    color: #73777c;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+  textarea {
+    font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+    float: left;
+    border: none;
     width: 100%;
+    padding: 14px 32px 10px 8px;
+    font-size: 1em;
+    color: #32465a;
+    resize: none;
+    white-space: pre-wrap;
+    height: 50px;
+    border-radius: 10px;
   }
+
+  .fa-paperclip{
+    color:#73777c;
+  }
+
+  .dropzoneUpPosition{
+    position: absolute; 
+    bottom: 78px; 
+    width:100%; 
+  }
+
   /* .emoji-invoker {
-     right: 63px;
-     top: 29px;
-  } */
-  .tabletd2 {
-    padding: 0px;
+    position: absolute;
+    top: 39px;
+    right: 115px;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
   }
-  
-}
-/*mohini*/
-.input-field {
+  .emoji-invoker:hover {
+    transform: scale(1.1);
+  }
+  .emoji-invoker > svg {
+    fill: #b1c6d0;
+  }
+
+  .emoji-picker {
     position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-.custom_btn{
-	background-color: #ff5252 !important;
-    height: 36px!important;
-    border-radius: 4px;
-}
+    z-index: 1;
+    font-family: Montserrat;
+    border: 1px solid #ccc;
+    width: 15rem;
+    height: 20rem;
+    overflow: scroll;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background: #fff;
+    box-shadow: 1px 1px 8px #c7dbe6;
+  }
+  .emoji-picker__search {
+    display: flex;
+  }
+  .emoji-picker__search > input {
+    flex: 1;
+    border-radius: 10rem;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    outline: none;
+  }
+  .emoji-picker h5 {
+    margin-bottom: 0;
+    color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 0.5rem;
+    cursor: default;
+  }
+  .emoji-picker .emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .emoji-picker .emojis:after {
+    content: "";
+    flex: auto;
+  }
+  .emoji-picker .emojis span {
+    padding: 0.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .emoji-picker .emojis span:hover {
+    background: #ececec;
+    cursor: pointer;
+  } */
+
+  .tabletd1 {
+    width: 5%;
+  }
+  .tabletd3 {
+    width: 6%;
+  }
+  .tabletd2 {
+    width: 70%;
+    padding: 27px;
+  }
+  @media screen and (max-width: 768px){
+    table{
+      width: 100%;
+    }
+    /* .emoji-invoker {
+       right: 63px;
+       top: 29px;
+    } */
+    .tabletd2 {
+      padding: 0px;
+    }
+  }
+
+  /*mohini*/
+  .input-field {
+      position: relative;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+  }
+  .custom_btn{
+  	background-color: #ff5252 !important;
+      height: 36px!important;
+      border-radius: 4px;
+  }
 </style>

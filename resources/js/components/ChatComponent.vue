@@ -24,11 +24,12 @@
         <!-- FOR WEB VIEW -->
         <div v-if="bigScreenView">
             <ContactsList 
-                    :onlineuserslist="onlineuserslist"
-                    :allusers="contacts"
-                    :user="user" @selected="emitStartConversationWith"
-                    :group_permission="group_permission"
-                    ref="contactlistcompnentref">
+                :onlineuserslist="onlineuserslist"
+                :allusers="contacts"
+                :user="user" @switchUser="switchUser"
+                @selected="emitStartConversationWith"
+                :group_permission="group_permission"
+                ref="contactlistcompnentref">
             </ContactsList>
         </div>
         <!-- FOR MOBILE VIEW -->
@@ -154,6 +155,10 @@
             };
         },
 
+        created() {
+            this.getcontactlist();
+        },
+
         mounted(){
             this.windowChecker();
             // ###r
@@ -162,32 +167,46 @@
                 this.bigScreenView      = false;
                 this.openNav();
             }
-            this.getcontactlist();
+            
             this.loading = true;
+
             // Remove Notification Indicator from tab
             // document.addEventListener("visibilitychange", function() {
             //     if (document.visibilityState === 'visible') {
             //         FaviconNotification.remove();
             //     }
             // }, false);
+
+            let rev_rooms = this.rooms.slice().reverse();
+
+            Echo.private(`EditMessage.${rev_rooms[0]}`)
+                .listen('EditMessage', (e) => {
+                    this.handleEditedMessage(e.editedmessage)
+                });
+
+            Echo.private(`DeleteMessage.${rev_rooms[0]}`)
+                .listen('DeleteMessage', (e) => {
+                    this.handleDeletedMessage(e.deletedmessage)
+                });
+
             if (this.rooms.length > 0) 
             {
                 for (var i = 0; i < this.rooms.length; i++) 
                 {
-                    Echo.private(`EditMessage.${this.rooms[i]}`)
-                        .listen('EditMessage', (e) => {
-                            this.handleEditedMessage(e.editedmessage)
+                    Echo.private(`ReadMessage.${this.rooms[i]}`)
+                        .listen('ReadMessage', (e) => {
+                            console.log('msg seen', e);
                         });
 
-                    Echo.private(`DeleteMessage.${this.rooms[i]}`)
-                        .listen('DeleteMessage', (e) => {
-                            this.handleDeletedMessage(e.deletedmessage)
-                        });
-
-                    Echo.private(`GroupDelete.${this.rooms[i]}`)
-                        .listen('GroupDelete', (e) => {
-                            this.getcontactlist()
-                        });
+                    // Echo.private(`DeleteMessage.${this.rooms[i]}`)
+                    //     .listen('DeleteMessage', (e) => {
+                    //         this.handleDeletedMessage(e.deletedmessage)
+                    //     });
+                    
+                    // Echo.private(`GroupDelete.${this.rooms[i]}`)
+                    //     .listen('GroupDelete', (e) => {
+                    //         this.getcontactlist()
+                    //     });
 
                     Echo.private(`newMessage.${this.rooms[i]}`)
                         .listen('NewMessage', (e) => {
@@ -227,6 +246,9 @@
         },
 
         methods:{
+            switchUser(contact){
+                this.selectedContact = contact;
+            },
             windowChecker() {
                 var count = 0;
                 var myInterval;
@@ -242,7 +264,7 @@
                 function startTimer() { // Start timer
                     console.log('focus');
                     x.readMessages();
-                    if(this.mobileView) {
+                    if(this.mobileView) { // force refresh on mobile phones
                         window.reload();
                     }
                     myInterval = window.setInterval(timerHandler, 1000);
@@ -340,9 +362,9 @@
 
             startConversationWith(contact) {
                 this.messages = [];
-                this.scrollends = false
-                this.loading_chat = false
-                this.hasChatHistory = false
+                this.scrollends = false;
+                this.loading_chat = false;
+                this.hasChatHistory = false;
                 this.page = 1;
                 axios.get('get_room_conversations/' + contact.room_id)
                     .then((response) => { 
@@ -355,7 +377,6 @@
                         this.loading_chat = true
                         this.newChat = false
                     });
-                    
             },
             
             saveNewMessage(message) {
@@ -513,13 +534,13 @@
     }
 </script>
 <style scoped>
-   .loader{
+   .loader {
         position: absolute;
         top: 50%;
         right: 50%;
-   }
+    }
 
-   .loader-overlay-custom{
+   .loader-overlay-custom {
        background: #000a0a87;
        position: absolute;
        top: 0;
@@ -529,11 +550,12 @@
        z-index: 100;
        width: 100%;
        height: 105%;
-   }
+    }
    
 	/* preloader */
 	.loader17{position:relative;width:65px;border:1px solid transparent;margin:40px auto}
-	.loader17 span{position:absolute;bottom:0;display:block;width:9px;height:5px;border-radius:5px;background:rgba(0,0,0,.1);-webkit-animation:preloader 2s infinite ease-in-out;animation:preloader 2s infinite ease-in-out}
+	.loader17 span{position:absolute;bottom:0;display:block;width:9px;height:5px;border-radius:5px;
+        background:rgba(0,0,0,.1);-webkit-animation:preloader 2s infinite ease-in-out;animation:preloader 2s infinite ease-in-out}
 	.loader17 span:nth-child(2){left:11px;-webkit-animation-delay:.2s;animation-delay:.2s}
 	.loader17 span:nth-child(3){left:22px;-webkit-animation-delay:.4s;animation-delay:.4s}
 	.loader17 span:nth-child(4){left:33px;-webkit-animation-delay:.6s;animation-delay:.6s}

@@ -43,8 +43,6 @@ class DeleteMessage implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        // (new UserResource($user))->foo('bar');
-        // (new MessageResource($this->message))->messageIndex($this->index)
         return ["deletedmessage" => (new MessageResource($this->message))->messageIndex($this->index)];
     }
 }

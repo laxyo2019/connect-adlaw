@@ -7,6 +7,7 @@ use App\Events\EditMessage;
 use App\Events\GroupDelete;
 use App\Events\NewMessage;
 use App\Events\NewRoom;
+use App\Events\ReadMessage;
 use App\Http\Resources\ContactCollection;
 use App\Http\Resources\GroupMemberCollection;
 use App\Http\Resources\MessageResource;
@@ -102,10 +103,17 @@ class HomeController extends Controller
     }
 
     public function readMessages($room_id) {
-        UnreadMessage::where([
+        $unread_msgs = UnreadMessage::where([
             'chatroom_id' => $room_id,
-            'user_id' => auth()->user()->id
-        ])->update(['read_at' => date('Y-m-d H:i:s')]);
+            'user_id' => auth()->user()->id,
+            'read_at' => null
+        ])->get();
+
+        foreach($unread_msgs as $msg)
+        {
+            UnreadMessage::where('id', $msg->id)->update(['read_at' => date('Y-m-d H:i:s')]);
+            broadcast(new ReadMessage($msg));
+        }
     }
 
     //Get All Messages of single ChatRoom
@@ -168,7 +176,7 @@ class HomeController extends Controller
         $editMessage->msg_props = json_encode($msg_props);
         $editMessage->save();
 
-        broadcast(new EditMessage($editMessage,$request->index));
+        broadcast(new EditMessage($editMessage, $request->index));
     }
 
     public function createNewGroup(Request $request){

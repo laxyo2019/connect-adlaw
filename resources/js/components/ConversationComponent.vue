@@ -47,7 +47,7 @@
                         </span>
      		          </span>
 				    </div>
-                	<div v-if="message.message_deleted=='0'">
+              <div v-if="message.message_deleted=='0'">
 				        <div class="chat-body">
 				            <span v-if="message.is_file=='0'">
 				                <TextAsMessage :right="true"
@@ -55,10 +55,10 @@
 			                		@edit='openEditMessageEditor'
 			                		@quote='quoteMessage'
 			                		@deleted = 'deleteMessage'
-				                    :content="message"
-				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-				                    :index="index"
-				                    :user="user" />
+			                    :content="message"
+			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                    :index="index"
+			                    :user="user" />
 				            </span>
 				            <span v-else-if="message.is_image">
 				                <ImageAsMessage 
@@ -66,11 +66,11 @@
 			                		:index="index"
 			                		@deleted = 'deleteMessage'
 			                		:user="user"
-				                    :content="message"
-				                    :file_id="message.file_id" 
-				                    :created_at="message.created_at" 
-				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-				                    :fileurl="message.fileurl" />
+			                    :content="message"
+			                    :file_id="message.file_id" 
+			                    :created_at="message.created_at" 
+			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+			                    :fileurl="message.fileurl" />
 				            </span>
 				  	        <span v-else>
 				                <FileAsMessage :right="true" 
@@ -78,7 +78,7 @@
 				                    :link="message.file_id" 
 				                    :created_at="message.created_at" 
 				                    :filename="message.file_name" 
-			                        :user="user"
+		                        :user="user"
 				                    :index="index"
 				                    :content="message"
 				                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
@@ -90,42 +90,42 @@
                 <li v-else class="replies message received_message">
                 	<div class="text-center">
 	            		<span v-if="checkdate(message)" class="date_line">
-                            <span class="subtitle fancy">
-                                <span>{{message.group_at}}</span>
-                            </span>
-                 		</span>
+                    <span class="subtitle fancy">
+                      <span>{{message.group_at}}</span>
+                    </span>
+               		</span>
 				    </div>
 	                <div class="chat-body" v-if="message.message_deleted=='0'">
 			              <span v-if="message.is_file=='0'">
 			                <TextAsMessage :right="false" 
 			                	@forwardMessageModal = 'forwardMessageModal'
 				                @quote='quoteMessage'
-			                    :content="message" 
-			                    :index="index"
-			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-			                    :user="user"/>
+		                    :content="message" 
+		                    :index="index"
+		                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+		                    :user="user"/>
 			              </span>
 			              <span v-else-if="message.is_image">
 			                <ImageAsMessage 
 		                		@deleted = 'deleteMessage'
 		                		:user="user"
-			                    :content="message"
+		                    :content="message"
 		                		:right="false" 
 		                		:sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-			                    :file_id="message.file_id" 
-			                    :created_at="message.created_at" 
-			                    :fileurl="message.fileurl" />
+		                    :file_id="message.file_id" 
+		                    :created_at="message.created_at" 
+		                    :fileurl="message.fileurl" />
 			              </span>
 			              <span v-else>
 			                <FileAsMessage :right="false" 
-			                    :link="message.file_id" 
-			                    :user="user"
+		                    :link="message.file_id" 
+		                    :user="user"
 				                :content="message"
 				                :index="index"
-			                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
-			                    :created_at="message.created_at" 
-			                    :filename="message.file_name" 
-			                    :filesize="message.file_size" />
+		                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
+		                    :created_at="message.created_at" 
+		                    :filename="message.file_name" 
+		                    :filesize="message.file_size" />
 			              </span>
 			            </div>         
                 </li>
@@ -157,7 +157,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <p v-if="selectedContact">{{ selectedContact.roomname}} 
+                        <!-- <p v-if="selectedContact">{{ selectedContact.roomname}} 
                             <button v-if="group_permission===1" type="button" 
                                     class="btn btn-primary deletegroupbutton" 
                                     data-toggle="modal" 
@@ -165,7 +165,7 @@
                                     @click="hideGroupmodel">
                                     <i  class="fa fa-trash"></i>
                             </button>
-                        </p>
+                        </p> -->
                         <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -189,7 +189,7 @@
                                 <button class="btn btn-success" style="height: 45px;" @click="addMemberstoGroup()"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
-                        <p class="text-danger" v-if="selectedContact && selectedContact.room_type == 'private'">All the Chat history will clear out in case of delete</p>
+                        <!-- <p class="text-danger" v-if="selectedContact && selectedContact.room_type == 'private'">All the Chat history will clear out in case of delete</p> -->
                         <br>
                         <div class="clearfix"></div>
                         <ul class="list-group" v-if="selectedContact && selectedContact.room_type == 'group'">
@@ -361,7 +361,7 @@
         	checkIsQuote(message){
         		let msg = JSON.parse(message);
         		if(msg.parent_id != ""){
-				    return true;
+				    	return true;
         		}
         		return false;
         	},
@@ -382,29 +382,23 @@
             },
             forwardMessageModal(message,index) {
             	this.forwardToList = this.allusers;
-                this.searchForwardTo = '';
-                $('#forwardMessageModal').modal('show');
-                this.forwardingMessage = message.message;
+              this.searchForwardTo = '';
+              $('#forwardMessageModal').modal('show');
+              this.forwardingMessage = message.message;
             },
             filterForwardToList() {
             	let searchKey = this.searchForwardTo;
             	//create  a regression to match a particular string in the name , i stands in insensitive 
-            	let searchReg =   new RegExp(searchKey, "i"); 
-            	let usersArr = [];
-            	this.allusers.forEach(function(v,k){
-            		if(v.roomname.match(searchReg)){ //push object if string has matched		
-            			usersArr.push(v);
-            		}	
-            	});
-            	this.forwardToList = usersArr;
+            	let searchReg = new RegExp(searchKey, "i"); 
+            	this.forwardToList = this.allusers.filter((e) => { if(e.roomname.match(searchReg)){ return e; } });
             },
             forwardMessage(room_id) {
                 axios.post('sendMessage', {
                     room_id: room_id,
                     message: this.forwardingMessage,
                 }).then((response) => {
-                    this.$emit('newMessage', response.data);
-                    $('#forwardMessageModal').modal('hide');
+                		this.$emit('newMessage', response.data);
+                  	$('#forwardMessageModal').modal('hide');
                 });
             },
             isEmpty(obj) {
@@ -579,194 +573,183 @@
     }
 </script>
 
-<style>
-    ::-webkit-input-placeholder {
+<style scoped>
+  ::-webkit-input-placeholder {
     color: peachpuff;
     font-size: 13px;
-    }
-    ::-moz-placeholder {
+  }
+  ::-moz-placeholder {
     color: peachpuff;
     font-size: 13px;
-    }
-    :-ms-input-placeholder {
+  }
+  :-ms-input-placeholder {
     color: peachpuff;
     font-size: 13px;
-    }
-    ::placeholder {
+  }
+  ::placeholder {
     color: peachpuff;
     font-size: 13px;
-    }
-    .date_line{
-        /*position: relative;
-        left: 50%;
-        top: -20px;*/
-    }
-    .btn:focus, .btn.focus {
-        outline: 0;
-        box-shadow: unset !important;
-    }
-    .fa-ellipsis-v{
-        color:#8e8585;
-    }
-    /* .actionbuttons{
-        display: none;
-    }
-    .sent_message:hover > .actionbuttons{
-        display:block;
-    } */
-    .edit_message_input{
-        border-radius: 0px;
-    }
+  }
+  .date_line{
+    /*position: relative;
+    left: 50%;
+    top: -20px;*/
+  }
+  .btn:focus, .btn.focus {
+      outline: 0;
+      box-shadow: unset !important;
+  }
+  .fa-ellipsis-v{
+      color:#8e8585;
+  }
+  .edit_message_input{
+    border-radius: 0px;
+  }
+  .typing_indicator{
+    font-size: 12px;
+    color: #2c3e50;
+  }
+  .groupsendername {
+    position: relative;
+    text-transform: capitalize;
+  }
+  .text-muted{
+    font-style: italic;
+  }
+  .sent_message{
+    position: relative;
+  }
+  .replies{
+    position: relative;
+  }
+
+  .sendmessagetime{
+    position: absolute;
+    top: 10px;
+    right: 37px;
+  }
+  .actionbuttonssend {
+    top: 3px;
+    right: 108px;
+    position: absolute;
+  }
+  .actionsbuttonreply{
+    position: absolute;
+    left: 60%;
+    top: -3px;
+  }
+  .actionbuttonssendgroup {
+    top: 3px;
+    right: 108px;
+    position: absolute;
+  }
+  .actionsbuttonreplygroup {
+    position: absolute;
+    left: 106px;
+    top: -6px;
+  }
+  .recievemessagetime{
+    position: relative;
+    top: 0;
+    left: 10px;
+  }
+  .messages .text-muted{
+    font-size: 10px;
+  }
+  #frame .content .messages{
+    /* max-height: unset !important; */
+    word-spacing: 2px;
+  }
+  .replies .text-muted{
+    color: #abafb3 !important
+  }
+  .list-group-item{
+    border: unset;
+    padding: unset;
+  }
+  .deletegroupbutton{
+    position: absolute;
+    right: 10%;
+    top: 4%;
+  }
+  .file_thumbnail{
+    width: 30% !important;
+    /* border-radius: unset !important; */
+  }
+  .file_thumbnail1{
+    width: 60% !important;
+    border-radius: 5px !important;
+  }
+
+  .sender-avatar-icon{
+    height: 37px;
+    text-align: center;
+    width: 37px;
+    color: #000;
+    background-color: #e5e4e8;
+    float: left;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 37px;
+    position: relative;
+    margin: 6px 10px 10px;
+  }
+  .actionbuttonsender{
+    top: 30px;
+  }
+  .quotemesg{
+    left: 2%;
+    width: 95%;
+    position: absolute;
+    bottom: 17%;
+    background: whitesmoke;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .quotemesgclose{
+    position: absolute;
+    bottom: 20%;
+    right: 5%;
+  }
+  .container_send_message{
+    word-break: unset;
+    white-space: unset;
+  }
+  #qouteMsgTable tr > td {
+    margin: 0;
+    padding: 0;
+  }
+  .file_container_send{
+    width: 50%;
+    float: right;
+    background: rgb(241, 241, 244) !important;
+    padding: 25px;
+    word-break: unset;
+    white-space: unset;
+  }
+  .file_container_recieve{
+    width: 70%;
+    float: left;
+    padding: 25px;
+    word-break: unset;
+    white-space: unset;
+  }
+  @media screen and (max-width: 735px) {
     .typing_indicator{
-        font-size: 12px;
+        font-size: 8px;
         color: #2c3e50;
     }
-    .groupsendername {
-        position: relative;
-        text-transform: capitalize;
-        /* left: 5%; */
+    .contact-profile p{
+        font-size: 12px;
     }
-    .text-muted{
-        font-style: italic;
-    }
-    .sent_message{
-        position: relative;
-    }
-    .replies{
-        position: relative;
-    }
+  }
 
-    .sendmessagetime{
-        /* float: right; */
-        position: absolute;
-        top: 10px;
-        right: 37px;
-    }
-    .actionbuttonssend {
-        top: 3px;
-        right: 108px;
-        position: absolute;
-    }
-    .actionsbuttonreply{
-        position: absolute;
-        left: 60%;
-        top: -3px;
-    }
-    .actionbuttonssendgroup {
-        top: 3px;
-        right: 108px;
-        position: absolute;
-    }
-    .actionsbuttonreplygroup {
-        position: absolute;
-        left: 106px;
-        top: -6px;
-    }
-    .recievemessagetime{
-        /* float: right; */
-        position: relative;
-        top: 0;
-        left: 10px;
-
-    }
-
-    .messages .text-muted{
-        font-size: 10px;
-    }
-    #frame .content .messages{
-        /* max-height: unset !important; */
-        word-spacing: 2px;
-    }
-    .replies .text-muted{
-        color: #abafb3 !important
-    }
-    .list-group-item{
-        border: unset;
-        padding: unset;
-    }
-    .deletegroupbutton{
-        position: absolute;
-        right: 10%;
-        top: 4%;
-    }
-    .file_thumbnail{
-        width: 30% !important;
-        /* border-radius: unset !important; */
-    }
-    .file_thumbnail1{
-        width: 60% !important;
-        border-radius: 5px !important;
-    }
-
-    .sender-avatar-icon{
-        height: 37px;
-        text-align: center;
-        width: 37px;
-        color: #000;
-        background-color: #e5e4e8;
-        float: left;
-        border-radius: 50%;
-        display: inline-block;
-        line-height: 37px;
-        position: relative;
-        margin: 6px 10px 10px;
-    }
-    .actionbuttonsender{
-        top: 30px;
-    }
-    .quotemesg{
-            left: 2%;
-        width: 95%;
-        position: absolute;
-        bottom: 17%;
-        background: whitesmoke;
-        border-radius: 10px;
-        padding: 10px;
-    }
-    .quotemesgclose{
-        position: absolute;
-        bottom: 20%;
-        right: 5%;
-    }
-    .container_send_message{
-        word-break: unset;
-        white-space: unset;
-    }
-    #qouteMsgTable tr > td {
-        margin: 0;
-        padding: 0;
-    }
-    .file_container_send{
-        width: 50%;
-        float: right;
-        background: rgb(241, 241, 244) !important;
-        padding: 25px;
-        word-break: unset;
-        white-space: unset;
-    }
-    .file_container_recieve{
-        width: 70%;
-        float: left;
-        padding: 25px;
-        word-break: unset;
-        white-space: unset;
-    }
-    @media screen and (max-width: 735px) {
-        .typing_indicator{
-            font-size: 8px;
-            color: #2c3e50;
-        }
-        .contact-profile p{
-            font-size: 12px;
-        }
-    }
-
-    .subtitle {
+  .subtitle {
     margin: 0 0 2em 0;
     color: grey;
-    }
-    .fancy {
-        font-size: 11px;
+  }
+  .fancy {
+    font-size: 11px;
     background: #c7edfc;
     padding: 4px;
     border-radius: 10px;
@@ -774,72 +757,71 @@
     text-align: center;
     padding-right: 8px;
     padding-left: 8px;
-    }
-    .fancy span {
+  }
+  .fancy span {
     display: inline-block;
     position: relative;  
-    }
-    .fancy span:before,
-    .fancy span:after {
+  }
+  .fancy span:before,
+  .fancy span:after {
     content: "";
     position: absolute;
     height: 5px;
     top: 0;
     width: 600%;
-    }
-    .fancy span:before {
+  }
+  .fancy span:before {
     right: 100%;
     margin-right: 15px;
-    }
-    .fancy span:after {
+  }
+  .fancy span:after {
     left: 100%;
     margin-left: 15px;
-    }
-    .modal-header{
-        background: #3490dc;
-        /* border: 0; */
-        color: #fff;
-    }
+  }
+  .modal-header{
+    background: #3490dc;
+    color: #fff;
+  }
 
-    /* typing indicator */
-    .tiblock {
-        align-items: center;
-        display: flex;
-        height: 17px;
-    }
+  /* typing indicator */
+  .tiblock {
+    align-items: center;
+    display: flex;
+    height: 17px;
+  }
 
-    .ticontainer .tidot {
-        background-color: #90949c;
-    }
+  .ticontainer .tidot {
+    background-color: #90949c;
+  }
 
-    .tidot {
-        -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
-        border-radius: 2px;
-        display: inline-block;
-        height: 4px;
-        margin-right: 2px;
-        width: 4px;
-    }
+  .tidot {
+    -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+    border-radius: 2px;
+    display: inline-block;
+    height: 4px;
+    margin-right: 2px;
+    width: 4px;
+  }
 
-    @-webkit-keyframes mercuryTypingAnimation{
+  @-webkit-keyframes mercuryTypingAnimation{
     0%{
-    -webkit-transform:translateY(0px)
+    	-webkit-transform:translateY(0px)
     }
     28%{
-    -webkit-transform:translateY(-5px)
+    	-webkit-transform:translateY(-5px)
     }
     44%{
-    -webkit-transform:translateY(0px)
+    	-webkit-transform:translateY(0px)
     }
-    }
+  }
 
-    .tidot:nth-child(1){
-    -webkit-animation-delay:200ms;
-    }
-    .tidot:nth-child(2){
-    -webkit-animation-delay:300ms;
-    }
-    .tidot:nth-child(3){
-    -webkit-animation-delay:400ms;
-    }
+  .tidot:nth-child(1){
+  	-webkit-animation-delay:200ms;
+  }
+  .tidot:nth-child(2){
+  	-webkit-animation-delay:300ms;
+  }
+  .tidot:nth-child(3){
+  	-webkit-animation-delay:400ms;
+  }
 </style>

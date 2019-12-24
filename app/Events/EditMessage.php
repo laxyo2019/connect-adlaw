@@ -25,7 +25,7 @@ class EditMessage implements ShouldBroadcastNow
      *
      * @return void
      */
-    public function __construct(ChatroomMessage $message,$index)
+    public function __construct(ChatroomMessage $message, $index)
     {
         $this->message = $message;
         $this->index = $index;
@@ -43,8 +43,6 @@ class EditMessage implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        // (new UserResource($user))->foo('bar');
-        // (new MessageResource($this->message))->messageIndex($this->index)
         return ["editedmessage" => (new MessageResource($this->message))->messageIndex($this->index)];
     }
 }

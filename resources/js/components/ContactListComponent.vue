@@ -64,7 +64,6 @@
                 </div>
                 
               </div>
-
             <span class="badge badge-light" v-show="contact.unreadcount > 0">
               {{ contact.unreadcount }}
             </span>
@@ -181,6 +180,7 @@
       allusers(contacts) {
         contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
         this.usercontactlist = contacts;
+        this.$emit("switchUser", contacts[0]);
         this.selected = contacts[0];
       }
     }
