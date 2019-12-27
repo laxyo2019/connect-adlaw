@@ -7,7 +7,7 @@ use App\Events\EditMessage;
 use App\Events\GroupDelete;
 use App\Events\NewMessage;
 use App\Events\NewRoom;
-use App\Events\ReadMessage;
+// use App\Events\ReadMessage;
 use App\Http\Resources\ContactCollection;
 use App\Http\Resources\GroupMemberCollection;
 use App\Http\Resources\MessageResource;
@@ -109,11 +109,11 @@ class HomeController extends Controller
             'read_at' => null
         ])->get();
 
-        foreach($unread_msgs as $msg)
-        {
-            UnreadMessage::where('id', $msg->id)->update(['read_at' => date('Y-m-d H:i:s')]);
-            broadcast(new ReadMessage($msg));
-        }
+        // foreach($unread_msgs as $msg)
+        // {
+        //     UnreadMessage::where('id', $msg->id)->update(['read_at' => date('Y-m-d H:i:s')]);
+        //     broadcast(new ReadMessage($msg));
+        // }
     }
 
     //Get All Messages of single ChatRoom
