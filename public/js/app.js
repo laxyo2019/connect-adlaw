@@ -1785,6 +1785,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ComposeMessageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ComposeMessageComponent */ "./resources/js/components/ComposeMessageComponent.vue");
 /* harmony import */ var _AddNewUserComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddNewUserComponent */ "./resources/js/components/AddNewUserComponent.vue");
 /* harmony import */ var _CreateGroupComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CreateGroupComponent */ "./resources/js/components/CreateGroupComponent.vue");
+/* harmony import */ var _event_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../event.js */ "./resources/js/event.js");
 //
 //
 //
@@ -1879,6 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotification = require('favicon-notification');
+
 
 
 
@@ -2157,6 +2159,8 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
       this.gotnewMessage(message);
 
       if (message.sender_id != this.user.id) {
+        _event_js__WEBPACK_IMPORTED_MODULE_6__["default"].$emit('Incoming', message.room_id);
+
         if (document.visibilityState === 'hidden') {
           // FaviconNotification.add(); 
           this.showMessageNotification(message);
@@ -2541,6 +2545,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _event_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../event.js */ "./resources/js/event.js");
 //
 //
 //
@@ -2623,6 +2628,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
@@ -2656,7 +2662,19 @@ __webpack_require__.r(__webpack_exports__);
 
     };
   },
-  created: function created() {// this.usersOnline = this.onlineuserslist;
+  created: function created() {
+    var _this = this;
+
+    _event_js__WEBPACK_IMPORTED_MODULE_0__["default"].$on('Incoming', function (e) {
+      //this.contact.unreadcount = e
+      if (_this.selected.room_id == e) {
+        axios.get("direct_delete/" + e).then(function (response) {
+          _this.usercontactlist = response.data;
+          console.log(_this.usercontactlist);
+        });
+      } //  $('.preunread_'+e).hide();
+
+    }); // this.usersOnline = this.onlineuserslist;
     // axios.get('get_unreadcounts').then(response => {
     //   console.log('unread_messages', response.data);
     // }).catch(error => console.log(error.response.data));
@@ -2671,8 +2689,13 @@ __webpack_require__.r(__webpack_exports__);
       return message.replace(/<\/?[^>]+(>|$)/g, "");
     },
     selectContact: function selectContact(contact) {
+      var _this2 = this;
+
       contact.unreadcount = 0;
       this.selected = contact;
+      axios.get("direct_delete/" + contact.room_id).then(function (response) {
+        _this2.usercontactlist = response.data;
+      });
       this.$emit("selected", contact); // ###r
 
       this.$emit("menuWidth", "0px");
@@ -2707,11 +2730,11 @@ __webpack_require__.r(__webpack_exports__);
     //   });
     // },
     orderedUsersLists: function orderedUsersLists() {
-      var _this = this;
+      var _this3 = this;
 
       if (this.search != '') {
         return this.usercontactlist.filter(function (contact) {
-          return contact.roomname.toLowerCase().match(_this.search);
+          return contact.roomname.toLowerCase().match(_this3.search);
         });
       } else {
         return _.orderBy(this.usercontactlist, 'lastmessagetime', 'desc');
@@ -2722,8 +2745,11 @@ __webpack_require__.r(__webpack_exports__);
     allusers: function allusers(contacts) {
       contacts = _.orderBy(contacts, 'lastmessagetime', 'desc');
       this.usercontactlist = contacts;
-      this.$emit("switchUser", contacts[0]);
-      this.selected = contacts[0];
+      this.room_id = contacts[0].room_id; // First code
+      // contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
+      // this.usercontactlist = contacts;
+      // this.$emit("switchUser", contacts[0]);
+      // this.selected = contacts[0];
     }
   }
 });
@@ -67748,7 +67774,7 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "26a2fee0b7a4ff883609",
+  key: "3356885dee647da4ef91",
   cluster: 'ap2',
   encrypted: true
 });
@@ -68522,6 +68548,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/event.js":
+/*!*******************************!*\
+  !*** ./resources/js/event.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (new vue__WEBPACK_IMPORTED_MODULE_0___default.a());
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -68540,8 +68582,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\laragon\www\laxyo_erp\laxyo_connect\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\laragon\www\laxyo_erp\laxyo_connect\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mukesh-dev/code/latest_connect/laxyo-connect/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mukesh-dev/code/latest_connect/laxyo-connect/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

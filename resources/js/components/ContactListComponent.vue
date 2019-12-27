@@ -81,6 +81,7 @@
 </template>
 
 <script>
+  import Event from '../event.js';
   export default {
     props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
       // mobileView:{
@@ -115,6 +116,20 @@
       };
     },
     created(){
+
+      Event.$on('Incoming',(e)=>{          
+        //this.contact.unreadcount = e
+        
+        if(this.selected.room_id == e){
+            axios.get("direct_delete/" + e).then(response => {
+              this.usercontactlist = response.data;              
+              console.log(this.usercontactlist);
+              
+            });
+        }
+        //  $('.preunread_'+e).hide();
+            
+      })
       // this.usersOnline = this.onlineuserslist;
       // axios.get('get_unreadcounts').then(response => {
       //   console.log('unread_messages', response.data);
@@ -131,6 +146,10 @@
       selectContact(contact) {
         contact.unreadcount = 0;
         this.selected = contact;
+        axios.get("direct_delete/" + contact.room_id).then(response => {
+            this.usercontactlist = response.data
+            
+          });
         this.$emit("selected", contact);
         // ###r
         this.$emit("menuWidth", "0px");
@@ -180,8 +199,12 @@
       allusers(contacts) {
         contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
         this.usercontactlist = contacts;
-        this.$emit("switchUser", contacts[0]);
-        this.selected = contacts[0];
+        this.room_id = contacts[0].room_id;
+        // First code
+        // contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
+        // this.usercontactlist = contacts;
+        // this.$emit("switchUser", contacts[0]);
+       // this.selected = contacts[0];
       }
     }
   };

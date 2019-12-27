@@ -26,3 +26,5 @@ Route::post('uploadfile', 'HomeController@uploadfile')->name('uploadfile');
 Route::resource('/media', 'MediaController');
 
 Route::patch('read_messages/{room_id}', 'HomeController@readMessages');
+
+Route::get('direct_delete/{room_id}', 'HomeController@DirectDelete')->name('direct_delete');

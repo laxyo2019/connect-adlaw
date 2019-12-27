@@ -100,6 +100,7 @@
     import ComposeMessage from './ComposeMessageComponent';
     import AddNewUser from './AddNewUserComponent';
     import CreateNewGroup from './CreateGroupComponent';
+    import Event from '../event.js';
     // When your app loads
     // FaviconNotification.init({
     //   color: '#000000'
@@ -386,6 +387,8 @@
             handleIncoming(message) {
                 this.gotnewMessage(message);
                 if(message.sender_id != this.user.id){
+
+                    Event.$emit('Incoming',message.room_id)
                     if (document.visibilityState === 'hidden') {
                         // FaviconNotification.add(); 
                         this.showMessageNotification(message);

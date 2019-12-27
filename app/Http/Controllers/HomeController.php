@@ -7,7 +7,7 @@ use App\Events\EditMessage;
 use App\Events\GroupDelete;
 use App\Events\NewMessage;
 use App\Events\NewRoom;
-use App\Events\ReadMessage;
+// use App\Events\ReadMessage;
 use App\Http\Resources\ContactCollection;
 use App\Http\Resources\GroupMemberCollection;
 use App\Http\Resources\MessageResource;
@@ -103,22 +103,25 @@ class HomeController extends Controller
     }
 
     public function readMessages($room_id) {
-        $unread_msgs = UnreadMessage::where([
-            'chatroom_id' => $room_id,
-            'user_id' => auth()->user()->id,
-            'read_at' => null
-        ])->get();
+        // $unread_msgs = UnreadMessage::where([
+        //     'chatroom_id' => $room_id,
+        //     'user_id' => auth()->user()->id,
+        //     'read_at' => null
+        // ])->get();
 
-        foreach($unread_msgs as $msg)
-        {
-            UnreadMessage::where('id', $msg->id)->update(['read_at' => date('Y-m-d H:i:s')]);
-            broadcast(new ReadMessage($msg));
-        }
+        UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->update(['read_at'=>date('Y-m-d H:i:s')]);
+
+        // foreach($unread_msgs as $msg)
+        // {
+        //     UnreadMessage::where('id', $msg->id)->update(['read_at' => date('Y-m-d H:i:s')]);
+        //     broadcast(new ReadMessage($msg));
+        // }
     }
 
     //Get All Messages of single ChatRoom
     public function getRoomConversations($room_id) {
         $this->readMessages($room_id);
+
         $data = ChatroomMessage::where('chatroom_id', $room_id)->orderBy('id','desc')->paginate(20);
         return (new MessageResourceCollection($data))->chatroom_id($room_id);
     }
@@ -303,5 +306,11 @@ class HomeController extends Controller
     public function downloadfile($id){
         $messge = ChatroomMessage::find($id);
         return response()->download($messge->getMedia()[0]->getPath(), $messge->getMedia()[0]->file_name);
+    }
+
+    public function DirectDelete($room_id){
+        $this->getRoomConversations($room_id);  
+        $data = $this->getUsersChatRooms();  
+        return $data;        
     }
 }
