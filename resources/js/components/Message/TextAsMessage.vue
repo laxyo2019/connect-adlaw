@@ -19,9 +19,8 @@
 			</p>
 			<p v-else class="after_msg" v-text="content.message"
 				v-linkified:options="{ className: 'font-italic text-info' }"
-				:style="{maxWidth : content.message.length > 150 ? '80%' : '' }">
+				:style="{maxWidth : content.message.length > 10 ? content.message.length+300+'px' : '' }">
 			</p>
-
 			<p class="msg_edited_icon" v-if="checkIsEdited(content.msg_props,content.message)"><i class="fa fa-pencil"></i></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
 					<template slot-scope="child">
@@ -38,9 +37,10 @@
 				    	<a href="#" @click.prevent="$emit('edit',content,index)" v-show="content.sender_id== user.id">
 				    		<i class="fa fa-edit"></i>Edit
 				    	</a>
-			        <a href="#" @click.prevent="deleteMsg()" v-show="content.sender_id== user.id">
+			        <a href="#" @click.prevent="deleteMsg()">
 			        	<i class="fa fa-trash"></i>Delete
 			        </a>
+			        <!-- v-show="content.sender_id== user.id" -->
 				    </li>
 			    </template>
 				</vue-context>

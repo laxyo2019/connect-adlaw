@@ -102,6 +102,7 @@
 				                @quote='quoteMessage'
 		                    :content="message" 
 		                    :index="index"
+                            @deleted = 'deleteMessage'
 		                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 		                    :user="user"/>
 			              </span>
@@ -109,7 +110,7 @@
 			                <ImageAsMessage 
 		                		@deleted = 'deleteMessage'
 		                		:user="user"
-		                    :content="message"
+		                        :content="message"
 		                		:right="false" 
 		                		:sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 		                    :file_id="message.file_id" 
@@ -120,8 +121,8 @@
 			                <FileAsMessage :right="false" 
 		                    :link="message.file_id" 
 		                    :user="user"
-				                :content="message"
-				                :index="index"
+				            :content="message"
+				            :index="index"
 		                    :sender_name="selectedContact.room_type=='group' ? message.sender_name.split(' ')[0] : false"
 		                    :created_at="message.created_at" 
 		                    :filename="message.file_name" 

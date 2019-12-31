@@ -3047,6 +3047,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -54182,7 +54183,8 @@ var render = function() {
                                           on: {
                                             forwardMessageModal:
                                               _vm.forwardMessageModal,
-                                            quote: _vm.quoteMessage
+                                            quote: _vm.quoteMessage,
+                                            deleted: _vm.deleteMessage
                                           }
                                         })
                                       ],
@@ -55285,7 +55287,10 @@ var render = function() {
                 ],
                 staticClass: "after_msg",
                 style: {
-                  maxWidth: _vm.content.message.length > 150 ? "80%" : ""
+                  maxWidth:
+                    _vm.content.message.length > 10
+                      ? _vm.content.message.length + 300 + "px"
+                      : ""
                 },
                 domProps: { textContent: _vm._s(_vm.content.message) }
               }),
@@ -55389,14 +55394,6 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.content.sender_id == _vm.user.id,
-                              expression: "content.sender_id== user.id"
-                            }
-                          ],
                           attrs: { href: "#" },
                           on: {
                             click: function($event) {
@@ -67774,7 +67771,7 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "3356885dee647da4ef91",
+  key: "26a2fee0b7a4ff883609",
   cluster: 'ap2',
   encrypted: true
 });
@@ -68582,8 +68579,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mukesh-dev/code/latest_connect/laxyo-connect/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mukesh-dev/code/latest_connect/laxyo-connect/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\laragon\www\laxyo_erp\laxyo_connect\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\laragon\www\laxyo_erp\laxyo_connect\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
