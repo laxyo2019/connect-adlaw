@@ -103,11 +103,15 @@ class HomeController extends Controller
     }
 
     public function readMessages($room_id) {
-        $unread_msgs = UnreadMessage::where([
-            'chatroom_id' => $room_id,
-            'user_id' => auth()->user()->id,
-            'read_at' => null
-        ])->get();
+
+        // $unread_msgs = UnreadMessage::where([
+        //     'chatroom_id' => $room_id,
+        //     'user_id' => auth()->user()->id,
+        //     'read_at' => null
+        // ])->get();
+
+        UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->update(['read_at'=>date('Y-m-d H:i:s')]);
+
 
         // foreach($unread_msgs as $msg)
         // {
@@ -119,6 +123,7 @@ class HomeController extends Controller
     //Get All Messages of single ChatRoom
     public function getRoomConversations($room_id) {
         $this->readMessages($room_id);
+
         $data = ChatroomMessage::where('chatroom_id', $room_id)->orderBy('id','desc')->paginate(20);
         return (new MessageResourceCollection($data))->chatroom_id($room_id);
     }
@@ -303,5 +308,11 @@ class HomeController extends Controller
     public function downloadfile($id){
         $messge = ChatroomMessage::find($id);
         return response()->download($messge->getMedia()[0]->getPath(), $messge->getMedia()[0]->file_name);
+    }
+
+    public function DirectDelete($room_id){
+        $this->getRoomConversations($room_id);  
+        $data = $this->getUsersChatRooms();  
+        return $data;        
     }
 }
