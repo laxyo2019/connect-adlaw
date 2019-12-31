@@ -2632,7 +2632,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
-  // 	type:Boolean,
+  //  type:Boolean,
   // },
   // user: {
   //   type: Object,
@@ -2669,7 +2669,8 @@ __webpack_require__.r(__webpack_exports__);
       //this.contact.unreadcount = e
       if (_this.selected.room_id == e) {
         axios.get("direct_delete/" + e).then(function (response) {
-          _this.usercontactlist = response.data; // console.log(this.usercontactlist);
+          _this.usercontactlist = response.data;
+          console.log(_this.usercontactlist);
         });
       } //  $('.preunread_'+e).hide();
 
@@ -2770,6 +2771,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message/TextAsMessage */ "./resources/js/components/Message/TextAsMessage.vue");
 /* harmony import */ var _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message/ImageAsMessage */ "./resources/js/components/Message/ImageAsMessage.vue");
 /* harmony import */ var _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message/FileAsMessage */ "./resources/js/components/Message/FileAsMessage.vue");
+//
 //
 //
 //
@@ -54181,7 +54183,8 @@ var render = function() {
                                           on: {
                                             forwardMessageModal:
                                               _vm.forwardMessageModal,
-                                            quote: _vm.quoteMessage
+                                            quote: _vm.quoteMessage,
+                                            deleted: _vm.deleteMessage
                                           }
                                         })
                                       ],
@@ -55284,7 +55287,7 @@ var render = function() {
                 ],
                 staticClass: "after_msg",
                 style: {
-                  maxWidth: _vm.content.message.length > 150 ? "80%" : ""
+                  maxWidth: _vm.content.message.length > 50 ? "736px" : ""
                 },
                 domProps: { textContent: _vm._s(_vm.content.message) }
               }),
@@ -55388,14 +55391,6 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.content.sender_id == _vm.user.id,
-                              expression: "content.sender_id== user.id"
-                            }
-                          ],
                           attrs: { href: "#" },
                           on: {
                             click: function($event) {

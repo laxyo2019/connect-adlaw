@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group has-search" style="position:relative">
-    	<i class="fa fa-search search_box_icon"></i>
+      <i class="fa fa-search search_box_icon"></i>
       <input style="background: #eee;border-radius: 23px;" type="text" class="search_box form-control" v-model="search" placeholder="Search Chats...">
     </div>
 
@@ -85,7 +85,7 @@
   export default {
     props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
       // mobileView:{
-      // 	type:Boolean,
+      //  type:Boolean,
       // },
       // user: {
       //   type: Object,
@@ -123,7 +123,7 @@
         if(this.selected.room_id == e){
             axios.get("direct_delete/" + e).then(response => {
               this.usercontactlist = response.data;              
-             // console.log(this.usercontactlist);
+              console.log(this.usercontactlist);
               
             });
         }
@@ -177,18 +177,6 @@
         axios.post("logout", {}).then(response => {
           location.reload();
         });
-      },
-      updateCounts{
-	 Event.$on('Incoming',(e)=>{          
-        //this.contact.unreadcount = e
-        
-        if(this.selected.room_id == e){
-            axios.get("direct_delete/" + e).then(response => {
-              this.usercontactlist = response.data;              
-             console.log(this.usercontactlist);
-              
-            });
-        }
       }
     },
     computed: {
@@ -208,7 +196,6 @@
       }
     },
     watch: {
-	this.updateCounts()
       allusers(contacts) {
         contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
         this.usercontactlist = contacts;
@@ -217,7 +204,7 @@
         // contacts = _.orderBy(contacts, 'lastmessagetime', 'desc')
         // this.usercontactlist = contacts;
         // this.$emit("switchUser", contacts[0]);
-       // this.selected = contacts[0]
+       // this.selected = contacts[0];
       }
     }
   };
