@@ -263,7 +263,7 @@
                 }
 
                 function startTimer() { // Start timer
-                    console.log('focus');
+               
                     x.readMessages();
                     if(this.mobileView) { // force refresh on mobile phones
                         window.reload();

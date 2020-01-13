@@ -2035,7 +2035,6 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_0___default.a); // var FaviconNotif
 
       function startTimer() {
         // Start timer
-        console.log('focus');
         x.readMessages();
 
         if (this.mobileView) {
@@ -2663,22 +2662,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this2 = this;
+    var _this = this;
 
     document.addEventListener("visibilitychange", function () {
-      var _this = this;
-
       var room_id1 = 0;
+      this.usercontactlist = {};
       axios.get("direct_delete/" + room_id1).then(function (response) {
-        _this.usercontactlist = response.data;
-        console.log(response.data);
+        console.log(_.orderBy(response.data, 'lastmessagetime', 'desc'));
       });
     }, false);
     _event_js__WEBPACK_IMPORTED_MODULE_0__["default"].$on('Incoming', function (e) {
       //this.contact.unreadcount = e
-      if (_this2.selected.room_id == e) {
+      if (_this.selected.room_id == e) {
         axios.get("direct_delete/" + e).then(function (response) {
-          _this2.usercontactlist = response.data;
+          _this.usercontactlist = response.data;
         });
       } //  $('.preunread_'+e).hide();
 
@@ -2697,12 +2694,13 @@ __webpack_require__.r(__webpack_exports__);
       return message.replace(/<\/?[^>]+(>|$)/g, "");
     },
     selectContact: function selectContact(contact) {
-      var _this3 = this;
+      var _this2 = this;
 
+      //console.log(contact)
       contact.unreadcount = 0;
       this.selected = contact;
       axios.get("direct_delete/" + contact.room_id).then(function (response) {
-        _this3.usercontactlist = response.data;
+        _this2.usercontactlist = response.data;
       });
       this.$emit("selected", contact); // ###r
 
@@ -2738,11 +2736,11 @@ __webpack_require__.r(__webpack_exports__);
     //   });
     // },
     orderedUsersLists: function orderedUsersLists() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.search != '') {
         return this.usercontactlist.filter(function (contact) {
-          return contact.roomname.toLowerCase().match(_this4.search);
+          return contact.roomname.toLowerCase().match(_this3.search);
         });
       } else {
         return _.orderBy(this.usercontactlist, 'lastmessagetime', 'desc');

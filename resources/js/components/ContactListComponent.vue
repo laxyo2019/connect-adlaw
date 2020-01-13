@@ -118,9 +118,11 @@
     created(){
       document.addEventListener("visibilitychange", function() {
         let room_id1 =0
+         this.usercontactlist={}
         axios.get("direct_delete/" + room_id1).then(response => {
-            this.usercontactlist = response.data
-               console.log(response.data)            
+
+             console.log(_.orderBy(response.data, 'lastmessagetime','desc'));         
+                         
           });
        
       }, false);
@@ -151,11 +153,11 @@
       },
 
       selectContact(contact) {
+        //console.log(contact)
         contact.unreadcount = 0;
         this.selected = contact;
         axios.get("direct_delete/" + contact.room_id).then(response => {
             this.usercontactlist = response.data
-            
           });
         this.$emit("selected", contact);
         // ###r
