@@ -2663,14 +2663,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
+    document.addEventListener("visibilitychange", function () {
+      var _this = this;
+
+      var room_id1 = 0;
+      axios.get("direct_delete/" + room_id1).then(function (response) {
+        _this.usercontactlist = response.data;
+        console.log(response.data);
+      });
+    }, false);
     _event_js__WEBPACK_IMPORTED_MODULE_0__["default"].$on('Incoming', function (e) {
       //this.contact.unreadcount = e
-      if (_this.selected.room_id == e) {
+      if (_this2.selected.room_id == e) {
         axios.get("direct_delete/" + e).then(function (response) {
-          _this.usercontactlist = response.data;
-          console.log(_this.usercontactlist);
+          _this2.usercontactlist = response.data;
         });
       } //  $('.preunread_'+e).hide();
 
@@ -2689,12 +2697,12 @@ __webpack_require__.r(__webpack_exports__);
       return message.replace(/<\/?[^>]+(>|$)/g, "");
     },
     selectContact: function selectContact(contact) {
-      var _this2 = this;
+      var _this3 = this;
 
       contact.unreadcount = 0;
       this.selected = contact;
       axios.get("direct_delete/" + contact.room_id).then(function (response) {
-        _this2.usercontactlist = response.data;
+        _this3.usercontactlist = response.data;
       });
       this.$emit("selected", contact); // ###r
 
@@ -2730,11 +2738,11 @@ __webpack_require__.r(__webpack_exports__);
     //   });
     // },
     orderedUsersLists: function orderedUsersLists() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.search != '') {
         return this.usercontactlist.filter(function (contact) {
-          return contact.roomname.toLowerCase().match(_this3.search);
+          return contact.roomname.toLowerCase().match(_this4.search);
         });
       } else {
         return _.orderBy(this.usercontactlist, 'lastmessagetime', 'desc');
@@ -2771,6 +2779,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Message_TextAsMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message/TextAsMessage */ "./resources/js/components/Message/TextAsMessage.vue");
 /* harmony import */ var _Message_ImageAsMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message/ImageAsMessage */ "./resources/js/components/Message/ImageAsMessage.vue");
 /* harmony import */ var _Message_FileAsMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message/FileAsMessage */ "./resources/js/components/Message/FileAsMessage.vue");
+//
 //
 //
 //
@@ -3718,6 +3727,8 @@ Vue.directive('linkified', vue_linkify__WEBPACK_IMPORTED_MODULE_1___default.a);
         message_id: this.content.message_id,
         index: this.index
       }).then(function (response) {
+        alert(_this.content.message_id);
+
         _this.$emit('deleted', _this.content.message_id);
       })["catch"](function (error) {
         return console.log(error.response.data);
@@ -54235,7 +54246,8 @@ var render = function() {
                                             created_at: message.created_at,
                                             filename: message.file_name,
                                             filesize: message.file_size
-                                          }
+                                          },
+                                          on: { deleted: _vm.deleteMessage }
                                         })
                                       ],
                                       1
@@ -55009,14 +55021,6 @@ var render = function() {
                             _c(
                               "a",
                               {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.content.sender_id == _vm.user.id,
-                                    expression: "content.sender_id== user.id"
-                                  }
-                                ],
                                 attrs: { href: "#" },
                                 on: {
                                   click: function($event) {
@@ -55271,8 +55275,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("br")
-                  ]),
-                  _vm._v(_vm._s(_vm.content.message) + "\n\t\t")
+                  ])
                 ]
               )
             : _c("p", {
@@ -55287,10 +55290,7 @@ var render = function() {
                 ],
                 staticClass: "after_msg",
                 style: {
-                  maxWidth:
-                    _vm.content.message.length > 10
-                      ? _vm.content.message.length + 300 + "px"
-                      : ""
+                  maxWidth: _vm.content.message.length > 10 ? "756px" : ""
                 },
                 domProps: { textContent: _vm._s(_vm.content.message) }
               }),

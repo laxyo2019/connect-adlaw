@@ -119,6 +119,7 @@
 			              </span>
 			              <span v-else>
 			                <FileAsMessage :right="false" 
+                            @deleted = 'deleteMessage'
 		                    :link="message.file_id" 
 		                    :user="user"
 				            :content="message"
@@ -553,6 +554,7 @@
         },
         watch: {
             selectedContact (room) {
+
                 if(room.room_type !='private'){
                     axios.get('getGroupMembers/' + room.room_id)
                     .then((response) => {

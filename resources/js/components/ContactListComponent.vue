@@ -116,15 +116,21 @@
       };
     },
     created(){
+      document.addEventListener("visibilitychange", function() {
+        let room_id1 =0
+        axios.get("direct_delete/" + room_id1).then(response => {
+            this.usercontactlist = response.data
+               console.log(response.data)            
+          });
+       
+      }, false);
 
       Event.$on('Incoming',(e)=>{          
         //this.contact.unreadcount = e
         
         if(this.selected.room_id == e){
             axios.get("direct_delete/" + e).then(response => {
-              this.usercontactlist = response.data;              
-              console.log(this.usercontactlist);
-              
+              this.usercontactlist = response.data;       
             });
         }
         //  $('.preunread_'+e).hide();
@@ -136,6 +142,7 @@
       // }).catch(error => console.log(error.response.data));
     },
     methods: {
+
       checkIfOnline(uid){
         return this.onlineuserslist.find(e => e.id === uid);
       },
