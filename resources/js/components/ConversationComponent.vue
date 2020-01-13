@@ -121,7 +121,6 @@
 			                <FileAsMessage :right="false" 
                             @deleted = 'deleteMessage'
 		                    :link="message.file_id" 
-                            @deleted = 'deleteMessage'
 		                    :user="user"
 				            :content="message"
 				            :index="index"
