@@ -15,10 +15,11 @@
 					</br>
 					<span class="text-muted">~ {{ JSON.parse(content.msg_props)['sender_name'] }}</span>
 					</br> 
-				</span>{{content.message}}
+				</span>
 			</p>
 			<p v-else class="after_msg" v-text="content.message"
 				v-linkified:options="{ className: 'font-italic text-info' }"
+
 				:style="{maxWidth : content.message.length > 50 ? '736px' : '' }">
 			</p>
 			<p class="msg_edited_icon" v-if="checkIsEdited(content.msg_props,content.message)"><i class="fa fa-pencil"></i></p>
@@ -103,6 +104,7 @@
 			},
 			deleteMsg() {
 				axios.post(`deleteMessage`,{message_id:this.content.message_id,index:this.index}).then((response) => {
+					alert(this.content.message_id)
            this.$emit('deleted', this.content.message_id);
         }).catch(error => console.log(error.response.data));
 			}

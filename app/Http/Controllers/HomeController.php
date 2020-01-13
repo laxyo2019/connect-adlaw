@@ -311,7 +311,9 @@ class HomeController extends Controller
     }
 
     public function DirectDelete($room_id){
-        $this->getRoomConversations($room_id);  
+        if($room_id !=0){
+            $this->getRoomConversations($room_id);               
+        }        
         $data = $this->getUsersChatRooms();  
         return $data;        
     }
