@@ -2632,7 +2632,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
   // mobileView:{
-  // 	type:Boolean,
+  //  type:Boolean,
   // },
   // user: {
   //   type: Object,
@@ -3618,6 +3618,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_clipboard2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_clipboard2__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
 /* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_3__);
+//
 //
 //
 //
@@ -55290,7 +55291,7 @@ var render = function() {
                 ],
                 staticClass: "after_msg",
                 style: {
-                  maxWidth: _vm.content.message.length > 10 ? "756px" : ""
+                  maxWidth: _vm.content.message.length > 50 ? "736px" : ""
                 },
                 domProps: { textContent: _vm._s(_vm.content.message) }
               }),

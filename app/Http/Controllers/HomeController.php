@@ -103,6 +103,7 @@ class HomeController extends Controller
     }
 
     public function readMessages($room_id) {
+
         // $unread_msgs = UnreadMessage::where([
         //     'chatroom_id' => $room_id,
         //     'user_id' => auth()->user()->id,
@@ -110,6 +111,7 @@ class HomeController extends Controller
         // ])->get();
 
         UnreadMessage::where('chatroom_id', $room_id)->where('user_id', auth()->user()->id)->update(['read_at'=>date('Y-m-d H:i:s')]);
+
 
         // foreach($unread_msgs as $msg)
         // {

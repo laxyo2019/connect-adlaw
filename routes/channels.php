@@ -12,9 +12,9 @@ Broadcast::channel('newMessage.{id}', function ($user, $rooms) {
     return true;
 });
 
-Broadcast::channel('ReadMessage.{id}', function ($user, $rooms) {
-    return true; 
-});
+// Broadcast::channel('ReadMessage.{id}', function ($user, $rooms) {
+//     return true; 
+// });
 
 Broadcast::channel('EditMessage.{id}', function ($user, $rooms) {
     return true; 

@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group has-search" style="position:relative">
-    	<i class="fa fa-search search_box_icon"></i>
+      <i class="fa fa-search search_box_icon"></i>
       <input style="background: #eee;border-radius: 23px;" type="text" class="search_box form-control" v-model="search" placeholder="Search Chats...">
     </div>
 
@@ -85,7 +85,7 @@
   export default {
     props: ['mobileView', 'user', 'allusers', 'group_permission', 'onlineuserslist'],
       // mobileView:{
-      // 	type:Boolean,
+      //  type:Boolean,
       // },
       // user: {
       //   type: Object,

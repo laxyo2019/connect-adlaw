@@ -19,7 +19,8 @@
 			</p>
 			<p v-else class="after_msg" v-text="content.message"
 				v-linkified:options="{ className: 'font-italic text-info' }"
-				:style="{maxWidth : content.message.length > 10 ? '756px' : '' }">
+
+				:style="{maxWidth : content.message.length > 50 ? '736px' : '' }">
 			</p>
 			<p class="msg_edited_icon" v-if="checkIsEdited(content.msg_props,content.message)"><i class="fa fa-pencil"></i></p>
 				<vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
