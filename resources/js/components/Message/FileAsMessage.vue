@@ -12,7 +12,7 @@
           	 <vue-context ref="menu" class="context-menu" :class="[right ? 'context-menu-right' : 'context-menu-left']">
 								<template slot-scope="child">
 							    <li>
-						        <a href="#" @click.prevent="deleteMsg()" v-show="content.sender_id== user.id"><i class="fa fa-trash"></i>Delete</a>
+						        <a href="#" @click.prevent="deleteMsg()"><i class="fa fa-trash"></i>Delete</a>
 							    </li>
 						    </template>
 						</vue-context>

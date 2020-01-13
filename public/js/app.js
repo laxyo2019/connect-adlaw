@@ -3048,6 +3048,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -54235,7 +54236,8 @@ var render = function() {
                                             created_at: message.created_at,
                                             filename: message.file_name,
                                             filesize: message.file_size
-                                          }
+                                          },
+                                          on: { deleted: _vm.deleteMessage }
                                         })
                                       ],
                                       1
@@ -55009,14 +55011,6 @@ var render = function() {
                             _c(
                               "a",
                               {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.content.sender_id == _vm.user.id,
-                                    expression: "content.sender_id== user.id"
-                                  }
-                                ],
                                 attrs: { href: "#" },
                                 on: {
                                   click: function($event) {

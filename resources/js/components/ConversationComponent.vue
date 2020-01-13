@@ -120,6 +120,7 @@
 			              <span v-else>
 			                <FileAsMessage :right="false" 
 		                    :link="message.file_id" 
+                            @deleted = 'deleteMessage'
 		                    :user="user"
 				            :content="message"
 				            :index="index"
