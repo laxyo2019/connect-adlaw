@@ -118,13 +118,9 @@
     created(){
       document.addEventListener("visibilitychange", function() {
         let room_id1 =0
-         this.usercontactlist={}
         axios.get("direct_delete/" + room_id1).then(response => {
-
-             console.log(_.orderBy(response.data, 'lastmessagetime','desc'));         
-                         
-          });
-       
+            this.usercontactlist = _.orderBy(response.data, 'lastmessagetime','desc');                       
+          });       
       }, false);
 
       Event.$on('Incoming',(e)=>{          
