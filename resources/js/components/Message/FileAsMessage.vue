@@ -76,4 +76,5 @@
 	.context-menu-left {
     left: 0 !important;
 	}
+	@import '~vue-context/dist/css/vue-context.css';
 </style>

@@ -3,8 +3,8 @@
     	<div class="preloader_div text-center" v-if="!loading_chat && !newChat" >
     	<div class="container" style="margin-top:12%">
 	        <br/><br/>
-	         <img src="/custom/mini_logo.png" class="mb-3">
-	        <h3 class="h3">Laxyo Connect</h3>
+	         <img src="/custom/adlaw-logo.png" class="mb-3" style="width:200px;height200px;">
+	        <!-- <h3 class="h3">ADLAW</h3> -->
 	        <div class="row">
 	            <div class="col-md-12">
 	                <div class="loader17">
@@ -74,7 +74,7 @@
 
         <div class="modal fade" id="createnewgroup" tabindex="-1" role="dialog" aria-labelledby="createnewgroupLabel"
              aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createnewgroupLabel">Create New Group</h5>
@@ -487,7 +487,6 @@
                         // $('#contact_no_'+e.newroomdata.user_id).addClass('online');
                 });
             },
-
             updateRoomListners(newlyaddedroom) {
                 this.getcontactlist();
 
@@ -558,7 +557,7 @@
 	/* preloader */
 	.loader17{position:relative;width:65px;border:1px solid transparent;margin:40px auto}
 	.loader17 span{position:absolute;bottom:0;display:block;width:9px;height:5px;border-radius:5px;
-        background:rgba(0,0,0,.1);-webkit-animation:preloader 2s infinite ease-in-out;animation:preloader 2s infinite ease-in-out}
+        background:#3c8dbc;-webkit-animation:preloader 2s infinite ease-in-out;animation:preloader 2s infinite ease-in-out}
 	.loader17 span:nth-child(2){left:11px;-webkit-animation-delay:.2s;animation-delay:.2s}
 	.loader17 span:nth-child(3){left:22px;-webkit-animation-delay:.4s;animation-delay:.4s}
 	.loader17 span:nth-child(4){left:33px;-webkit-animation-delay:.6s;animation-delay:.6s}
@@ -566,12 +565,12 @@
 	.loader17 span:nth-child(6){left:55px;-webkit-animation-delay:1s;animation-delay:1s}
 
 	@-webkit-keyframes preloader{
-		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:rgba(0,0,0,.1)}
-		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#f8990c}
+		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:#3c8dbc}
+		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#3c8dbc}
 	}
 
 	@keyframes preloader{
-		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:rgba(0,0,0,.1)}
-		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#f8990c}
+		0%,100%,50%{height:5px;-webkit-transform:translateY(0);transform:translateY(0);background:#3c8dbc}
+		25%{height:30px;-webkit-transform:translateY(15px);transform:translateY(15px);background:#3c8dbc}
     }
 </style>

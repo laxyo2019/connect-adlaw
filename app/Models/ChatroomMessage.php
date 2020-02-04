@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+// use App\Traits\Encryptable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -13,6 +14,7 @@ class ChatroomMessage extends Model implements HasMedia
     use SoftDeletes, HasMediaTrait;
 
     protected $guarded = [];
+
 
     public function registerMediaCollections()
     {

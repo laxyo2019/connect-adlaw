@@ -7,6 +7,7 @@ import vue2Dropzone from 'vue2-dropzone'
 import At from 'vue-at'
 import AtTa from 'vue-at/dist/vue-at-textarea'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
 Vue.use(VueChatScroll)
 Vue.use(vue2Dropzone)
 Vue.use(multiselect)

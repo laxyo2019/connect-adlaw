@@ -577,6 +577,7 @@
 </script>
 
 <style scoped>
+
   ::-webkit-input-placeholder {
     color: peachpuff;
     font-size: 13px;

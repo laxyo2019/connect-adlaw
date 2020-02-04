@@ -15,7 +15,7 @@
 					</br>
 					<span class="text-muted">~ {{ JSON.parse(content.msg_props)['sender_name'] }}</span>
 					</br> 
-				</span>
+				</span>{{content.message}}
 			</p>
 			<p v-else class="after_msg" v-text="content.message"
 				v-linkified:options="{ className: 'font-italic text-info' }"
@@ -104,7 +104,6 @@
 			},
 			deleteMsg() {
 				axios.post(`deleteMessage`,{message_id:this.content.message_id,index:this.index}).then((response) => {
-					alert(this.content.message_id)
            this.$emit('deleted', this.content.message_id);
         }).catch(error => console.log(error.response.data));
 			}
@@ -135,4 +134,5 @@
 	.context-menu-left {
     left: 0 !important;
 	}
+	@import '~vue-context/dist/css/vue-context.css';
 </style>

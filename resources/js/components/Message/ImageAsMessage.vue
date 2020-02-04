@@ -49,4 +49,5 @@
 		width:auto!important;
     border-radius: 0
 	}
+	@import '~vue-context/dist/css/vue-context.css';
 </style>

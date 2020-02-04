@@ -3,7 +3,7 @@
 Route::get('/', function(){
   return redirect('login');
 });
-	
+// Route::get('/','LoginController@login');	
 Auth::routes(['register' => false]);
 
 Route::get('/custom-login/{email}', 'Auth\LoginController@customLogin');

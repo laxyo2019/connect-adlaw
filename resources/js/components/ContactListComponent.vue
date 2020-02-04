@@ -23,7 +23,7 @@
         <i class="text-white fa fa-user-plus fa-fw" aria-hidden="true"></i>
       </button>
 
-      <button v-if="group_permission == 1" id="creategroup" data-toggle="modal" data-target="#createnewgroup" 
+      <button v-if="user.parent_id == null" id="creategroup" data-toggle="modal" data-target="#createnewgroup" 
         class="btn btn-sm btn-secondary add_btn mr-2" title="New Group">
         <i class="fa fa-users fa-fw" aria-hidden="true"></i>
       </button>
@@ -116,12 +116,13 @@
       };
     },
     created(){
-      document.addEventListener("visibilitychange", function() {
-        let room_id1 =0
-        axios.get("direct_delete/" + room_id1).then(response => {
-            this.usercontactlist = _.orderBy(response.data, 'lastmessagetime','desc');                       
-          });       
-      }, false);
+    	window.addEventListener('focus', this.updateList);  
+      // document.addEventListener("visibilitychange", function() {
+      //   let room_id1 =0
+      //   axios.get("direct_delete/" + room_id1).then(response => {
+      //       this.usercontactlist = _.orderBy(response.data, 'lastmessagetime','desc');                       
+      //     });       
+      // }, false);
 
       Event.$on('Incoming',(e)=>{          
         //this.contact.unreadcount = e
@@ -141,6 +142,12 @@
     },
     methods: {
 
+    	updateList(){
+         let id = 0;
+        axios.get("direct_delete/" + id).then(response => {
+              this.usercontactlist = response.data;     
+        });     
+     } ,
       checkIfOnline(uid){
         return this.onlineuserslist.find(e => e.id === uid);
       },
@@ -192,9 +199,11 @@
       // },
       orderedUsersLists: function () {
         if(this.search != ''){
-          return this.usercontactlist.filter(contact => {
-            return contact.roomname.toLowerCase().match(this.search);
-          });
+          let searchReg = new RegExp(this.search, "i");
+          return this.usercontactlist.filter((e) => { return e.roomname.match(searchReg) });
+          // return this.usercontactlist.filter(contact => {
+          //   return contact.roomname.toLowerCase().match(this.search);
+          // });
         }else{
           return _.orderBy(this.usercontactlist, 'lastmessagetime','desc')
         }

@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\Crypt;
 class HomeController extends Controller
 {
     public function __construct()
@@ -37,12 +37,15 @@ class HomeController extends Controller
 
     //Load Chat View with User Data
     public function index(){
-        $auth_user_id = Auth::user()->id;
+    
+        $auth_user_id = Auth::user()->id;      
         $rooms = ChatroomUser::where('user_id', $auth_user_id)->pluck('chatroom_id');
         $crooms = Chatroom::whereIn('id',$rooms)->where('type','private')->pluck('id');
-        $added_users_id = ChatroomUser::whereIn('chatroom_id', $crooms)->pluck('user_id');
-        $allusers = User::whereNotIn('id',$added_users_id)->where('id','!=',$auth_user_id)->get();
-        $allcontacts = User::where('id','!=',$auth_user_id)->get();
+        $added_users_id = ChatroomUser::whereIn('chatroom_id', $crooms)->pluck('user_id'); 
+
+        $allcontacts = $this->get_users($auth_user_id)->get();
+        $allusers = $this->get_users($auth_user_id)->whereNotIn('id',$added_users_id)->get();
+        
         return view('home',compact('allusers','rooms','allcontacts'));
     }
 
@@ -93,6 +96,7 @@ class HomeController extends Controller
 
     public function getUsersChatRooms(){
         $auth_user_id = Auth::user()->id;
+
         $chatrooms = Chatroom::whereHas('participants', function ($query) use ($auth_user_id) {
             $query->where('user_id', '=', $auth_user_id);
         })
@@ -148,6 +152,7 @@ class HomeController extends Controller
         }
 
         $user_id = Auth::user()->id;
+
 
         $newMessage = new ChatroomMessage;
         $newMessage->is_file = ($request->hasfile('file')) ? 1 : 0; 
@@ -316,5 +321,26 @@ class HomeController extends Controller
         }        
         $data = $this->getUsersChatRooms();  
         return $data;        
+    }
+
+    public function get_users($auth_user_id){
+        $user = User::find($auth_user_id);
+
+        if(Auth::user()->parent_id == null){
+            $users = User::where('parent_id',$auth_user_id)->orderBy('name', 'asc');
+            if($user->user_catg_id == '4'){
+                $users = $users->where('user_catg_id','6');
+            }
+            else if($user->user_catg_id == '3' || $user->user_catg_id == '2'){
+                $users = $users->where('user_catg_id','2');
+         
+            }else{
+                $users = $users->where('user_catg_id','5');
+            }
+            
+        }else{
+            $users = User::where('parent_id',Auth::user()->parent_id)->where('user_catg_id',$user->user_catg_id)->where('id','!=',$auth_user_id)->orderBy('name', 'asc');
+        }
+        return $users;
     }
 }
