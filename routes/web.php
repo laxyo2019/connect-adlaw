@@ -6,7 +6,9 @@ Route::get('/', function(){
 // Route::get('/','LoginController@login');	
 Auth::routes(['register' => false]);
 
-Route::get('/custom-login/{email}', 'Auth\LoginController@customLogin');
+Route::get('/custom-login', 'Auth\LoginController@customLogin');
+Route::post('/customlogout', 'Auth\LoginController@customlogout')->name('customlogout');;
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('newprivatechat', 'HomeController@newprivatechat')->name('newprivatechat');

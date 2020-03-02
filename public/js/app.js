@@ -2755,7 +2755,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     logout: function logout() {
       axios.post("logout", {}).then(function (response) {
-        location.reload();
+        window.location = "http://127.0.0.1:8001";
       });
     }
   },
