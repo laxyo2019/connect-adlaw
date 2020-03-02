@@ -187,7 +187,7 @@
 
       logout() {
         axios.post("logout", {}).then(response => {
-          location.reload();
+          window.location = "http://127.0.0.1:8001";
         });
       }
     },

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use App\User;
+use Auth;
+use Crypt;
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -37,8 +40,31 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function customLogin($email)
+    public function customLogin()
     {
-        return view('auth.custom-login', compact('email'));
+        $user =  User::where('email',request('email'))->first();
+        if(request('password') == $user->password){
+
+            $decrypt = Crypt::decrypt($user->pwd);
+
+            if (Auth::attempt(['email' => request('email'), 'password' => $decrypt])) {
+              return redirect()->route('home');
+            }else {
+               return response()->json(['error' => 'Unauthorised'], 401);
+            }
+        }else{
+
+            return redirect('login');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return "sdasd";
     }
 }
