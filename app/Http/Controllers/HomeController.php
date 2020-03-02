@@ -37,7 +37,6 @@ class HomeController extends Controller
 
     //Load Chat View with User Data
     public function index(){
-    
         $auth_user_id = Auth::user()->id;      
         $rooms = ChatroomUser::where('user_id', $auth_user_id)->pluck('chatroom_id');
         $crooms = Chatroom::whereIn('id',$rooms)->where('type','private')->pluck('id');
