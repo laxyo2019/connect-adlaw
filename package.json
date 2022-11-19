@@ -44,6 +44,6 @@
         "vue-toasted": "^1.1.27",
         "vue-turbolinks": "^2.0.4",
         "vue2-dropzone": "^3.5.9",
-        "webpack-cli": "^3.3.10"
+        "webpack-cli": "^3.3.12"
     }
 }
